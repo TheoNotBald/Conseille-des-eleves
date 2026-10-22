@@ -1,0 +1,111 @@
+.site-empty-state{display:grid;justify-items:center;gap:10px;padding:36px 24px;border:1px dashed #d4dbd4;border-radius:18px;background:rgba(255,255,255,.58);text-align:center}
+.site-empty-icon{display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:#edf2eb;color:var(--forest);font-size:21px}
+.site-empty-state h2,.site-empty-state h3{margin:0;color:var(--forest);font-size:18px;letter-spacing:-.02em}
+.site-empty-state p{max-width:470px;margin:0;color:var(--muted);font-size:13px}
+.home-hero{height:clamp(230px,24vw,300px)}
+.scroll-down{color:#fff;opacity:1}
+.site-hero-actions .hero-more.secondary-action{border-color:var(--forest);background:var(--forest);color:#fff}
+.site-hero-actions .hero-more{min-height:46px}
+.site-section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:30px 0 14px}
+.site-section-title h2{margin:0;color:var(--forest);font-size:21px;letter-spacing:-.035em}
+.site-section-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.site-form{display:grid;gap:17px;max-width:760px;margin-top:22px}
+.site-form label,.admin-search-label{display:grid;gap:7px;color:var(--ink);font-size:13px;font-weight:800}
+.site-form input,.site-form textarea,.site-form select,.admin-search{width:100%;min-height:46px;border:1px solid #d8dfd8;border-radius:11px;background:#fff;padding:11px 13px;color:var(--ink)}
+.site-form textarea{min-height:145px;resize:vertical}
+.site-form input:focus,.site-form textarea:focus,.site-form select:focus,.admin-search:focus{border-color:var(--green);outline:3px solid rgba(74,109,96,.13)}
+.site-field-help{color:var(--muted);font-size:11px;font-weight:500}
+.site-privacy-note,.site-admin-note{margin:14px 0;padding:13px 15px;border:1px solid #e4d5b1;border-radius:12px;background:#fbf4e7;color:#604f32;font-size:12px}
+.site-status{min-height:22px;margin:0;color:var(--forest);font-size:13px;font-weight:750}
+.site-status[data-kind="error"]{color:#963e36}
+.site-status[data-kind="success"]{color:#315f47}
+.site-empty-state .primary,.site-empty-state .secondary{margin-top:4px}
+.site-project-list,.site-news-list,.site-review-list{display:grid;gap:12px}
+.site-project-card{padding:18px}
+.site-project-card h3,.site-review-card h3{margin:10px 0 6px;font-size:17px;line-height:1.3}
+.site-project-card p,.site-review-card p{margin:0;color:var(--muted);font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.site-project-meta,.site-review-meta{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.site-review-toolbar{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:20px 0}
+.site-review-toolbar .admin-search-label{flex:1;max-width:460px}
+.site-review-filters{display:flex;flex-wrap:wrap;gap:7px}
+.site-filter{min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-size:12px;font-weight:800}
+.site-filter[aria-pressed="true"]{border-color:var(--forest);background:var(--forest);color:#fff}
+.site-review-card{padding:18px}
+.site-review-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.site-review-actions button{min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:12px;font-weight:800}
+.site-review-actions .approve{border-color:var(--forest);background:var(--forest);color:#fff}
+.site-review-actions .reject{color:#8a413b}
+.site-review-actions button:hover{filter:brightness(.96)}
+.site-hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
+.site-hero-actions .hero-more{width:auto;min-height:46px;padding:9px 18px;border-width:1px;font-size:14px}
+.site-hero-actions .hero-more.secondary-action{border-color:rgba(255,255,255,.48);color:#fff}
+.site-page-heading{margin:8px 0 22px}
+.site-page-heading .eyebrow{margin-bottom:10px}
+.site-page-heading h1{margin:0 0 8px;font-size:clamp(29px,4vw,43px);line-height:1.12;letter-spacing:-.045em;color:var(--forest)}
+.site-page-heading p{max-width:660px;margin:0;color:var(--muted);font-size:14px}
+.site-review-count{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:23px;padding:0 7px;border-radius:999px;background:rgba(255,255,255,.2);font-size:11px}
+.site-admin-page .site-page-heading{margin-bottom:12px}
+.site-admin-page .site-review-toolbar{align-items:center}
+.site-date{color:var(--muted);font-size:11px}
+.site-rejection-label{background:#f6e9e5!important;color:#91463f!important}
+.mobile button:focus-visible,.header-nav button:focus-visible,.site-filter:focus-visible,.site-review-actions button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+@media(max-width:760px){
+  .admin-entry{display:none!important}
+  .mobile{justify-content:space-between}
+  .mobile button{flex:1;min-width:0}
+  .site-review-toolbar{align-items:stretch;flex-direction:column}
+  .site-review-toolbar .admin-search-label{max-width:none}
+  .site-review-filters{overflow-x:auto;flex-wrap:nowrap;padding:2px}
+  .site-filter{flex:0 0 auto}
+  .site-form{gap:14px}
+  .site-admin-note,.site-privacy-note{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.site-review-actions button,.site-filter{transition:none}}
+.gov-home-intro{margin-bottom:24px;padding:clamp(22px,3.5vw,34px);border:1px solid var(--line);border-radius:18px;background:#fff}
+.gov-home-intro h1{margin:12px 0 8px;color:var(--forest);font-size:clamp(28px,3.5vw,40px);line-height:1.12;letter-spacing:-.045em}
+.gov-home-intro>p:not(.gov-proposal-note){max-width:680px;margin:0;color:var(--muted);font-size:14px}
+.gov-home-intro>h2{margin:25px 0 13px;color:var(--forest);font-size:19px;letter-spacing:-.025em}
+.gov-proposal-note,.gov-pending,.gov-schedule-note,.gov-boundary-note{padding:12px 14px;border-radius:12px;font-size:12px}
+.gov-proposal-note{margin:14px 0 0;background:#f6f1e7;color:#625436;font-weight:750}
+.gov-pending{margin:14px 0;background:#f6f1e7;color:#625436}
+.gov-schedule-note{margin:0 0 14px;background:#edf2eb;color:var(--forest);font-weight:800}
+.gov-boundary-note{margin:16px 0;background:#f6f1e7;color:#625436}
+.gov-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.gov-flow-step{position:relative;min-width:0;padding:14px 12px;border:1px solid var(--line);border-radius:14px;background:#fbfaf7}
+.gov-flow-step:not(:last-child):after{position:absolute;top:24px;right:-9px;z-index:1;content:"›";width:16px;height:20px;background:#fff;color:var(--green);font-size:20px;font-weight:900;line-height:16px;text-align:center}
+.gov-flow-number{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:var(--forest);color:#fff;font-size:11px;font-weight:900}
+.gov-flow-step h3{margin:10px 0 6px;color:var(--forest);font-size:13px;line-height:1.3}
+.gov-flow-step p{margin:0;color:var(--muted);font-size:11px;line-height:1.45}
+.gov-home-links{margin-top:18px}
+.gov-home-links .primary,.gov-home-links .secondary,.gov-home-links .outline{min-height:42px}
+.gov-level-grid,.gov-role-grid,.gov-election-grid,.gov-resource-grid{margin:16px 0}
+.gov-level-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.gov-level-card h3,.gov-info-card h3{margin:4px 0;color:var(--forest);font-size:16px}
+.gov-level-card p,.gov-info-card p{margin:0;color:var(--muted);font-size:13px}
+.gov-info-card{display:grid;align-content:start;justify-items:start;gap:8px}
+.gov-card-icon{display:grid;place-items:center;min-width:36px;height:36px;padding:0 8px;border-radius:11px;background:var(--soft);color:var(--forest);font-size:15px;font-weight:900}
+.gov-role-grid .pill{margin-bottom:2px}
+.gov-notice-stack{margin:16px 0;padding:15px 17px;border:1px solid var(--line);border-radius:14px;background:#fff}
+.gov-notice-stack p{margin:5px 0;color:var(--muted);font-size:13px}
+.gov-notice-stack .gov-schedule-note{margin:0 0 8px;color:var(--forest)}
+.gov-notice-stack .gov-pending{margin:10px 0 0}
+.gov-checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px;margin:0 0 18px;padding:0;list-style:none}
+.gov-checklist li{position:relative;padding:10px 12px 10px 31px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:13px}
+.gov-checklist li:before{position:absolute;left:12px;content:"•";color:var(--green);font-size:18px;font-weight:900;line-height:16px}
+.page#page-levels>.primary,.page#page-assembly>.primary,.page#page-resources>.primary{margin-top:12px}
+@media(max-width:1000px){
+  .gov-flow{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .gov-flow-step:nth-child(3):after{display:none}
+}
+@media(max-width:760px){
+  .gov-home-intro{padding:19px 16px}
+  .gov-flow{grid-template-columns:1fr;gap:8px}
+  .gov-flow-step{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start;padding:12px}
+  .gov-flow-step h3{margin:1px 0 3px}
+  .gov-flow-step p{grid-column:2}
+  .gov-flow-step:not(:last-child):after{top:auto;right:auto;bottom:-13px;left:18px;transform:rotate(90deg)}
+  .gov-checklist{grid-template-columns:1fr}
+  .gov-home-links{display:grid}
+  .gov-home-links>*{width:100%}
+  .site-page-heading{margin-top:3px}
+}
