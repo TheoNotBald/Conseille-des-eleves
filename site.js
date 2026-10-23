@@ -163,6 +163,18 @@
       storageStatus:'Les propositions de cet appareil sont enregistrées dans ce navigateur uniquement.',
       projectStatus:'Projet approuvé',
       confirmRemove:'Supprimer définitivement cette proposition de ce navigateur ?',
+      priorityHeader:'Priorité de révision',
+      priorityHelp:'Tri automatique par quelques mots-clés, sans IA : vérifie chaque proposition, car le classement peut se tromper. Rien n’est rejeté automatiquement et la priorité peut être modifiée.',
+      priorityNormal:'Normale',
+      priorityYellow:'À vérifier',
+      priorityRed:'Signalée',
+      priorityManual:'Priorité modifiée manuellement',
+      priorityAutomatic:'Automatique (suggestion)',
+      prioritySet:'Modifier la priorité de révision',
+      priorityReasonSchool:'Des repères liés à l’école ont été détectés.',
+      priorityReasonUnclear:'Le lien avec l’école n’est pas clair; une vérification est suggérée.',
+      priorityReasonOffTopic:'Le sujet semble possiblement sans lien avec l’école.',
+      priorityReasonLanguage:'Le texte contient un langage à vérifier.',
       noCategory:'Sans catégorie'
     },
     en:{
@@ -326,6 +338,18 @@
       storageStatus:'Suggestions on this device are saved in this browser only.',
       projectStatus:'Approved project',
       confirmRemove:'Permanently delete this suggestion from this browser?',
+      priorityHeader:'Review priority',
+      priorityHelp:'Automatic sorting uses a small set of keywords, not AI. Review every suggestion because the label can be wrong. Nothing is rejected automatically, and the priority can be changed.',
+      priorityNormal:'Normal',
+      priorityYellow:'Needs review',
+      priorityRed:'Flagged',
+      priorityManual:'Priority changed manually',
+      priorityAutomatic:'Automatic (suggested)',
+      prioritySet:'Change review priority',
+      priorityReasonSchool:'School-related terms were detected.',
+      priorityReasonUnclear:'The school connection is unclear; review is suggested.',
+      priorityReasonOffTopic:'The topic may be unrelated to school.',
+      priorityReasonLanguage:'The text contains language that needs review.',
       noCategory:'No category'
     }
   };
@@ -351,6 +375,40 @@
   });
 
   const text=(key)=>copy[document.documentElement.lang==='en'?'en':'fr'][key];
+  const priorities=['normal','yellow','red'];
+  const priorityOrder={normal:0,yellow:1,red:2};
+  const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
+  const schoolTerms=new Set((
+    'school schools student students class classroom classes teacher teachers lesson lessons learning course courses subject subjects homework study library book books reading cafeteria lunch food kitchen bathroom washroom locker hallway corridor playground gym sports club clubs event events meeting assembly council representative representatives safety safe wellbeing well-being health accessibility accessible inclusion inclusive bullying transport bus schoolyard uniform technology computer internet schedule timetable exam exams bench benches furniture support accommodation accommodations calendar '+
+    'ecole scolaire eleve eleves classe classes cours professeur professeurs enseignant enseignante enseignants enseignement apprentissage devoirs etude etudier bibliotheque livre livres lecture cafetaria cafet cafeteria repas diner nourriture cantine salle toilettes corridor casier cour recre gymnase sport club clubs evenement evenements reunion assemblee conseil representant representants securite sante accessibilite inclusion intimidation transport autobus horaire examen examens ordinateur ordinateurs banc bancs mobilier adaptation adaptations calendrier'
+  ).split(/\s+/));
+  const activityTerms=new Set('art arts music theater theatre chess robotics musique echecs robotique'.split(/\s+/));
+  const profanityTerms=new Set((
+    'fuck fucking fucked shit bullshit bitch bastard asshole assholes damn dick dumbass piss crap motherfucker '+
+    'merde putain pute con connard connasse salope salaud enculer encule foutre bordel chiant chier'
+  ).split(/\s+/));
+  const offTopicPatterns=[
+    /\b(?:bitcoin|cryptocurrency|crypto trading|stock portfolio|invest in stocks|tinder|dating app|my dating profile|my car|my dog|my cat|my personal business|sell my product|video games?|playstation|xbox|fortnite|minecraft|my vacation|holiday trip)\b/,
+    /\b(?:cryptomonnaie|trading crypto|portefeuille boursier|investir en bourse|tinder|application de rencontre|mon profil de rencontre|mon chien|mon chat|ma voiture|mon entreprise personnelle|vendre mon produit|jeux video|playstation|xbox|fortnite|minecraft|mes vacances|voyage de vacances)\b/
+  ];
+  const normalizedWords=value=>String(value||'')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase()
+    .match(/[a-z0-9]+/g)||[];
+  const classifySuggestion=suggestion=>{
+    const raw=`${suggestion.title} ${suggestion.details}`.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+    const words=normalizedWords(raw);
+    if(words.some(word=>profanityTerms.has(word)))return {priority:'red',reason:'priorityReasonLanguage'};
+    const hasSchoolContext=words.some(word=>schoolTerms.has(word))||
+      (suggestion.category!=='other'&&words.some(word=>activityTerms.has(word)));
+    if(offTopicPatterns.some(pattern=>pattern.test(raw))&&!hasSchoolContext)return {priority:'red',reason:'priorityReasonOffTopic'};
+    if(offTopicPatterns.some(pattern=>pattern.test(raw)))return {priority:'yellow',reason:'priorityReasonUnclear'};
+    if(hasSchoolContext&&words.length>=4)return {priority:'normal',reason:'priorityReasonSchool'};
+    return {priority:'yellow',reason:'priorityReasonUnclear'};
+  };
+  const suggestionPriority=item=>{
+    if(priorities.includes(item.priority))return {priority:item.priority,reason:item.priorityReason||'priorityReasonUnclear',manual:item.priorityOverride===true};
+    return {...classifySuggestion(item),manual:false};
+  };
   const categoryName=value=>{
     const key={
       'school-life':'schoolLife',
@@ -409,6 +467,9 @@
     typeof value.details==='string'&&value.details.length<=1200&&
     typeof value.category==='string'&&value.category.length<=40&&
     typeof value.createdAt==='string'&&
+    (value.priority===undefined||priorities.includes(value.priority))&&
+    (value.priorityReason===undefined||priorityReasons.has(value.priorityReason))&&
+    (value.priorityOverride===undefined||typeof value.priorityOverride==='boolean')&&
     supportedStatuses.has(value.status);
   const readSuggestions=()=>{
     let raw;
@@ -590,8 +651,7 @@
     ['projects','projects','✳'],
     ['elections','elections','⚑'],
     ['resources','navResources','▤'],
-    ['news','news','▣'],
-    ['participate','participate','＋']
+    ['news','news','▣']
   ];
   const routeLabels=[];
   sideNav.replaceChildren();
@@ -606,8 +666,7 @@
     ['home','home','⌂'],
     ['levels','navLevels','▦'],
     ['assembly','navAssembly','◎'],
-    ['projects','projects','✳'],
-    ['participate','participate','＋']
+    ['projects','projects','✳']
   ];
   const mobileNav=document.querySelector('.mobile');
   const mobileLabels=[];
@@ -624,7 +683,7 @@
     routeLabels.forEach(({node,key})=>node.textContent=text(key));
     mobileLabels.forEach(({node,key})=>node.textContent=text(key));
     document.querySelectorAll('.header-nav [data-page]').forEach(item=>{
-      const key={home:'home',how:'navCharter',levels:'navLevels',assembly:'navAssembly',projects:'projects',elections:'elections',participate:'participate',news:'news'}[item.dataset.page];
+      const key={home:'home',how:'navCharter',levels:'navLevels',assembly:'navAssembly',projects:'projects',elections:'elections',news:'news'}[item.dataset.page];
       if(key)item.textContent=text(key);
     });
     document.querySelector('.header-nav-inactive').textContent=text('navVote');
@@ -651,8 +710,10 @@
   );
 
   const participation=document.getElementById('page-participate');
-  participation.replaceChildren();
-  const participationForm=make('form','card site-form');
+  participation.remove();
+  const participationRouteIndex=pageNames.indexOf('participate');
+  if(participationRouteIndex!==-1)pageNames.splice(participationRouteIndex,1);
+  const participationForm=make('form','card site-form site-proposal-form');
   participationForm.id='suggestform';
   participationForm.noValidate=true;
   participationForm.append(
@@ -716,13 +777,14 @@
   const submit=make('button','primary',text('submit'));
   submit.type='submit';
   participationForm.append(categoryLabel,titleLabel,detailsLabel,privacy,formStatus,submit,hiddenCompatibility);
-  participation.append(participationForm);
+  projects.append(participationForm);
 
   const admin=document.getElementById('page-admin');
   admin.replaceChildren();
   admin.classList.add('site-admin-page');
   const adminHeading=makePageHeading('',text('adminTitle'),text('adminText'));
   const adminNotice=make('p','site-admin-note',text('adminNotice'));
+  const priorityHelp=make('p','site-priority-help',text('priorityHelp'));
   const adminStatus=make('p','site-status');
   adminStatus.setAttribute('role','status');
   adminStatus.setAttribute('aria-live','polite');
@@ -746,7 +808,7 @@
     filters.append(filter);
   });
   toolbar.append(searchLabel,filters);
-  admin.append(adminHeading,adminNotice,adminStatus,toolbar,reviewList);
+  admin.append(adminHeading,adminNotice,priorityHelp,adminStatus,toolbar,reviewList);
   const mobileAdmin=make('button');
   mobileAdmin.type='button';
   mobileAdmin.dataset.page='admin';
@@ -782,7 +844,10 @@
     const visible=suggestions
       .filter(item=>item.status===activeFilter)
       .filter(item=>`${item.title} ${item.details} ${categoryName(item.category)}`.toLocaleLowerCase().includes(searchTerm))
-      .sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+      .sort((a,b)=>{
+        const priorityDifference=priorityOrder[suggestionPriority(a).priority]-priorityOrder[suggestionPriority(b).priority];
+        return priorityDifference||b.createdAt.localeCompare(a.createdAt);
+      });
     reviewList.replaceChildren();
     if(!visible.length){
       const hasStatusItems=suggestions.some(item=>item.status===activeFilter);
@@ -799,8 +864,30 @@
       const date=make('time','site-date',`${text('savedDate')} ${formatDate(item.createdAt)}`);
       meta.append(status,date);
       article.append(meta,make('h3','',item.title));
+      const priority=suggestionPriority(item);
+      const priorityRow=make('div','site-priority-row');
+      priorityRow.append(make('span',`site-priority-badge site-priority-${priority.priority}`,text(`priority${priority.priority[0].toUpperCase()}${priority.priority.slice(1)}`)));
+      priorityRow.append(make('span',priority.manual?'site-priority-manual':'site-priority-reason',text(priority.manual?'priorityManual':priority.reason)));
+      article.append(priorityRow);
       article.append(make('span','muted',categoryName(item.category)));
       article.append(make('p','',item.details));
+      const priorityLabel=make('label','site-priority-control');
+      priorityLabel.append(make('span','',text('priorityHeader')));
+      const prioritySelect=document.createElement('select');
+      prioritySelect.dataset.priorityId=item.id;
+      prioritySelect.setAttribute('aria-label',`${text('prioritySet')}: ${item.title}`);
+      const automaticOption=make('option','',text('priorityAutomatic'));
+      automaticOption.value='automatic';
+      automaticOption.selected=!priority.manual;
+      prioritySelect.append(automaticOption);
+      priorities.forEach(value=>{
+        const option=make('option','',text(`priority${value[0].toUpperCase()}${value.slice(1)}`));
+        option.value=value;
+        option.selected=priority.manual&&value===priority.priority;
+        prioritySelect.append(option);
+      });
+      priorityLabel.append(prioritySelect);
+      article.append(priorityLabel);
       const actions=make('div','site-review-actions');
       if(item.status!=='approved')actions.append(button(text('approve'),'approve','approve'));
       if(item.status!=='rejected')actions.append(button(text('reject'),'reject','reject'));
@@ -844,13 +931,17 @@
     }
     try{
       const suggestions=readSuggestions();
+      const priority=classifySuggestion({title,details,category});
       suggestions.push({
         id:createId(),
         title,
         details,
         category,
         createdAt:new Date().toISOString(),
-        status:'pending'
+        status:'pending',
+        priority:priority.priority,
+        priorityReason:priority.reason,
+        priorityOverride:false
       });
       saveSuggestions(suggestions);
       participationForm.reset();
@@ -869,6 +960,29 @@
     renderAll();
   });
   searchInput.addEventListener('input',()=>renderAll());
+  reviewList.addEventListener('change',event=>{
+    const control=event.target.closest('[data-priority-id]');
+    if(!control)return;
+    try{
+      const suggestions=readSuggestions();
+      const item=suggestions.find(suggestion=>suggestion.id===control.dataset.priorityId);
+      if(!item)return;
+      if(control.value==='automatic'){
+        delete item.priority;
+        delete item.priorityReason;
+        delete item.priorityOverride;
+      }else{
+        if(!priorities.includes(control.value))throw new Error(text('saveError'));
+        item.priority=control.value;
+        item.priorityReason='priorityManual';
+        item.priorityOverride=true;
+      }
+      saveSuggestions(suggestions);
+      renderAll();
+    }catch(error){
+      setStatus(adminStatus,error.message||text('saveError'),'error');
+    }
+  });
   reviewList.addEventListener('click',event=>{
     const action=event.target.closest('[data-action]');
     if(!action)return;
@@ -902,8 +1016,8 @@
     news.querySelector('.site-page-heading p').textContent=language.noNewsText;
     news.querySelector('.site-empty-state h2').textContent=language.noNewsTitle;
     news.querySelector('.site-empty-state p').textContent=language.noNewsText;
-    participation.querySelector('h1').textContent=language.participateTitle;
-    participation.querySelector('.site-page-heading p').textContent=language.participateText;
+    participationForm.querySelector('h1').textContent=language.participateTitle;
+    participationForm.querySelector('.site-page-heading p').textContent=language.participateText;
     categoryLabel.querySelector('span').textContent=language.category;
     Array.from(categorySelect.options).forEach((option,index)=>{
       option.textContent=[language.chooseCategory,language.schoolLife,language.activity,language.sharedSpaces,language.other][index];
@@ -917,6 +1031,7 @@
     admin.querySelector('h1').textContent=language.adminTitle;
     admin.querySelector('.site-page-heading p').textContent=language.adminText;
     adminNotice.textContent=language.adminNotice;
+    priorityHelp.textContent=language.priorityHelp;
     mobileAdmin.querySelectorAll('span')[1].textContent=language.adminTab;
     mobileAdmin.setAttribute('aria-label',language.adminTitle);
     searchLabel.querySelector('span').textContent=language.searchSuggestions;
@@ -936,7 +1051,8 @@
   const heroParagraph=make('p','',copy.fr.heroText);
   const heroActions=make('div','site-hero-actions');
   const heroSubmit=button(copy.fr.shareIdea,'hero-more');
-  heroSubmit.dataset.page='participate';
+  heroSubmit.dataset.page='projects';
+  heroSubmit.addEventListener('click',()=>setTimeout(()=>participationForm.scrollIntoView({behavior:'smooth',block:'start'}),0));
   const heroProjects=button(copy.fr.viewProjects,'hero-more secondary-action');
   heroProjects.dataset.page='projects';
   heroActions.append(heroSubmit,heroProjects);

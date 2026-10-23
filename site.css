@@ -10,6 +10,7 @@
 .site-section-title h2{margin:0;color:var(--forest);font-size:21px;letter-spacing:-.035em}
 .site-section-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
 .site-form{display:grid;gap:17px;max-width:760px;margin-top:22px}
+.site-proposal-form{margin:28px 0 0;scroll-margin-top:24px}
 .site-form label,.admin-search-label{display:grid;gap:7px;color:var(--ink);font-size:13px;font-weight:800}
 .site-form input,.site-form textarea,.site-form select,.admin-search{width:100%;min-height:46px;border:1px solid #d8dfd8;border-radius:11px;background:#fff;padding:11px 13px;color:var(--ink)}
 .site-form textarea{min-height:145px;resize:vertical}
@@ -31,6 +32,15 @@
 .site-filter{min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--muted);font-size:12px;font-weight:800}
 .site-filter[aria-pressed="true"]{border-color:var(--forest);background:var(--forest);color:#fff}
 .site-review-card{padding:18px}
+.site-priority-help{margin:12px 0;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--muted);font-size:12px}
+.site-priority-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:10px 0}
+.site-priority-badge{display:inline-flex;align-items:center;min-height:24px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink);font-size:10px;font-weight:850}
+.site-priority-yellow{border-color:#e8d69c;background:#fbf3dc;color:#75591d}
+.site-priority-red{border-color:#e2b9b2;background:#f8e9e6;color:#8b3e36}
+.site-priority-reason,.site-priority-manual{color:var(--muted);font-size:11px}
+.site-priority-control{display:flex;align-items:center;gap:9px;margin-top:12px;color:var(--muted);font-size:11px;font-weight:750}
+.site-priority-control select{min-height:34px;padding:6px 9px;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);font:inherit}
+.site-priority-control select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .site-review-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .site-review-actions button{min-height:38px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-size:12px;font-weight:800}
 .site-review-actions .approve{border-color:var(--forest);background:var(--forest);color:#fff}
