@@ -155,7 +155,7 @@
   body{padding-bottom:72px}
 }
 
-.site-header+.home-hero{height:clamp(390px,57vw,660px);background:linear-gradient(90deg,rgba(14,35,29,.32),rgba(14,35,29,.05)),url("hero-photo.jpg") center 42%/cover no-repeat}
+.site-header+.home-hero{height:clamp(390px,57vw,660px);background:linear-gradient(90deg,rgba(14,35,29,.32),rgba(14,35,29,.05)),url("completed-project-template.png") center 42%/cover no-repeat}
 .home-hero .hero-story{width:min(470px,calc(100% - 36px));margin-left:clamp(22px,7vw,100px);padding:24px 26px 20px;border-radius:26px;background:rgba(250,247,241,.9);backdrop-filter:blur(5px)}
 .home-hero .hero-story h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4vw,46px);line-height:1.12;letter-spacing:-.035em;color:#171b19}
 .hero-date{display:block;margin:10px 0 14px;color:#39453e;font-size:14px;letter-spacing:.13em}
