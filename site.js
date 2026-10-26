@@ -8,6 +8,27 @@
       heroText:'Le CDECC donne aux élèves une voix pour partager leurs idées, discuter des besoins de leur classe et contribuer à des projets qui améliorent la vie scolaire.',
       homeTitle:'Des idées pour faire avancer notre école.',
       homeText:'Comprendre comment les élèves se représentent, échangent et font avancer leurs propositions au Collège Citoyen.',
+      missionTitle:'Notre mission',
+      missionText:'Le Conseil des élèves rassemble les voix de toute l’école. Ensemble, les élèves écoutent les besoins de leur communauté, proposent des idées et collaborent pour transformer les meilleures propositions en actions concrètes.',
+      completedTitle:'Projets terminés',
+      completedIntro:'Des idées proposées par les élèves, réalisées ensemble pour améliorer la vie à l’école.',
+      projectDetails:'Découvrir le projet',
+      projectBack:'Retour aux projets terminés',
+      completedTemplateLabel:'Exemple fictif · modèle',
+      moreInfo:'Découvrir plus →',
+      voteTemplateTitle:'La boîte de vote',
+      voteTemplateText:'Cette maquette montre où un vote pourra apparaître. Aucun vote n’est ouvert ni enregistré pour le moment.',
+      voteOptionOne:'Option de vote à définir',
+      voteOptionTwo:'Une autre option à définir',
+      voteDisabled:'Le vote en ligne n’est pas encore disponible.',
+      candidatePageTitle:'Les candidatures',
+      candidatePageText:'Les renseignements sur les candidatures et les personnes candidates seront publiés lorsque le processus sera confirmé.',
+      candidateInfoTitle:'Se présenter au Conseil des élèves',
+      candidateInfoText:'Les dates, les critères et les façons de déposer une candidature restent à confirmer avec l’école.',
+      candidatePending:'Aucune candidature ni aucun résultat officiel n’est publié pour le moment.',
+      navIdeas:'Idées',
+      navCandidates:'Candidature',
+      navMembers:'Membres',
       flowStudents:'Élèves',
       flowClass:'Élection du représentant de classe',
       flowLevel:'Conseil de niveau · chaque semaine',
@@ -65,7 +86,7 @@
       trainingMeetings:'Préparer et tenir une réunion',
       trainingProposals:'Présenter et évaluer une proposition',
       trainingMinutes:'Consigner les décisions et transmettre les suivis',
-      electionPageTitle:'Élections et règles',
+      electionPageTitle:'Élections et vote',
       electionPageText:'Les renseignements seront publiés lorsque les modalités auront été établies et confirmées par les organisateurs.',
       classElectionTitle:'Élection dans chaque classe',
       classElectionText:'Les élèves de chaque classe choisissent leur représentant par un vote de classe.',
@@ -94,14 +115,14 @@
       emptyProjectsTitle:'Aucun projet approuvé',
       meetingScheduleNote:'Aucun jour de réunion n’est fixé ici : il sera choisi avec les élèves et l’Assemblée citoyenne.',
       voteDisabledLabel:'Aucun vote en ligne',
-      navCharter:'Fonctionnement',
+      navCharter:'Charte',
       navLevels:'Niveaux',
       navAssembly:'Assemblée',
       navResources:'Ressources',
       navVote:'Vote',
       home:'Accueil',
-      projects:'Projets',
-      elections:'Élections',
+      projects:'Idées',
+      elections:'Candidature',
       participate:'Participer',
       news:'Actualités',
       shareIdea:'Proposer une idée',
@@ -110,6 +131,8 @@
       latestNews:'Actualités',
       noProjectsTitle:'Aucun projet pour le moment',
       noProjectsText:'Les projets approuvés par le Conseil des élèves apparaîtront ici.',
+      projectSearch:'Rechercher dans les idées',
+      projectSearchPlaceholder:'Titre, description ou catégorie',
       noNewsTitle:'Aucune actualité pour le moment',
       noNewsText:'Les actualités, les mises à jour des projets terminés et les comptes rendus approuvés seront publiés ici lorsqu’ils seront disponibles.',
       peopleTitle:'Représentants',
@@ -117,6 +140,9 @@
       noPeopleTitle:'Les représentants seront bientôt présentés',
       noPeopleText:'Les informations sur les représentants seront ajoutées lorsqu’elles seront confirmées.',
       projectIntro:'Les idées approuvées par le Conseil des élèves sont réunies ici.',
+      markCompleted:'Marquer comme terminé',
+      reopenIdea:'Remettre dans Idées',
+      completedStatus:'Projet terminé',
       processNote:'Le Conseil partage les nouvelles et le suivi des propositions avec la communauté scolaire.',
       participateTitle:'Une idée pour améliorer la vie à l’école ?',
       participateText:'Décris ta proposition. Après examen, une idée approuvée sera publiée dans les projets.',
@@ -183,6 +209,27 @@
       heroText:'CDECC gives students a voice to share ideas, discuss their class needs, and contribute to projects that improve school life.',
       homeTitle:'Ideas that move our school forward.',
       homeText:'Learn how students are represented, discuss issues, and move proposals forward at Collège Citoyen.',
+      missionTitle:'Our mission',
+      missionText:'The Student Council brings together voices from across the school. Students listen to their community, share ideas, and work together to turn the best proposals into meaningful action.',
+      completedTitle:'Completed projects',
+      completedIntro:'Student ideas brought to life together to make school a better place.',
+      projectDetails:'Explore this project',
+      projectBack:'Back to completed projects',
+      completedTemplateLabel:'Fictional example · template',
+      moreInfo:'Discover more →',
+      voteTemplateTitle:'The voting booth',
+      voteTemplateText:'This is a preview of where a vote could appear. No vote is currently open or recorded.',
+      voteOptionOne:'Voting option to be decided',
+      voteOptionTwo:'Another option to be decided',
+      voteDisabled:'Online voting is not available yet.',
+      candidatePageTitle:'Candidate applications',
+      candidatePageText:'Information about candidates and applications will be published once the process is confirmed.',
+      candidateInfoTitle:'Run for Student Council',
+      candidateInfoText:'Dates, eligibility, and application steps still need to be confirmed with the school.',
+      candidatePending:'No candidates or official results are published yet.',
+      navIdeas:'Ideas',
+      navCandidates:'Candidates',
+      navMembers:'Members',
       flowStudents:'Students',
       flowClass:'Class representative elected',
       flowLevel:'Level Council · weekly',
@@ -240,7 +287,7 @@
       trainingMeetings:'Preparing for and participating in meetings',
       trainingProposals:'Presenting and evaluating proposals',
       trainingMinutes:'Recording decisions and sharing follow-up',
-      electionPageTitle:'Elections and rules',
+      electionPageTitle:'Elections and voting',
       electionPageText:'Election information will be published once organizers establish and confirm the process.',
       classElectionTitle:'Class elections',
       classElectionText:'Students in each class elect their class representative through a class vote.',
@@ -269,14 +316,14 @@
       emptyProjectsTitle:'No approved projects yet',
       meetingScheduleNote:'No meeting day is set here: students and the Student Assembly will choose it together.',
       voteDisabledLabel:'No online voting',
-      navCharter:'How it works',
+      navCharter:'Charter',
       navLevels:'Levels',
       navAssembly:'Assembly',
       navResources:'Resources',
       navVote:'Vote',
       home:'Home',
-      projects:'Projects',
-      elections:'Elections',
+      projects:'Ideas',
+      elections:'Candidates',
       participate:'Participate',
       news:'News',
       shareIdea:'Suggest an idea',
@@ -285,6 +332,8 @@
       latestNews:'News',
       noProjectsTitle:'No projects yet',
       noProjectsText:'Projects approved by the Student Council will appear here.',
+      projectSearch:'Search ideas',
+      projectSearchPlaceholder:'Title, description, or category',
       noNewsTitle:'No news yet',
       noNewsText:'News, completed-project updates, and approved meeting summaries will be published here when available.',
       peopleTitle:'Representatives',
@@ -292,6 +341,9 @@
       noPeopleTitle:'Representatives will be introduced soon',
       noPeopleText:'Representative information will be added once it has been confirmed.',
       projectIntro:'Ideas approved by the Student Council are collected here.',
+      markCompleted:'Mark as completed',
+      reopenIdea:'Return to Ideas',
+      completedStatus:'Completed project',
       processNote:'The Student Council shares updates and proposal follow-up with the school community.',
       participateTitle:'Have an idea to improve school life?',
       participateText:'Describe your suggestion. Once reviewed, an approved idea will be published under Projects.',
@@ -354,27 +406,41 @@
     }
   };
   Object.assign(en,{
-    navCharter:'How it works',
+    navCharter:'Charter',
     navLevels:'Levels',
     navAssembly:'Assembly',
     navVote:'Vote',
-    projects:'Projects',
-    elections:'Elections',
+    projects:'Ideas',
+    elections:'Candidates',
     participate:'Participate',
     news:'News'
   });
   Object.assign(fr,{
-    navCharter:'Fonctionnement',
+    navCharter:'Charte',
     navLevels:'Niveaux',
     navAssembly:'Assemblée',
     navVote:'Vote',
-    projects:'Projets',
-    elections:'Élections',
+    projects:'Idées',
+    elections:'Candidature',
     participate:'Participer',
     news:'Actualités'
   });
 
   const text=(key)=>copy[document.documentElement.lang==='en'?'en':'fr'][key];
+  const completedTemplates={
+    fr:[
+      {id:'template-reading',title:'Un coin lecture aménagé',date:'2026-06-12',details:'Un espace calme a été aménagé avec des livres et des places confortables pour lire ou se détendre pendant les pauses.'},
+      {id:'template-talents',title:'Une semaine des talents',date:'2026-05-22',details:'Les élèves ont partagé leurs créations, leurs passions et leurs talents lors d’activités organisées dans l’école.'},
+      {id:'template-welcome',title:'Des activités pour accueillir les élèves',date:'2026-04-17',details:'Des activités conçues par les élèves ont aidé chacun à découvrir les espaces, les ressources et la vie de l’école.'},
+      {id:'template-garden',title:'Un espace commun plus accueillant',date:'2026-03-20',details:'Une zone commune a été repensée avec des sièges et des idées choisies pour rendre les pauses plus agréables.'}
+    ],
+    en:[
+      {id:'template-reading',title:'A new reading corner',date:'2026-06-12',details:'A quiet space with books and comfortable seating was created for reading or relaxing during breaks.'},
+      {id:'template-talents',title:'A week of student talents',date:'2026-05-22',details:'Students shared their creations, interests, and talents through activities organized at school.'},
+      {id:'template-welcome',title:'Activities to welcome students',date:'2026-04-17',details:'Student-led activities helped everyone discover school spaces, resources, and community life.'},
+      {id:'template-garden',title:'A more welcoming shared space',date:'2026-03-20',details:'A common area was refreshed with seating and student-selected ideas to make breaks more enjoyable.'}
+    ]
+  };
   const priorities=['normal','yellow','red'];
   const priorityOrder={normal:0,yellow:1,red:2};
   const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
@@ -457,7 +523,7 @@
     return header;
   };
   const formatDate=value=>{
-    const date=new Date(value);
+    const date=new Date(/^\d{4}-\d{2}-\d{2}$/.test(value)?`${value}T12:00:00`:value);
     if(Number.isNaN(date.getTime()))return '';
     return new Intl.DateTimeFormat(document.documentElement.lang==='en'?'en-CA':'fr-CA',{year:'numeric',month:'short',day:'numeric'}).format(date);
   };
@@ -467,6 +533,7 @@
     typeof value.details==='string'&&value.details.length<=1200&&
     typeof value.category==='string'&&value.category.length<=40&&
     typeof value.createdAt==='string'&&
+    (value.completedAt===undefined||(typeof value.completedAt==='string'&&!Number.isNaN(Date.parse(value.completedAt))))&&
     (value.priority===undefined||priorities.includes(value.priority))&&
     (value.priorityReason===undefined||priorityReasons.has(value.priorityReason))&&
     (value.priorityOverride===undefined||typeof value.priorityOverride==='boolean')&&
@@ -497,33 +564,135 @@
     return article;
   };
   const renderApproved=(suggestions)=>{
-    const approved=suggestions.filter(item=>item.status==='approved').sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+    const approved=suggestions.filter(item=>item.status==='approved'&&!item.completedAt).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
+    const query=projectSearchInput.value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+    const matches=query?approved.filter(item=>{
+      const searchable=[item.title,item.details,item.category,categoryName(item.category)].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
+      return searchable.includes(query);
+    }):approved;
     const list=document.createElement('div');
     list.className='site-project-list';
-    if(approved.length)approved.forEach(item=>list.append(makeProjectCard(item)));
+    if(matches.length)matches.forEach(item=>list.append(makeProjectCard(item)));
+    else if(query)list.append(emptyState(text('noMatchesTitle'),text('noMatchesText')));
     else list.append(emptyState(text('noProjectsTitle'),text('noProjectsText')));
     document.querySelector('#page-projects .site-project-list')?.replaceWith(list);
     return approved;
   };
 
   const home=document.getElementById('page-home');
-  home.replaceChildren();
+  const homeMission=make('section','home-mission');
+  homeMission.append(make('h2','',text('missionTitle')),make('p','',text('missionText')));
+  const completedSection=make('section','home-completed');
+  const completedHeading=make('div','home-section-heading');
+  completedHeading.append(make('h2','',text('completedTitle')));
+  completedSection.append(completedHeading,make('p','home-section-intro',text('completedIntro')));
+  const completedGrid=make('div','home-completed-grid');
+  completedGrid.setAttribute('aria-label',text('completedTitle'));
+  completedSection.append(completedGrid);
+  const projectDetail=make('section','home-project-detail');
+  projectDetail.hidden=true;
+  const homeFooter=make('footer','home-footer',`Collège Citoyen · ${text('brand')}`);
+  home.replaceChildren(homeMission,completedSection,projectDetail,homeFooter);
+  let homeCompletedItems=new Map();
+  let selectedCompletedId='';
+  const heroStory=document.querySelector('.hero-story');
+  heroStory.replaceChildren();
+  const heroHeading=make('h1','',text('homeTitle'));
+  const heroDate=make('time','hero-date');
+  const heroMore=button(text('moreInfo'),'hero-more primary');
+  heroStory.append(heroHeading,heroDate,heroMore);
+  const renderProjectDetail=(project,scroll=false)=>{
+    if(!project)return;
+    selectedCompletedId=project.id;
+    projectDetail.replaceChildren();
+    const back=button(text('projectBack'),'home-project-back');
+    const content=make('article','home-project-detail-card');
+    const image=document.createElement('img');
+    image.src='completed-project-template.png';
+    image.alt='';
+    image.loading='lazy';
+    const description=make('div','home-project-detail-copy');
+    description.append(
+      make('span','pill',project.isTemplate?text('completedTemplateLabel'):text('completedStatus')),
+      make('h2','',project.title),
+      make('time','site-date',formatDate(project.completedAt||project.date)),
+      make('p','',project.details)
+    );
+    content.append(description,image);
+    projectDetail.append(back,content);
+    projectDetail.hidden=false;
+    if(scroll)projectDetail.scrollIntoView({behavior:'smooth',block:'start'});
+  };
+  const renderHomeProjects=suggestions=>{
+    const actual=suggestions
+      .filter(item=>item.status==='approved'&&item.completedAt)
+      .sort((a,b)=>b.completedAt.localeCompare(a.completedAt))
+      .map(item=>({...item,id:item.id,isTemplate:false}));
+    const templates=completedTemplates[document.documentElement.lang==='en'?'en':'fr'];
+    const entries=[...actual,...templates.slice(0,Math.max(0,4-actual.length)).map(item=>({...item,isTemplate:true}))];
+    homeCompletedItems=new Map(entries.map(item=>[item.id,item]));
+    completedGrid.replaceChildren();
+    entries.forEach(project=>{
+      const card=button('', 'home-project-card');
+      card.dataset.completedId=project.id;
+      card.setAttribute('aria-label',`${text('projectDetails')}: ${project.title}`);
+      const copyBlock=make('span','home-project-card-copy');
+      copyBlock.append(
+        make('span','pill',project.isTemplate?text('completedTemplateLabel'):text('completedStatus')),
+        make('span','home-project-card-title',project.title),
+        make('span','home-project-card-description',project.details),
+        make('time','site-date',formatDate(project.completedAt||project.date))
+      );
+      const image=document.createElement('img');
+      image.src='completed-project-template.png';
+      image.alt='';
+      image.loading='lazy';
+      card.append(copyBlock,image);
+      completedGrid.append(card);
+    });
+    const featured=entries[0];
+    if(featured){
+      heroHeading.textContent=featured.title;
+      heroDate.textContent=formatDate(featured.completedAt||featured.date);
+      heroMore.dataset.completedId=featured.id;
+    }
+    if(selectedCompletedId){
+      const selected=homeCompletedItems.get(selectedCompletedId);
+      if(selected)renderProjectDetail(selected);
+      else{
+        selectedCompletedId='';
+        projectDetail.hidden=true;
+        projectDetail.replaceChildren();
+      }
+    }
+  };
+  completedGrid.addEventListener('click',event=>{
+    const card=event.target.closest('[data-completed-id]');
+    if(card)renderProjectDetail(homeCompletedItems.get(card.dataset.completedId),true);
+  });
+  heroMore.addEventListener('click',()=>renderProjectDetail(homeCompletedItems.get(heroMore.dataset.completedId),true));
+  projectDetail.addEventListener('click',event=>{
+    if(event.target.closest('.home-project-back')){
+      projectDetail.hidden=true;
+      selectedCompletedId='';
+      completedSection.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
 
   const people=document.getElementById('page-people');
-  people.id='page-levels';
-  people.replaceChildren();
-  const levels=people;
   const how=document.getElementById('page-how');
   how.replaceChildren();
   const main=document.querySelector('main');
-  const assembly=make('section','page');
-  assembly.id='page-assembly';
+  const levels=make('section','charter-section charter-levels');
+  const assembly=make('section','charter-section charter-assembly');
   const elections=make('section','page');
   elections.id='page-elections';
   const resources=make('section','page');
   resources.id='page-resources';
-  main.append(assembly,elections,resources);
-  ['levels','assembly','elections','resources'].forEach(page=>{
+  const vote=make('section','page');
+  vote.id='page-vote';
+  main.append(elections,resources,vote);
+  ['elections','resources','vote'].forEach(page=>{
     if(!pageNames.includes(page))pageNames.push(page);
   });
 
@@ -555,23 +724,6 @@
     return link;
   };
   const renderGovernancePages=()=>{
-    home.querySelector('.gov-home-intro')?.remove();
-    const homeIntro=make('section','gov-home-intro');
-    homeIntro.append(
-      make('span','pill',text('cdeccName')),
-      make('h1','',text('homeTitle')),
-      make('p','',text('homeText')),
-      make('p','gov-proposal-note',text('structureProposal'))
-    );
-    home.prepend(homeIntro);
-    how.replaceChildren(
-      makePageHeading(text('navCharter'),text('cdeccFlowLabel'),text('homeText')),
-      makeFlow(),
-      make('p','gov-boundary-note',text('noPowerClaim')),
-      makePageLink('learnLevels','levels','primary'),
-      makePageLink('learnAssembly','assembly','secondary')
-    );
-
     const levelCards=make('div','cards gov-level-grid');
     ['One','Two','Three','Four','Five'].forEach(number=>{
       const card=make('article','card gov-level-card');
@@ -579,11 +731,10 @@
       levelCards.append(card);
     });
     levels.replaceChildren(
-      makePageHeading(text('navLevels'),text('levelPageTitle'),text('levelPageText')),
+      sectionHeading(text('levelPageTitle'),text('levelPageText')),
       make('p','gov-schedule-note',text('meetingDay')),
       levelCards,
-      make('p','gov-pending',text('levelSchedulePending')),
-      makePageLink('learnAssembly','assembly','primary')
+      make('p','gov-pending',text('levelSchedulePending'))
     );
 
     const roleEntries=[
@@ -604,12 +755,18 @@
     const assemblyMeeting=make('div','gov-notice-stack');
     assemblyMeeting.append(make('p','gov-schedule-note',text('assemblyMeeting')),make('p','',text('assemblyMeetingDay')),make('p','gov-pending',text('assemblyComposition')));
     assembly.replaceChildren(
-      makePageHeading(text('navAssembly'),text('assemblyPageTitle'),text('assemblyPageText')),
+      sectionHeading(text('assemblyPageTitle'),text('assemblyPageText')),
       makeInfoCard('assemblyPurposeTitle','assemblyPurposeText','◎'),
       assemblyMeeting,
       sectionHeading(text('assemblyPageTitle'),text('noMembers')),
       roleCards,
-      make('p','gov-boundary-note',text('noPowerClaim')),
+      make('p','gov-boundary-note',text('noPowerClaim'))
+    );
+    how.replaceChildren(
+      makePageHeading(text('navCharter'),text('cdeccFlowLabel'),text('homeText')),
+      makeFlow(),
+      levels,
+      assembly,
       makePageLink('trainingTitle','resources','primary')
     );
 
@@ -618,13 +775,9 @@
     const electionChecklist=make('ul','gov-checklist');
     ['electionDates','electionCandidates','electionRules','electionResults','electionVacancies'].forEach(key=>electionChecklist.append(make('li','',text(key))));
     elections.replaceChildren(
-      makePageHeading(text('elections'),text('electionPageTitle'),text('electionPageText')),
-      electionCards,
-      makeInfoCard('electionRelationTitle','electionRelationText','!'),
-      sectionHeading(text('electionInfoTitle'),text('noElectionInfo')),
-      electionChecklist,
-      makeInfoCard('partiesTitle','partiesText','?'),
-      make('p','gov-boundary-note',text('voteDisabledLabel'))
+      makePageHeading(text('navCandidates'),text('candidatePageTitle'),text('candidatePageText')),
+      makeInfoCard('candidateInfoTitle','candidateInfoText','✦'),
+      make('p','gov-pending',text('candidatePending'))
     );
 
     const resourceCards=make('div','cards gov-resource-grid');
@@ -637,21 +790,49 @@
       makePageHeading(text('navResources'),text('trainingTitle'),text('trainingText')),
       resourceCards,
       make('p','gov-pending',text('trainingPending')),
-      makePageLink('backToAssembly','assembly','primary')
+      makePageLink('backToAssembly','how','primary')
+    );
+    const ballot=make('section','vote-template');
+    const voteOptions=make('div','vote-options');
+    ['voteOptionOne','voteOptionTwo'].forEach(key=>{
+      const option=make('label','vote-option');
+      const input=document.createElement('input');
+      input.type='radio';
+      input.name='vote-preview';
+      input.disabled=true;
+      option.append(input,make('span','',text(key)));
+      voteOptions.append(option);
+    });
+    ballot.append(
+      make('h2','',text('voteTemplateTitle')),
+      make('p','',text('voteTemplateText')),
+      voteOptions,
+      make('button','vote-submit',text('navVote')),
+      make('p','vote-disabled-note',text('voteDisabled'))
+    );
+    const voteSubmit=ballot.querySelector('.vote-submit');
+    voteSubmit.type='button';
+    voteSubmit.disabled=true;
+    vote.replaceChildren(
+      makePageHeading(text('navVote'),text('electionPageTitle'),text('electionPageText')),
+      electionCards,
+      makeInfoCard('electionRelationTitle','electionRelationText','!'),
+      sectionHeading(text('electionInfoTitle'),text('noElectionInfo')),
+      electionChecklist,
+      makeInfoCard('partiesTitle','partiesText','?'),
+      make('p','gov-pending',text('voteDisabledLabel')),
+      ballot
     );
   };
   renderGovernancePages();
 
   const sideNav=document.querySelector('.side');
   const sideRoutes=[
-    ['home','home','⌂'],
+    ['projects','navIdeas','✳'],
+    ['elections','navCandidates','⚑'],
     ['how','navCharter','↗'],
-    ['levels','navLevels','▦'],
-    ['assembly','navAssembly','◎'],
-    ['projects','projects','✳'],
-    ['elections','elections','⚑'],
-    ['resources','navResources','▤'],
-    ['news','news','▣']
+    ['people','navMembers','♧'],
+    ['vote','navVote','✓']
   ];
   const routeLabels=[];
   sideNav.replaceChildren();
@@ -662,32 +843,19 @@
     routeLabels.push({node:item.querySelectorAll('span')[1],key});
     sideNav.append(item);
   });
-  const mobileRoutes=[
-    ['home','home','⌂'],
-    ['levels','navLevels','▦'],
-    ['assembly','navAssembly','◎'],
-    ['projects','projects','✳']
-  ];
   const mobileNav=document.querySelector('.mobile');
-  const mobileLabels=[];
-  mobileNav.replaceChildren();
-  mobileRoutes.forEach(([page,key,icon])=>{
-    const item=button('');
-    item.dataset.page=page;
-    item.append(make('span','',icon),make('span','',text(key)));
-    mobileLabels.push({node:item.querySelectorAll('span')[1],key});
-    mobileNav.append(item);
-  });
+  mobileNav.remove();
+  const adminEntry=document.querySelector('.admin-entry');
   const updateNavigation=()=>{
     const english=document.documentElement.lang==='en';
     routeLabels.forEach(({node,key})=>node.textContent=text(key));
-    mobileLabels.forEach(({node,key})=>node.textContent=text(key));
     document.querySelectorAll('.header-nav [data-page]').forEach(item=>{
-      const key={home:'home',how:'navCharter',levels:'navLevels',assembly:'navAssembly',projects:'projects',elections:'elections',news:'news'}[item.dataset.page];
+      const key={home:'home',how:'navCharter',people:'navMembers',projects:'navIdeas',elections:'navCandidates',vote:'navVote'}[item.dataset.page];
       if(key)item.textContent=text(key);
     });
-    document.querySelector('.header-nav-inactive').textContent=text('navVote');
     document.querySelector('.branding-name small').textContent=english?'CDECC · Student Council':'CDECC · Conseil des élèves';
+    adminEntry.textContent=english?'⚙ Admin version':'⚙ Version admin';
+    adminEntry.setAttribute('aria-label',english?'Admin access':'Accès administrateur');
     document.querySelector('.pluriportail-link').setAttribute('aria-label',english?'Open Pluriportail in a new tab':'Ouvrir Pluriportail dans un nouvel onglet');
     document.getElementById('lang').setAttribute('aria-label',english?'Change language to French':'Passer en anglais');
   };
@@ -698,8 +866,18 @@
   };
 
   const projects=document.getElementById('page-projects');
+  const projectSearchLabel=make('label','site-project-search-label');
+  projectSearchLabel.append(make('span','',text('projectSearch')));
+  const projectSearchInput=document.createElement('input');
+  projectSearchInput.className='site-project-search';
+  projectSearchInput.type='search';
+  projectSearchInput.autocomplete='off';
+  projectSearchInput.placeholder=text('projectSearchPlaceholder');
+  projectSearchInput.setAttribute('aria-label',text('projectSearch'));
+  projectSearchLabel.append(projectSearchInput);
   projects.replaceChildren(
     makePageHeading(text('projects'),text('approvedProjects'),text('projectIntro')),
+    projectSearchLabel,
     make('div','site-project-list')
   );
 
@@ -809,13 +987,6 @@
   });
   toolbar.append(searchLabel,filters);
   admin.append(adminHeading,adminNotice,priorityHelp,adminStatus,toolbar,reviewList);
-  const mobileAdmin=make('button');
-  mobileAdmin.type='button';
-  mobileAdmin.dataset.page='admin';
-  mobileAdmin.setAttribute('aria-label',text('adminTitle'));
-  mobileAdmin.append(make('span','', '⚙'),make('span','',text('adminTab')));
-  document.querySelector('.mobile').append(mobileAdmin);
-
   const drawerCards=document.getElementById('news-drawer-cards');
   const drawerIntro=document.querySelector('.news-drawer-intro');
   const drawerTitle=document.getElementById('news-drawer-title');
@@ -860,7 +1031,7 @@
     visible.forEach(item=>{
       const article=make('article','card site-review-card');
       const meta=make('div','site-review-meta');
-      const status=make('span',`pill${item.status==='rejected'?' site-rejection-label':''}`,statusLabel(item.status));
+      const status=make('span',`pill${item.status==='rejected'?' site-rejection-label':''}`,item.completedAt?text('completedStatus'):statusLabel(item.status));
       const date=make('time','site-date',`${text('savedDate')} ${formatDate(item.createdAt)}`);
       meta.append(status,date);
       article.append(meta,make('h3','',item.title));
@@ -892,6 +1063,7 @@
       if(item.status!=='approved')actions.append(button(text('approve'),'approve','approve'));
       if(item.status!=='rejected')actions.append(button(text('reject'),'reject','reject'));
       if(item.status!=='pending')actions.append(button(text('reopen'),'','reopen'));
+      if(item.status==='approved')actions.append(button(text(item.completedAt?'reopenIdea':'markCompleted'),item.completedAt?'':'approve',item.completedAt?'reopen-completed':'complete'));
       actions.append(button(text('remove'),'','remove'));
       actions.querySelectorAll('[data-action]').forEach(action=>{action.dataset.id=item.id});
       article.append(actions);
@@ -908,6 +1080,7 @@
     }
     setStatus(formStatus,text('storageStatus'));
     setStatus(adminStatus,text('storageStatus'));
+    renderHomeProjects(suggestions);
     const approved=renderApproved(suggestions);
     renderAdmin(suggestions);
     updateDrawer(approved);
@@ -960,6 +1133,7 @@
     renderAll();
   });
   searchInput.addEventListener('input',()=>renderAll());
+  projectSearchInput.addEventListener('input',()=>renderAll());
   reviewList.addEventListener('change',event=>{
     const control=event.target.closest('[data-priority-id]');
     if(!control)return;
@@ -993,12 +1167,22 @@
       if(!item)return;
       if(action.dataset.action==='remove'){
         saveSuggestions(suggestions.filter(suggestion=>suggestion.id!==item.id));
+      }else if(action.dataset.action==='complete'){
+        if(item.status!=='approved')return;
+        item.completedAt=new Date().toISOString();
+        saveSuggestions(suggestions);
+      }else if(action.dataset.action==='reopen-completed'){
+        delete item.completedAt;
+        saveSuggestions(suggestions);
       }else{
         const nextStatus={approve:'approved',reject:'rejected',reopen:'pending'}[action.dataset.action];
         if(!nextStatus)return;
         item.status=nextStatus;
         if(nextStatus==='approved')item.approvedAt=new Date().toISOString();
-        else delete item.approvedAt;
+        else{
+          delete item.approvedAt;
+          delete item.completedAt;
+        }
         saveSuggestions(suggestions);
       }
       renderAll();
@@ -1016,6 +1200,11 @@
     news.querySelector('.site-page-heading p').textContent=language.noNewsText;
     news.querySelector('.site-empty-state h2').textContent=language.noNewsTitle;
     news.querySelector('.site-empty-state p').textContent=language.noNewsText;
+    homeMission.querySelector('h2').textContent=language.missionTitle;
+    homeMission.querySelector('p').textContent=language.missionText;
+    completedHeading.querySelector('h2').textContent=language.completedTitle;
+    completedSection.querySelector('.home-section-intro').textContent=language.completedIntro;
+    homeFooter.textContent=`Collège Citoyen · ${language.brand}`;
     participationForm.querySelector('h1').textContent=language.participateTitle;
     participationForm.querySelector('.site-page-heading p').textContent=language.participateText;
     categoryLabel.querySelector('span').textContent=language.category;
@@ -1032,10 +1221,11 @@
     admin.querySelector('.site-page-heading p').textContent=language.adminText;
     adminNotice.textContent=language.adminNotice;
     priorityHelp.textContent=language.priorityHelp;
-    mobileAdmin.querySelectorAll('span')[1].textContent=language.adminTab;
-    mobileAdmin.setAttribute('aria-label',language.adminTitle);
     searchLabel.querySelector('span').textContent=language.searchSuggestions;
     searchInput.setAttribute('aria-label',language.searchSuggestions);
+    projectSearchLabel.querySelector('span').textContent=language.projectSearch;
+    projectSearchInput.placeholder=language.projectSearchPlaceholder;
+    projectSearchInput.setAttribute('aria-label',language.projectSearch);
     syncGovernanceLanguage();
     renderAll();
   });
@@ -1045,35 +1235,20 @@
   document.querySelector('.demo')?.remove();
   const processNote=document.querySelector('[data-t="processnote"]');
   if(processNote)processNote.textContent=copy.fr.processNote;
-  document.querySelector('.hero-story').replaceChildren();
-  const heroStory=document.querySelector('.hero-story');
-  const heroHeading=make('h1','',copy.fr.heroTitle);
-  const heroParagraph=make('p','',copy.fr.heroText);
-  const heroActions=make('div','site-hero-actions');
-  const heroSubmit=button(copy.fr.shareIdea,'hero-more');
-  heroSubmit.dataset.page='projects';
-  heroSubmit.addEventListener('click',()=>setTimeout(()=>participationForm.scrollIntoView({behavior:'smooth',block:'start'}),0));
-  const heroProjects=button(copy.fr.viewProjects,'hero-more secondary-action');
-  heroProjects.dataset.page='projects';
-  heroActions.append(heroSubmit,heroProjects);
-  heroStory.append(heroHeading,heroParagraph,heroActions);
-  const heroMore=heroStory.querySelector('.hero-more');
-  heroMore.classList.add('primary');
   const originalToggleLabel=document.getElementById('news-toggle');
   const projectShortcut=document.querySelector('.header-tools [data-page="projects"]');
   const updateHeaderLabels=()=>{
     originalToggleLabel.setAttribute('aria-label',document.documentElement.lang==='en'?'Open news':'Ouvrir les actualités');
-    projectShortcut.querySelector('.search-label').textContent=document.documentElement.lang==='en'?'Projects':'Projets';
-    projectShortcut.setAttribute('aria-label',document.documentElement.lang==='en'?'View approved projects':'Voir les projets approuvés');
+    projectShortcut.querySelector('.search-label').textContent=document.documentElement.lang==='en'?'Ideas':'Idées';
+    projectShortcut.setAttribute('aria-label',document.documentElement.lang==='en'?'Open project search':'Ouvrir la recherche dans les projets');
   };
   updateHeaderLabels();
+  projectShortcut.addEventListener('click',()=>setTimeout(()=>{
+    projectSearchInput.focus();
+    projectSearchInput.scrollIntoView({behavior:'smooth',block:'center'});
+  },0));
   originalToggleLabel.addEventListener('click',()=>{if(document.getElementById('news-drawer').open)renderAll()});
   document.getElementById('lang').addEventListener('click',()=>{
-    const language=copy[document.documentElement.lang==='en'?'en':'fr'];
-    heroHeading.textContent=language.heroTitle;
-    heroParagraph.textContent=language.heroText;
-    heroSubmit.textContent=language.shareIdea;
-    heroProjects.textContent=language.viewProjects;
     updateHeaderLabels();
     renderAll();
   });
