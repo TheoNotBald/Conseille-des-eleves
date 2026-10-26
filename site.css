@@ -109,11 +109,6 @@
 }
 @media(max-width:760px){
   .gov-home-intro{padding:19px 16px}
-  .gov-flow{grid-template-columns:1fr;gap:8px}
-  .gov-flow-step{display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:10px;align-items:start;padding:12px}
-  .gov-flow-step h3{margin:1px 0 3px}
-  .gov-flow-step p{grid-column:2}
-  .gov-flow-step:not(:last-child):after{top:auto;right:auto;bottom:-13px;left:18px;transform:rotate(90deg)}
   .gov-checklist{grid-template-columns:1fr}
   .gov-home-links{display:grid}
   .gov-home-links>*{width:100%}
@@ -161,7 +156,7 @@
 .hero-date{display:block;margin:10px 0 14px;color:#39453e;font-size:14px;letter-spacing:.13em}
 .home-hero .hero-story .hero-more{width:100%;min-height:56px;border:3px solid #202522;border-radius:999px;background:transparent;color:#202522;font-size:clamp(16px,2vw,21px);font-weight:850}
 .home-hero .hero-story .hero-more:hover{background:#202522;color:#fff}
-.home-mission{position:relative;width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(54px,8vw,112px) 24px;background:#e5d0ba;text-align:center}
+.home-mission{position:relative;width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(54px,8vw,112px) 24px;background:#f7f3ee;text-align:center}
 .home-mission:before,.home-mission:after{display:block;width:min(84%,1050px);height:6px;margin:0 auto;background:#396d59;content:""}
 .home-mission h2{margin:24px 0 14px;color:#396d59;font-family:Georgia,"Times New Roman",serif;font-size:clamp(44px,8vw,88px);font-style:italic;font-weight:500;letter-spacing:-.045em}
 .home-mission p{max-width:980px;margin:0 auto 30px;color:#171b19;font-family:Georgia,"Times New Roman",serif;font-size:clamp(19px,2.8vw,31px);line-height:1.5}
@@ -170,8 +165,8 @@
 .home-section-heading h2{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4.4vw,46px);font-weight:500}
 .home-section-intro{margin-top:8px;margin-bottom:28px;font-size:14px}
 .home-completed-grid{display:grid;gap:18px}
-.home-project-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(18px,4vw,50px);width:min(100%,1200px);min-height:190px;margin:0 auto;padding:28px clamp(28px,4vw,48px);border:0;border-radius:48px;background:#e5d0ba;color:#171b19;text-align:left}
-.home-project-card:hover{transform:translateY(-2px);background:#edddcc}
+.home-project-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(18px,4vw,50px);width:min(100%,1200px);min-height:190px;margin:0 auto;padding:28px clamp(28px,4vw,48px);border:3px solid #e5d0ba;border-radius:48px;background:#f7f3ee;color:#171b19;text-align:left}
+.home-project-card:hover{transform:translateY(-2px)}
 .home-project-card-copy{display:grid;justify-items:start;gap:8px;min-width:0}
 .home-project-card-copy .pill{background:rgba(255,255,255,.46);font-size:9px}
 .home-project-card-title{font-family:Georgia,"Times New Roman",serif;font-size:clamp(21px,2.7vw,34px);font-weight:600;line-height:1.2}
@@ -180,7 +175,7 @@
 .home-project-detail-page{width:100vw;margin-top:-25px;margin-left:calc(50% - 50vw);padding:clamp(26px,5vw,68px) clamp(18px,5.5vw,76px);background:#396d59;scroll-margin-top:160px}
 .home-project-back{display:block;width:min(100%,1200px);margin:0 auto 20px;padding:10px 0;border:0;background:transparent;color:#fff;font-size:15px;font-weight:850;text-align:left}
 .home-project-back:hover{text-decoration:underline;text-underline-offset:4px}
-.home-project-detail-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(24px,4vw,56px);width:min(100%,1200px);min-height:460px;margin:0 auto;padding:clamp(24px,4vw,48px);border-radius:54px;background:#e5d0ba}
+.home-project-detail-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(24px,4vw,56px);width:min(100%,1200px);min-height:460px;margin:0 auto;padding:clamp(24px,4vw,48px);border:3px solid #e5d0ba;border-radius:54px;background:#f7f3ee}
 .home-project-detail-copy h2{margin:14px 0 7px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4.5vw,54px);line-height:1.1}
 .home-project-detail-copy .site-date{display:block;margin-bottom:18px;letter-spacing:.12em}
 .home-project-detail-copy p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,1.8vw,21px);line-height:1.55}
@@ -200,8 +195,17 @@
 .member-group{margin:7px 0 0;color:#4e554f;font-size:13px;font-weight:700}
 .member-bio{max-width:35ch;margin:12px auto 0;color:#4e554f;font-size:13px;line-height:1.5}
 @media(max-width:1000px){.member-grid-classes{grid-template-columns:repeat(3,minmax(0,1fr))}}
-.charter-section{margin:36px 0;padding-top:8px;border-top:1px solid var(--line)}
-.charter-section .site-section-title{margin-top:22px}
+.charter-template-frame{width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(24px,6vw,80px);background:#396d59}
+.charter-template-note{max-width:1180px;margin:0 auto 14px;color:#fff;font-size:12px}
+.charter-template-articles{display:grid;gap:28px}
+.charter-template-panel{width:min(100%,1200px);margin:0 auto;padding:clamp(24px,4vw,48px);border:6px solid #e5d0ba;border-radius:58px;background:#f7f3ee}
+.charter-template-article{margin:0 0 32px;color:#171b19;font-family:Georgia,"Times New Roman",serif;font-size:clamp(26px,3vw,38px);line-height:1.15;text-align:center;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
+.charter-template-sections{display:grid;gap:30px}
+.charter-template-section{min-width:0}
+.charter-template-section-heading{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:8px;margin-bottom:7px}
+.charter-template-number{margin:0;color:#396d59;font-size:clamp(14px,1.6vw,19px);letter-spacing:.12em;white-space:nowrap}
+.charter-template-section h2{margin:0;color:#396d59;font-family:inherit;font-size:clamp(14px,1.6vw,19px);font-weight:900;line-height:1.4;letter-spacing:.12em;text-transform:uppercase}
+.charter-template-copy{max-width:1100px;margin:0;color:#171b19;font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,1.7vw,20px);line-height:1.5}
 .vote-template{margin-top:36px;padding:clamp(22px,4vw,40px);border:1px solid var(--line);border-radius:20px;background:#fff}
 .vote-template h2{margin:0 0 8px;color:var(--forest);font-size:21px}
 .vote-template>p{max-width:700px;color:var(--muted);font-size:13px}
@@ -211,6 +215,12 @@
 .vote-submit{min-height:44px;padding:10px 18px;border:0;border-radius:11px;background:#dfe5df;color:#647168;font-weight:850}
 .vote-disabled-note{margin-bottom:0;color:var(--muted);font-size:12px}
 @media(max-width:760px){
+  .charter-template-frame{margin-top:-16px;padding:20px 14px}
+  .charter-template-panel{padding:22px 18px;border-width:4px;border-radius:34px}
+  .charter-template-article{margin-bottom:24px}
+  .charter-template-sections{gap:24px}
+  .charter-template-section h2,.charter-template-number{font-size:13px;letter-spacing:.08em}
+  .charter-template-copy{font-size:16px}
   .home-project-detail-page{margin-top:-16px}
   .site-header+.home-hero{height:clamp(360px,105vw,500px);align-items:flex-end;padding:18px}
   .home-hero .hero-story{width:min(440px,100%);margin:0 0 6px;padding:20px}

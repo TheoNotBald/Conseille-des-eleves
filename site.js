@@ -29,6 +29,39 @@
       navIdeas:'Idées',
       navCandidates:'Candidature',
       navMembers:'Membres',
+      charterTemplateNote:'Projet de charte constitutionnelle — à réviser et à faire approuver par l’école avant adoption.',
+      charterArticleOne:'Article 1',
+      charterArticleTwo:'Article 2',
+      charterSectionOne:'1.1',
+      charterSectionOneTitle:'Objet et principes',
+      charterSectionOneText:'Le Conseil des élèves a pour mission de représenter les élèves, de favoriser leur participation à la vie scolaire et de transmettre leurs idées. Ses membres agissent avec respect, équité, écoute et souci du bien commun, dans le cadre des règles de l’école.',
+      charterSectionTwo:'1.2',
+      charterSectionTwoTitle:'Composition et représentation',
+      charterSectionTwoText:'Le Conseil est composé de représentants des classes et de membres responsables de la coordination. Chaque représentant consulte les élèves qu’il représente et transmet fidèlement leurs questions et propositions. Le mode de sélection, la durée des mandats et les postes doivent être définis avec l’école.',
+      charterSectionThree:'1.3',
+      charterSectionThreeTitle:'Fonctions et responsabilités',
+      charterSectionThreeText:'Les représentants recueillent les idées, participent aux rencontres et rendent compte des échanges à leurs classes. Les membres coordonnateurs préparent les réunions et assurent le suivi des propositions. Le Conseil formule des avis et des projets; toute décision demeure soumise aux responsabilités et à l’approbation de l’école.',
+      charterSectionFour:'1.4',
+      charterSectionFourTitle:'Réunions et décisions',
+      charterSectionFourText:'Le Conseil se réunit selon un calendrier établi avec l’école. Les membres cherchent d’abord à parvenir à un consensus; à défaut, une méthode de vote approuvée peut être utilisée. Les décisions, les suivis et les responsabilités sont consignés. Le quorum et les règles de vote restent à déterminer.',
+      charterSectionFive:'1.5',
+      charterSectionFiveTitle:'Transparence, révision et adoption',
+      charterSectionFiveText:'Le Conseil communique aux élèves les sujets abordés et l’état des propositions, tout en protégeant les renseignements personnels. La présente charte entre en vigueur uniquement après révision et approbation par l’école. Ses règles de modification doivent être établies avant son adoption.',
+      charterArticleTwoSectionOne:'2.1',
+      charterArticleTwoSectionOneTitle:'Mandats et renouvellement',
+      charterArticleTwoSectionOneText:'La durée des mandats, les conditions de renouvellement et le calendrier de sélection des représentants sont établis avec l’école et communiqués aux élèves avant chaque processus.',
+      charterArticleTwoSectionTwo:'2.2',
+      charterArticleTwoSectionTwoTitle:'Vacance et remplacement',
+      charterArticleTwoSectionTwoText:'Lorsqu’un poste devient vacant, un processus de remplacement équitable est déterminé avec l’école. Le représentant intérimaire, s’il y a lieu, exerce les responsabilités jusqu’à la désignation d’un nouveau membre.',
+      charterArticleTwoSectionThree:'2.3',
+      charterArticleTwoSectionThreeTitle:'Participation aux réunions',
+      charterArticleTwoSectionThreeText:'Les membres contribuent aux échanges, examinent les propositions et déclarent toute absence selon les modalités fixées par le Conseil. Les règles de quorum sont précisées avant que des décisions soient prises.',
+      charterArticleTwoSectionFour:'2.4',
+      charterArticleTwoSectionFourTitle:'Modification de la charte',
+      charterArticleTwoSectionFourText:'Toute modification proposée est présentée aux membres et examinée avec l’école. Une modification entre en vigueur uniquement après approbation selon la procédure qui aura été adoptée.',
+      charterArticleTwoSectionFive:'2.5',
+      charterArticleTwoSectionFiveTitle:'Interprétation et conformité',
+      charterArticleTwoSectionFiveText:'La charte est interprétée conformément aux politiques et aux règles de l’école. En cas de conflit, les règles de l’école prévalent et le Conseil consulte la personne responsable désignée.',
       flowStudents:'Élèves',
       flowClass:'Élection du représentant de classe',
       flowLevel:'Conseil de niveau · chaque semaine',
@@ -256,6 +289,39 @@
       navIdeas:'Ideas',
       navCandidates:'Candidates',
       navMembers:'Members',
+      charterTemplateNote:'Draft constitution-style charter — to be reviewed and approved by the school before adoption.',
+      charterArticleOne:'Article 1',
+      charterArticleTwo:'Article 2',
+      charterSectionOne:'1.1',
+      charterSectionOneTitle:'Purpose and principles',
+      charterSectionOneText:'The Student Council exists to represent students, encourage their participation in school life, and communicate their ideas. Its members act with respect, fairness, careful listening, and concern for the common good, in accordance with school rules.',
+      charterSectionTwo:'1.2',
+      charterSectionTwoTitle:'Membership and representation',
+      charterSectionTwoText:'The Council is made up of class representatives and members responsible for coordination. Each representative consults the students they represent and faithfully brings forward their questions and proposals. Selection methods, term lengths, and positions must be established with the school.',
+      charterSectionThree:'1.3',
+      charterSectionThreeTitle:'Duties and responsibilities',
+      charterSectionThreeText:'Representatives gather ideas, take part in meetings, and report discussions back to their classes. Coordinating members prepare meetings and follow up on proposals. The Council makes recommendations and develops projects; all decisions remain subject to the school’s responsibilities and approval.',
+      charterSectionFour:'1.4',
+      charterSectionFourTitle:'Meetings and decisions',
+      charterSectionFourText:'The Council meets according to a schedule established with the school. Members first seek consensus; if they cannot reach it, an approved voting method may be used. Decisions, follow-up actions, and responsibilities are recorded. Quorum and voting rules still need to be determined.',
+      charterSectionFive:'1.5',
+      charterSectionFiveTitle:'Transparency, revision, and adoption',
+      charterSectionFiveText:'The Council informs students about topics discussed and proposal progress while protecting personal information. This charter takes effect only after review and approval by the school. Rules for amending it must be established before adoption.',
+      charterArticleTwoSectionOne:'2.1',
+      charterArticleTwoSectionOneTitle:'Terms and renewal',
+      charterArticleTwoSectionOneText:'Term lengths, renewal conditions, and the representative selection schedule are established with the school and communicated to students before each process.',
+      charterArticleTwoSectionTwo:'2.2',
+      charterArticleTwoSectionTwoTitle:'Vacancies and replacement',
+      charterArticleTwoSectionTwoText:'When a position becomes vacant, a fair replacement process is determined with the school. Any interim representative serves until a new member is selected.',
+      charterArticleTwoSectionThree:'2.3',
+      charterArticleTwoSectionThreeTitle:'Participation in meetings',
+      charterArticleTwoSectionThreeText:'Members contribute to discussions, review proposals, and report absences according to Council procedures. Quorum requirements are established before decisions are made.',
+      charterArticleTwoSectionFour:'2.4',
+      charterArticleTwoSectionFourTitle:'Amending the charter',
+      charterArticleTwoSectionFourText:'Any proposed amendment is presented to members and reviewed with the school. An amendment takes effect only after approval under the procedure adopted for that purpose.',
+      charterArticleTwoSectionFive:'2.5',
+      charterArticleTwoSectionFiveTitle:'Interpretation and compliance',
+      charterArticleTwoSectionFiveText:'The charter is interpreted in accordance with school policies and rules. If a conflict arises, school rules prevail and the Council consults the designated school contact.',
       flowStudents:'Students',
       flowClass:'Class representative elected',
       flowLevel:'Level Council · weekly',
@@ -743,8 +809,6 @@
   const how=document.getElementById('page-how');
   how.replaceChildren();
   const main=document.querySelector('main');
-  const levels=make('section','charter-section charter-levels');
-  const assembly=make('section','charter-section charter-assembly');
   const elections=make('section','page');
   elections.id='page-elections';
   const resources=make('section','page');
@@ -756,23 +820,6 @@
     if(!pageNames.includes(page))pageNames.push(page);
   });
 
-  const flowSteps=[
-    ['flowStudents','classVoice'],
-    ['flowClass','classElection'],
-    ['flowLevel','levelResponsibilities'],
-    ['flowAssembly','assemblyPurposeText'],
-    ['flowReturn','flowReturnText']
-  ];
-  const makeFlow=()=>{
-    const flow=make('ol','gov-flow');
-    flow.setAttribute('aria-label',text('cdeccFlowLabel'));
-    flowSteps.forEach(([titleKey,descriptionKey],index)=>{
-      const item=make('li','gov-flow-step');
-      item.append(make('span','gov-flow-number',String(index+1)),make('h3','',text(titleKey)),make('p','',text(descriptionKey)));
-      flow.append(item);
-    });
-    return flow;
-  };
   const makeInfoCard=(titleKey,descriptionKey,icon='•')=>{
     const card=make('article','card gov-info-card');
     card.append(make('span','gov-card-icon',icon),make('h3','',text(titleKey)),make('p','',text(descriptionKey)));
@@ -784,51 +831,30 @@
     return link;
   };
   const renderGovernancePages=()=>{
-    const levelCards=make('div','cards gov-level-grid');
-    ['One','Two','Three','Four','Five'].forEach(number=>{
-      const card=make('article','card gov-level-card');
-      card.append(make('span','pill',text('weeklyMeeting')),make('h3','',text(`level${number}`)),make('p','',text('levelResponsibilities')),make('p','gov-pending',text('levelMembersPending')));
-      levelCards.append(card);
-    });
-    levels.replaceChildren(
-      sectionHeading(text('levelPageTitle'),text('levelPageText')),
-      make('p','gov-schedule-note',text('meetingDay')),
-      levelCards,
-      make('p','gov-pending',text('levelSchedulePending'))
-    );
-
-    const roleEntries=[
-      ['rolePresident','rolePresidentText',false],
-      ['roleVicePresident','roleVicePresidentText',false],
-      ['roleSecretary','roleSecretaryText',false],
-      ['roleTreasurer','roleTreasurerText',false],
-      ['roleLowSpokesperson','provisionalRole',true],
-      ['roleHighSpokesperson','provisionalRole',true],
-      ['roleExperts','roleExpertsText',false]
+    const charterArticles=[
+      {title:'charterArticleOne',sectionKeys:['One','Two','Three','Four','Five'].map(key=>({number:`charterSection${key}`,title:`charterSection${key}Title`,copy:`charterSection${key}Text`}))},
+      {title:'charterArticleTwo',sectionKeys:['One','Two','Three','Four','Five'].map(key=>({number:`charterArticleTwoSection${key}`,title:`charterArticleTwoSection${key}Title`,copy:`charterArticleTwoSection${key}Text`}))}
     ];
-    const roleCards=make('div','cards gov-role-grid');
-    roleEntries.forEach(([nameKey,descriptionKey,provisional])=>{
-      const card=makeInfoCard(nameKey,descriptionKey,'◦');
-      if(provisional)card.prepend(make('span','pill gold',text('provisionalLabel')));
-      roleCards.append(card);
+    const articlePanels=make('div','charter-template-articles');
+    charterArticles.forEach((article,index)=>{
+      const charterSections=make('div','charter-template-sections');
+      article.sectionKeys.forEach((section,sectionIndex)=>{
+        const sectionContent=make('section','charter-template-section');
+        sectionContent.setAttribute('aria-labelledby',`charter-article-${index+1}-section-${sectionIndex+1}-title`);
+        const title=make('h2','',text(section.title));
+        title.id=`charter-article-${index+1}-section-${sectionIndex+1}-title`;
+        const heading=make('div','charter-template-section-heading');
+        sectionContent.append(heading,make('p','charter-template-copy',text(section.copy)));
+        heading.append(make('p','charter-template-number',text(section.number)),title);
+        charterSections.append(sectionContent);
+      });
+      const charterPanel=make('div','charter-template-panel');
+      charterPanel.append(make('h1','charter-template-article',text(article.title)),charterSections);
+      articlePanels.append(charterPanel);
     });
-    const assemblyMeeting=make('div','gov-notice-stack');
-    assemblyMeeting.append(make('p','gov-schedule-note',text('assemblyMeeting')),make('p','',text('assemblyMeetingDay')),make('p','gov-pending',text('assemblyComposition')));
-    assembly.replaceChildren(
-      sectionHeading(text('assemblyPageTitle'),text('assemblyPageText')),
-      makeInfoCard('assemblyPurposeTitle','assemblyPurposeText','◎'),
-      assemblyMeeting,
-      sectionHeading(text('assemblyPageTitle'),text('noMembers')),
-      roleCards,
-      make('p','gov-boundary-note',text('noPowerClaim'))
-    );
-    how.replaceChildren(
-      makePageHeading(text('navCharter'),text('cdeccFlowLabel'),text('homeText')),
-      makeFlow(),
-      levels,
-      assembly,
-      makePageLink('trainingTitle','resources','primary')
-    );
+    const charterFrame=make('section','charter-template-frame');
+    charterFrame.append(make('p','charter-template-note',text('charterTemplateNote')),articlePanels);
+    how.replaceChildren(charterFrame);
 
     const electionCards=make('div','cards gov-election-grid');
     electionCards.append(makeInfoCard('classElectionTitle','classElectionText','01'),makeInfoCard('schoolElectionTitle','schoolElectionText','02'));
@@ -1066,7 +1092,7 @@
   const submit=make('button','primary',text('submit'));
   submit.type='submit';
   participationForm.append(categoryLabel,titleLabel,detailsLabel,privacy,formStatus,submit,hiddenCompatibility);
-  projects.append(participationForm);
+  projects.insertBefore(participationForm,projectSearchLabel);
 
   const admin=document.getElementById('page-admin');
   admin.replaceChildren();
