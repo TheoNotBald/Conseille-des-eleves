@@ -589,10 +589,12 @@
   const completedGrid=make('div','home-completed-grid');
   completedGrid.setAttribute('aria-label',text('completedTitle'));
   completedSection.append(completedGrid);
-  const projectDetail=make('section','home-project-detail');
-  projectDetail.hidden=true;
   const homeFooter=make('footer','home-footer',`Collège Citoyen · ${text('brand')}`);
-  home.replaceChildren(homeMission,completedSection,projectDetail,homeFooter);
+  home.replaceChildren(homeMission,completedSection,homeFooter);
+  const projectDetail=make('section','page home-project-detail-page');
+  projectDetail.id='page-completed-detail';
+  document.querySelector('main').append(projectDetail);
+  if(!pageNames.includes('completed-detail'))pageNames.push('completed-detail');
   let homeCompletedItems=new Map();
   let selectedCompletedId='';
   const heroStory=document.querySelector('.hero-story');
@@ -601,11 +603,11 @@
   const heroDate=make('time','hero-date');
   const heroMore=button(text('moreInfo'),'hero-more primary');
   heroStory.append(heroHeading,heroDate,heroMore);
-  const renderProjectDetail=(project,scroll=false)=>{
+  const renderProjectDetail=(project,navigate=false)=>{
     if(!project)return;
     selectedCompletedId=project.id;
     projectDetail.replaceChildren();
-    const back=button(text('projectBack'),'home-project-back');
+    const back=button(`← ${text('projectBack')}`,'home-project-back');
     const content=make('article','home-project-detail-card');
     const image=document.createElement('img');
     image.src='completed-project-template.png';
@@ -620,8 +622,10 @@
     );
     content.append(description,image);
     projectDetail.append(back,content);
-    projectDetail.hidden=false;
-    if(scroll)projectDetail.scrollIntoView({behavior:'smooth',block:'start'});
+    if(navigate){
+      document.querySelector('.home-hero').hidden=true;
+      window.showPage('completed-detail');
+    }
   };
   const renderHomeProjects=suggestions=>{
     const actual=suggestions
@@ -661,8 +665,11 @@
       if(selected)renderProjectDetail(selected);
       else{
         selectedCompletedId='';
-        projectDetail.hidden=true;
         projectDetail.replaceChildren();
+        if(projectDetail.classList.contains('active')){
+          document.querySelector('.home-hero').hidden=false;
+          window.showPage('home');
+        }
       }
     }
   };
@@ -673,8 +680,9 @@
   heroMore.addEventListener('click',()=>renderProjectDetail(homeCompletedItems.get(heroMore.dataset.completedId),true));
   projectDetail.addEventListener('click',event=>{
     if(event.target.closest('.home-project-back')){
-      projectDetail.hidden=true;
       selectedCompletedId='';
+      document.querySelector('.home-hero').hidden=false;
+      window.showPage('home');
       completedSection.scrollIntoView({behavior:'smooth',block:'start'});
     }
   });
@@ -846,6 +854,14 @@
   const mobileNav=document.querySelector('.mobile');
   mobileNav.remove();
   const adminEntry=document.querySelector('.admin-entry');
+  const sortNavigation=(navigation,labelForNode)=>{
+    const collator=new Intl.Collator(document.documentElement.lang,{sensitivity:'base'});
+    const sorted=Array.from(navigation.children).sort((first,second)=>collator.compare(labelForNode(first),labelForNode(second)));
+    navigation.append(...sorted);
+    const charter=navigation.querySelector('[data-page="how"]');
+    const candidature=navigation.querySelector('[data-page="elections"]');
+    if(charter&&candidature&&candidature.nextElementSibling===charter)navigation.insertBefore(charter,candidature);
+  };
   const updateNavigation=()=>{
     const english=document.documentElement.lang==='en';
     routeLabels.forEach(({node,key})=>node.textContent=text(key));
@@ -853,6 +869,9 @@
       const key={home:'home',how:'navCharter',people:'navMembers',projects:'navIdeas',elections:'navCandidates',vote:'navVote'}[item.dataset.page];
       if(key)item.textContent=text(key);
     });
+    sortNavigation(sideNav,node=>node.querySelectorAll('span')[1].textContent);
+    const headerNav=document.querySelector('.header-nav');
+    sortNavigation(headerNav,node=>node.textContent);
     document.querySelector('.branding-name small').textContent=english?'CDECC · Student Council':'CDECC · Conseil des élèves';
     adminEntry.textContent=english?'⚙ Admin version':'⚙ Version admin';
     adminEntry.setAttribute('aria-label',english?'Admin access':'Accès administrateur');
