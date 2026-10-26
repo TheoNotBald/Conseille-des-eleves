@@ -68,6 +68,32 @@
       assemblyComposition:'La composition de l’Assemblée et la sélection de chaque titulaire de poste restent à confirmer.',
       rolePresident:'Président',
       rolePresidentText:'Dirige les réunions et coordonne les travaux de l’Assemblée.',
+      memberLeadOne:'Remi Ouellet',
+      memberLeadOneRole:'Président',
+      memberLeadOneBio:'Exemple de présentation du président du Conseil des élèves.',
+      memberLeadTwo:'Camille Gagnon',
+      memberLeadTwoRole:'Vice-présidente',
+      memberLeadTwoBio:'Exemple de présentation de la vice-présidente du Conseil des élèves.',
+      leadreps:'Représentants principaux',
+      leadsub:'Coordonnent les échanges et les rencontres.',
+      classreps:'Représentants de classe',
+      classsub:'Exemples de profils pour présenter le modèle.',
+      classMemberOne:'Alexandre Roy',
+      classMemberTwo:'Sofia Tremblay',
+      classMemberThree:'Thomas Nguyen',
+      classMemberFour:'Maya Bouchard',
+      classMemberFive:'Elliot Gagnon',
+      classMemberRoleOne:'Représentant de classe · Secondaire 1',
+      classMemberRoleTwo:'Représentante de classe · Secondaire 2',
+      classMemberRoleThree:'Représentant de classe · Secondaire 3',
+      classMemberRoleFour:'Représentante de classe · Secondaire 4',
+      classMemberRoleFive:'Représentant de classe · Secondaire 5',
+      classMemberGroupOne:'Groupes 101-106',
+      classMemberGroupTwo:'Groupes 201-206',
+      classMemberGroupThree:'Groupes 301-306',
+      classMemberGroupFour:'Groupes 401-406',
+      classMemberGroupFive:'Groupes 511-516',
+      memberTemplateNote:'Profils fictifs pour présenter le modèle. Les noms et les portraits seront remplacés lorsque les représentants seront confirmés.',
       roleVicePresident:'Vice-président',
       roleVicePresidentText:'Remplace la présidence au besoin et apporte un second point de vue.',
       roleSecretary:'Secrétaire',
@@ -269,6 +295,32 @@
       assemblyComposition:'Assembly membership and the selection method for each position still need confirmation.',
       rolePresident:'President',
       rolePresidentText:'Leads meetings and coordinates the Assembly’s work.',
+      memberLeadOne:'Remi Ouellet',
+      memberLeadOneRole:'President',
+      memberLeadOneBio:'Example profile for the Student Council president.',
+      memberLeadTwo:'Camille Gagnon',
+      memberLeadTwoRole:'Vice-President',
+      memberLeadTwoBio:'Example profile for the Student Council vice-president.',
+      leadreps:'Lead representatives',
+      leadsub:'Coordinate discussions and meetings.',
+      classreps:'Class representatives',
+      classsub:'Sample profiles to demonstrate the layout.',
+      classMemberOne:'Alexandre Roy',
+      classMemberTwo:'Sofia Tremblay',
+      classMemberThree:'Thomas Nguyen',
+      classMemberFour:'Maya Bouchard',
+      classMemberFive:'Elliot Gagnon',
+      classMemberRoleOne:'Class representative · Secondary 1',
+      classMemberRoleTwo:'Class representative · Secondary 2',
+      classMemberRoleThree:'Class representative · Secondary 3',
+      classMemberRoleFour:'Class representative · Secondary 4',
+      classMemberRoleFive:'Class representative · Secondary 5',
+      classMemberGroupOne:'Groups 101-106',
+      classMemberGroupTwo:'Groups 201-206',
+      classMemberGroupThree:'Groups 301-306',
+      classMemberGroupFour:'Groups 401-406',
+      classMemberGroupFive:'Groups 511-516',
+      memberTemplateNote:'Fictional profiles to demonstrate the design. Names and portraits will be replaced once representatives are confirmed.',
       roleVicePresident:'Vice-President',
       roleVicePresidentText:'Steps in when needed and provides a second point of view.',
       roleSecretary:'Secretary',
@@ -610,7 +662,7 @@
     const back=button(`← ${text('projectBack')}`,'home-project-back');
     const content=make('article','home-project-detail-card');
     const image=document.createElement('img');
-    image.src='completed-project-template.png';
+    image.src='reading-corner-illustration.svg';
     image.alt='';
     image.loading='lazy';
     const description=make('div','home-project-detail-copy');
@@ -648,7 +700,7 @@
         make('time','site-date',formatDate(project.completedAt||project.date))
       );
       const image=document.createElement('img');
-      image.src='completed-project-template.png';
+      image.src='reading-corner-illustration.svg';
       image.alt='';
       image.loading='lazy';
       card.append(copyBlock,image);
@@ -786,6 +838,46 @@
       makePageHeading(text('navCandidates'),text('candidatePageTitle'),text('candidatePageText')),
       makeInfoCard('candidateInfoTitle','candidateInfoText','✦'),
       make('p','gov-pending',text('candidatePending'))
+    );
+
+    const makeMemberCard=(nameKey,roleKey,initials,primary,usesSuppliedPortrait=false,groupKey='')=>{
+      const card=make('article','member-card');
+      const portrait=make('div',`member-portrait${usesSuppliedPortrait?' member-portrait-photo':''}`);
+      if(usesSuppliedPortrait){
+        const image=document.createElement('img');
+        image.src='member-template-photo.png';
+        image.alt='';
+        image.loading='lazy';
+        portrait.append(image);
+      }else portrait.append(make('span','member-initials',initials));
+      const name=make('h3','',text(nameKey));
+      const role=make('p','member-role',text(roleKey));
+      const bioKey=primary?(usesSuppliedPortrait?'memberLeadOneBio':'memberLeadTwoBio'):'';
+      card.append(portrait,name,role);
+      if(groupKey)card.append(make('p','member-group',text(groupKey)));
+      if(bioKey)card.append(make('p','member-bio',text(bioKey)));
+      return card;
+    };
+    const leadMembers=make('div','member-grid member-grid-leads');
+    leadMembers.append(
+      makeMemberCard('memberLeadOne','memberLeadOneRole','RO',true,true),
+      makeMemberCard('memberLeadTwo','memberLeadTwoRole','CG',true)
+    );
+    const classMembers=make('div','member-grid member-grid-classes');
+    classMembers.append(
+      makeMemberCard('classMemberOne','classMemberRoleOne','AR',false,false,'classMemberGroupOne'),
+      makeMemberCard('classMemberTwo','classMemberRoleTwo','ST',false,false,'classMemberGroupTwo'),
+      makeMemberCard('classMemberThree','classMemberRoleThree','TN',false,false,'classMemberGroupThree'),
+      makeMemberCard('classMemberFour','classMemberRoleFour','MB',false,false,'classMemberGroupFour'),
+      makeMemberCard('classMemberFive','classMemberRoleFive','EG',false,false,'classMemberGroupFive')
+    );
+    people.replaceChildren(
+      makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
+      make('p','member-template-note',text('memberTemplateNote')),
+      sectionHeading(text('leadreps'),text('leadsub')),
+      leadMembers,
+      sectionHeading(text('classreps'),text('classsub')),
+      classMembers
     );
 
     const resourceCards=make('div','cards gov-resource-grid');
