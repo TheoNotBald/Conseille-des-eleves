@@ -21,6 +21,26 @@
       voteOptionOne:'Option de vote à définir',
       voteOptionTwo:'Une autre option à définir',
       voteDisabled:'Le vote en ligne n’est pas encore disponible.',
+      votePageTitle:'Système du vote',
+      votePageIntro:'Découvrez les équipes candidates. Les équipes et leurs propositions sont des exemples fictifs; aucun vote n’est ouvert.',
+      voteTeamOne:'Parti du renouveau étudiant',
+      voteTeamOneText:'Une équipe fictive qui propose de mieux faire circuler les idées et les nouvelles entre les élèves.',
+      voteTeamTwo:'Parti de la vie scolaire',
+      voteTeamTwoText:'Une équipe fictive qui souhaite créer davantage d’activités et de moments rassembleurs.',
+      voteTeamThree:'Parti des espaces accueillants',
+      voteTeamThreeText:'Une équipe fictive qui veut améliorer les espaces communs et les rendre agréables pour tous.',
+      voteTeamFour:'Parti de la voix étudiante',
+      voteTeamFourText:'Une équipe fictive qui met l’écoute et la représentation des élèves au premier plan.',
+      voteTeamFive:'Parti des idées en action',
+      voteTeamFiveText:'Une équipe fictive qui souhaite accompagner les propositions jusqu’à leur réalisation.',
+      voteTeamSix:'Parti d’un collège durable',
+      voteTeamSixText:'Une équipe fictive qui propose des gestes concrets pour prendre soin de la communauté scolaire.',
+      voteTeamMore:'Plus d’information →',
+      voteTeamBack:'Retour au vote',
+      voteTeamTemplateLabel:'Équipe fictive · modèle',
+      voteTeamImageAlt:'Photo modèle d’une équipe candidate fictive',
+      voteSubmit:'Voter',
+      voteReleaseNote:'Le vote n’est pas encore ouvert. Le bouton sera activé lorsque le scrutin sera officiellement lancé.',
       candidatePageTitle:'Les candidatures',
       candidatePageText:'Les renseignements sur les candidatures et les personnes candidates seront publiés lorsque le processus sera confirmé.',
       candidateInfoTitle:'Se présenter au Conseil des élèves',
@@ -287,6 +307,26 @@
       voteOptionOne:'Voting option to be decided',
       voteOptionTwo:'Another option to be decided',
       voteDisabled:'Online voting is not available yet.',
+      votePageTitle:'Voting system',
+      votePageIntro:'Explore the candidate teams. The teams and their platforms are fictional examples; voting is not open.',
+      voteTeamOne:'Student Renewal Party',
+      voteTeamOneText:'A fictional team proposing better ways to share ideas and updates among students.',
+      voteTeamTwo:'School Life Party',
+      voteTeamTwoText:'A fictional team hoping to create more activities and opportunities to come together.',
+      voteTeamThree:'Welcoming Spaces Party',
+      voteTeamThreeText:'A fictional team looking to improve shared spaces and make them welcoming for everyone.',
+      voteTeamFour:'Student Voice Party',
+      voteTeamFourText:'A fictional team putting listening to and representing students first.',
+      voteTeamFive:'Ideas in Action Party',
+      voteTeamFiveText:'A fictional team hoping to support proposals all the way through to completion.',
+      voteTeamSix:'Sustainable School Party',
+      voteTeamSixText:'A fictional team proposing practical ways to care for the school community.',
+      voteTeamMore:'More information →',
+      voteTeamBack:'Back to voting',
+      voteTeamTemplateLabel:'Fictional team · template',
+      voteTeamImageAlt:'Template photo of a fictional candidate team',
+      voteSubmit:'Vote',
+      voteReleaseNote:'Voting is not open yet. This button will be enabled when voting officially begins.',
       candidatePageTitle:'Candidate applications',
       candidatePageText:'Information about candidates and applications will be published once the process is confirmed.',
       candidateInfoTitle:'Run for Student Council',
@@ -827,10 +867,14 @@
   resources.id='page-resources';
   const vote=make('section','page');
   vote.id='page-vote';
-  main.append(elections,resources,vote);
+  const voteTeamDetail=make('section','page vote-team-detail');
+  voteTeamDetail.id='page-vote-team-detail';
+  main.append(elections,resources,vote,voteTeamDetail);
   ['elections','resources','vote'].forEach(page=>{
     if(!pageNames.includes(page))pageNames.push(page);
   });
+  if(!pageNames.includes('vote-team-detail'))pageNames.push('vote-team-detail');
+  let selectedVoteTeam='';
 
   const makeInfoCard=(titleKey,descriptionKey,icon='•')=>{
     const card=make('article','card gov-info-card');
@@ -868,10 +912,6 @@
     charterFrame.append(make('p','charter-template-note',text('charterTemplateNote')),articlePanels);
     how.replaceChildren(charterFrame);
 
-    const electionCards=make('div','cards gov-election-grid');
-    electionCards.append(makeInfoCard('classElectionTitle','classElectionText','01'),makeInfoCard('schoolElectionTitle','schoolElectionText','02'));
-    const electionChecklist=make('ul','gov-checklist');
-    ['electionDates','electionCandidates','electionRules','electionResults','electionVacancies'].forEach(key=>electionChecklist.append(make('li','',text(key))));
     elections.replaceChildren(
       makePageHeading(text('navCandidates'),text('candidatePageTitle'),text('candidatePageText')),
       makeInfoCard('candidateInfoTitle','candidateInfoText','✦'),
@@ -932,39 +972,64 @@
       make('p','gov-pending',text('trainingPending')),
       makePageLink('backToAssembly','how','primary')
     );
-    const ballot=make('section','vote-template');
-    const voteOptions=make('div','vote-options');
-    ['voteOptionOne','voteOptionTwo'].forEach(key=>{
-      const option=make('label','vote-option');
-      const input=document.createElement('input');
-      input.type='radio';
-      input.name='vote-preview';
-      input.disabled=true;
-      option.append(input,make('span','',text(key)));
-      voteOptions.append(option);
+    const voteGrid=make('div','vote-team-grid');
+    const voteTeams=Array.from({length:6},(_,index)=>({
+      key:['voteTeamOne','voteTeamTwo','voteTeamThree','voteTeamFour','voteTeamFive','voteTeamSix'][index]
+    }));
+    voteTeams.forEach(team=>{
+      const card=make('article','vote-team-card');
+      const image=document.createElement('img');
+      image.src='vote-team-template.jpg';
+      image.alt=text('voteTeamImageAlt');
+      image.loading='lazy';
+      const more=button(text('voteTeamMore'),'vote-team-more');
+      more.dataset.voteTeam=team.key;
+      card.append(make('h2','',text(team.key)),image,more);
+      voteGrid.append(card);
     });
-    ballot.append(
-      make('h2','',text('voteTemplateTitle')),
-      make('p','',text('voteTemplateText')),
-      voteOptions,
-      make('button','vote-submit',text('navVote')),
-      make('p','vote-disabled-note',text('voteDisabled'))
-    );
-    const voteSubmit=ballot.querySelector('.vote-submit');
-    voteSubmit.type='button';
-    voteSubmit.disabled=true;
+    const voteButton=make('button','vote-submit',text('voteSubmit'));
+    voteButton.type='button';
+    voteButton.disabled=true;
     vote.replaceChildren(
-      makePageHeading(text('navVote'),text('electionPageTitle'),text('electionPageText')),
-      electionCards,
-      makeInfoCard('electionRelationTitle','electionRelationText','!'),
-      sectionHeading(text('electionInfoTitle'),text('noElectionInfo')),
-      electionChecklist,
-      makeInfoCard('partiesTitle','partiesText','?'),
-      make('p','gov-pending',text('voteDisabledLabel')),
-      ballot
+      makePageHeading(text('navVote'),text('votePageTitle'),text('votePageIntro')),
+      voteGrid,
+      make('p','vote-disabled-note',text('voteReleaseNote')),
+      voteButton
     );
+    if(selectedVoteTeam){
+      const team=voteTeams.find(item=>item.key===selectedVoteTeam);
+      if(team){
+        const detailCard=make('article','vote-team-detail-card');
+        const detailImage=document.createElement('img');
+        detailImage.src='vote-team-template.jpg';
+        detailImage.alt=text('voteTeamImageAlt');
+        detailImage.loading='lazy';
+        const detailCopy=make('div','vote-team-detail-copy');
+        detailCopy.append(
+          make('span','pill',text('voteTeamTemplateLabel')),
+          make('h1','',text(team.key)),
+          make('p','',text(`${team.key}Text`))
+        );
+        detailCard.append(detailCopy,detailImage);
+        const back=button(`← ${text('voteTeamBack')}`,'vote-team-back');
+        voteTeamDetail.replaceChildren(back,detailCard);
+      }
+    }else voteTeamDetail.replaceChildren();
   };
   renderGovernancePages();
+  vote.addEventListener('click',event=>{
+    const more=event.target.closest('[data-vote-team]');
+    if(!more)return;
+    selectedVoteTeam=more.dataset.voteTeam;
+    renderGovernancePages();
+    window.showPage('vote-team-detail');
+  });
+  voteTeamDetail.addEventListener('click',event=>{
+    if(!event.target.closest('.vote-team-back'))return;
+    selectedVoteTeam='';
+    voteTeamDetail.replaceChildren();
+    window.showPage('vote');
+  });
 
   const sideNav=document.querySelector('.side');
   const sideRoutes=[

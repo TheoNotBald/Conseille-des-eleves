@@ -206,14 +206,23 @@
 .charter-template-number{margin:0;color:#396d59;font-size:clamp(14px,1.6vw,19px);letter-spacing:.12em;white-space:nowrap}
 .charter-template-section h2{margin:0;color:#396d59;font-family:inherit;font-size:clamp(14px,1.6vw,19px);font-weight:900;line-height:1.4;letter-spacing:.12em;text-transform:uppercase}
 .charter-template-copy{max-width:1100px;margin:0;color:#171b19;font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,1.7vw,20px);line-height:1.5}
-.vote-template{margin-top:36px;padding:clamp(22px,4vw,40px);border:1px solid var(--line);border-radius:20px;background:#fff}
-.vote-template h2{margin:0 0 8px;color:var(--forest);font-size:21px}
-.vote-template>p{max-width:700px;color:var(--muted);font-size:13px}
-.vote-options{display:grid;gap:10px;margin:20px 0}
-.vote-option{display:flex;align-items:center;gap:12px;min-height:48px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:#fbfaf7;color:var(--muted)}
-.vote-option input{width:18px;height:18px}
-.vote-submit{min-height:44px;padding:10px 18px;border:0;border-radius:11px;background:#dfe5df;color:#647168;font-weight:850}
-.vote-disabled-note{margin-bottom:0;color:var(--muted);font-size:12px}
+.vote-team-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:28px 0}
+.vote-team-card{display:flex;min-width:0;flex-direction:column;align-items:stretch;gap:14px;padding:18px;border:6px solid #111;border-radius:38px;background:#396d59;color:#fff}
+.vote-team-card h2{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,2.4vw,32px);font-weight:500;line-height:1.15}
+.vote-team-card img{display:block;width:100%;height:clamp(135px,17vw,205px);border:6px solid #111;border-radius:24px;object-fit:cover}
+.vote-team-more{align-self:center;min-height:46px;padding:9px 18px;border:3px solid #e8eee8;border-radius:999px;background:transparent;color:#fff;font-size:14px;font-weight:850}
+.vote-team-more:hover{background:#e8eee8;color:#233d33}
+.vote-disabled-note{margin:30px 0 8px;color:var(--muted);font-size:13px;text-align:center}
+.vote-submit{display:block;min-width:180px;min-height:50px;margin:0 auto 30px;padding:12px 24px;border:0;border-radius:12px;background:#dfe5df;color:#647168;font-weight:850}
+.vote-submit:disabled{background:#d9ded9;color:#7a827c;cursor:not-allowed;opacity:.72}
+.vote-team-detail-page{width:100vw;margin-left:calc(50% - 50vw);padding:clamp(26px,5vw,68px) clamp(18px,5.5vw,76px);background:#f7f3ee}
+.vote-team-back{display:block;width:min(100%,1200px);margin:0 auto 20px;padding:10px 0;border:0;background:transparent;color:var(--forest);font-size:15px;font-weight:850;text-align:left}
+.vote-team-back:hover{text-decoration:underline;text-underline-offset:4px}
+.vote-team-detail-card{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(24px,4vw,56px);width:min(100%,1200px);min-height:430px;margin:0 auto;padding:clamp(24px,4vw,48px);border-radius:54px;background:#e5d0ba}
+.vote-team-detail-copy h1{margin:14px 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(30px,4.5vw,54px);line-height:1.1}
+.vote-team-detail-copy>p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,1.8vw,21px);line-height:1.55}
+.vote-team-detail-card img{display:block;width:100%;height:clamp(250px,36vw,470px);border-radius:38px;object-fit:cover}
+@media(max-width:1000px){.vote-team-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){
   .charter-template-frame{margin-top:-16px;padding:20px 14px}
   .charter-template-panel{padding:22px 18px;border-width:4px;border-radius:34px}
@@ -235,6 +244,12 @@
   .home-project-detail-page{padding:20px 14px}
   .home-project-detail-card{grid-template-columns:1fr;gap:18px;min-height:0;padding:20px;border-radius:28px}
   .home-project-detail-card img{height:240px;border-radius:20px}
+  .vote-team-grid{grid-template-columns:1fr;gap:16px;margin:20px 0}
+  .vote-team-card{padding:16px;border-width:4px;border-radius:28px}
+  .vote-team-card img{height:190px;border-width:4px;border-radius:20px}
+  .vote-team-detail-page{padding:20px 14px}
+  .vote-team-detail-card{grid-template-columns:1fr;gap:18px;min-height:0;padding:20px;border-radius:28px}
+  .vote-team-detail-card img{height:240px;border-radius:20px}
   .member-grid{gap:14px}
   .member-grid-leads{grid-template-columns:repeat(2,minmax(0,1fr))}
   .member-grid-classes{grid-template-columns:repeat(2,minmax(0,1fr))}
