@@ -107,8 +107,14 @@
       memberLeadTwo:'Camille Gagnon',
       memberLeadTwoRole:'Vice-présidente',
       memberLeadTwoBio:'Exemple de présentation de la vice-présidente du Conseil des élèves.',
-      leadreps:'Représentants principaux',
-      leadsub:'Coordonnent les échanges et les rencontres.',
+      assemblyMemberSecretary:'Louis Martel',
+      assemblyMemberPresident:'Remi Ouellet',
+      assemblyMemberVicePresident:'Camille Gagnon',
+      assemblyMemberHighSpokesperson:'Amélie Dubois',
+      assemblyMemberTreasurer:'Noah Ali',
+      assemblyMemberLowSpokesperson:'Jules Morin',
+      leadreps:'Assemblée citoyenne',
+      leadsub:'Six rôles assurent la coordination et le suivi de l’Assemblée.',
       classreps:'Représentants de classe',
       classsub:'Exemples de profils pour présenter le modèle.',
       classMemberOne:'Alexandre Roy',
@@ -367,8 +373,14 @@
       memberLeadTwo:'Camille Gagnon',
       memberLeadTwoRole:'Vice-President',
       memberLeadTwoBio:'Example profile for the Student Council vice-president.',
-      leadreps:'Lead representatives',
-      leadsub:'Coordinate discussions and meetings.',
+      assemblyMemberSecretary:'Louis Martel',
+      assemblyMemberPresident:'Remi Ouellet',
+      assemblyMemberVicePresident:'Camille Gagnon',
+      assemblyMemberHighSpokesperson:'Amélie Dubois',
+      assemblyMemberTreasurer:'Noah Ali',
+      assemblyMemberLowSpokesperson:'Jules Morin',
+      leadreps:'Student Assembly',
+      leadsub:'Six roles support the Assembly’s coordination and follow-up.',
       classreps:'Class representatives',
       classsub:'Sample profiles to demonstrate the layout.',
       classMemberOne:'Alexandre Roy',
@@ -393,8 +405,8 @@
       roleSecretaryText:'Records meeting minutes, decisions, and important information.',
       roleTreasurer:'Treasurer',
       roleTreasurerText:'Oversees financial records and proposed budgets, subject to school rules.',
-      roleLowSpokesperson:'Basse-parole',
-      roleHighSpokesperson:'Haute-parole',
+      roleLowSpokesperson:'Lower secondary spokesperson',
+      roleHighSpokesperson:'Upper secondary spokesperson',
       provisionalRole:'Responsibilities to be clarified with the organizers.',
       roleExperts:'Evaluators / experts',
       roleExpertsText:'One or more members evaluate proposals, provide relevant expertise, and help assess feasibility.',
@@ -866,7 +878,7 @@
       make('p','gov-pending',text('candidatePending'))
     );
 
-    const makeMemberCard=(nameKey,roleKey,initials,primary,usesSuppliedPortrait=false,groupKey='')=>{
+    const makeMemberCard=(nameKey,roleKey,initials,usesSuppliedPortrait=false,groupKey='')=>{
       const card=make('article','member-card');
       const portrait=make('div',`member-portrait${usesSuppliedPortrait?' member-portrait-photo':''}`);
       if(usesSuppliedPortrait){
@@ -878,24 +890,26 @@
       }else portrait.append(make('span','member-initials',initials));
       const name=make('h3','',text(nameKey));
       const role=make('p','member-role',text(roleKey));
-      const bioKey=primary?(usesSuppliedPortrait?'memberLeadOneBio':'memberLeadTwoBio'):'';
       card.append(portrait,name,role);
       if(groupKey)card.append(make('p','member-group',text(groupKey)));
-      if(bioKey)card.append(make('p','member-bio',text(bioKey)));
       return card;
     };
     const leadMembers=make('div','member-grid member-grid-leads');
     leadMembers.append(
-      makeMemberCard('memberLeadOne','memberLeadOneRole','RO',true,true),
-      makeMemberCard('memberLeadTwo','memberLeadTwoRole','CG',true)
+      makeMemberCard('assemblyMemberSecretary','roleSecretary','LM'),
+      makeMemberCard('assemblyMemberPresident','rolePresident','RO',true),
+      makeMemberCard('assemblyMemberVicePresident','roleVicePresident','CG'),
+      makeMemberCard('assemblyMemberHighSpokesperson','roleHighSpokesperson','AD'),
+      makeMemberCard('assemblyMemberTreasurer','roleTreasurer','NA'),
+      makeMemberCard('assemblyMemberLowSpokesperson','roleLowSpokesperson','JM')
     );
     const classMembers=make('div','member-grid member-grid-classes');
     classMembers.append(
-      makeMemberCard('classMemberOne','classMemberRoleOne','AR',false,false,'classMemberGroupOne'),
-      makeMemberCard('classMemberTwo','classMemberRoleTwo','ST',false,false,'classMemberGroupTwo'),
-      makeMemberCard('classMemberThree','classMemberRoleThree','TN',false,false,'classMemberGroupThree'),
-      makeMemberCard('classMemberFour','classMemberRoleFour','MB',false,false,'classMemberGroupFour'),
-      makeMemberCard('classMemberFive','classMemberRoleFive','EG',false,false,'classMemberGroupFive')
+      makeMemberCard('classMemberOne','classMemberRoleOne','AR',false,'classMemberGroupOne'),
+      makeMemberCard('classMemberTwo','classMemberRoleTwo','ST',false,'classMemberGroupTwo'),
+      makeMemberCard('classMemberThree','classMemberRoleThree','TN',false,'classMemberGroupThree'),
+      makeMemberCard('classMemberFour','classMemberRoleFour','MB',false,'classMemberGroupFour'),
+      makeMemberCard('classMemberFive','classMemberRoleFive','EG',false,'classMemberGroupFive')
     );
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
