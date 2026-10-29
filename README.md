@@ -5,15 +5,19 @@ Bilingual static website demo in French and English. This is a front-end prototy
 ## Included
 - Responsive top navigation, quick-access left sidebar, news sidebar, and mobile navigation
 - French / English language toggle
-- Home, how it works, representatives, projects, elections, news, suggestions, and mock administration pages
+- Home, how it works, representatives grouped by level, projects, candidacies, news, suggestions, settings, and mock administration pages
+- Candidate application form, team photo, and team color preview
+- Settings for color presets, light/dark mode, language, and the moving slogan
+- Admin controls for a voting-form link and voting schedule
 - Fictional sample representatives and clearly labelled fictional election results
-- Identified and anonymous suggestion-form modes; submission is local-only and does not send or save data
+- Suggestions and candidate applications are stored in the current browser only; they are not sent to the school or shared across devices
 - Simulated admin news preview and section navigation
 
 ## Important limitations
-- No backend, authentication, database, analytics, email sending, or real voting is implemented.
-- The admin page is not protected. It is only a visual mockup.
-- Do not enter real student information. Names and election results are fictional.
+- No backend, authentication, database, analytics, or email sending is implemented. A configured voting link opens an external form; this site does not collect votes.
+- Admin controls are not protected. Voting links, schedules, and appearance settings are saved in the current browser only, not published for other visitors.
+- Candidate applications are also stored only in the current browser. Do not enter real student information or upload real student photos.
+- Names and election examples are fictional. The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 - The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 
 ## Test on Vercel

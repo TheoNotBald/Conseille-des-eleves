@@ -87,7 +87,12 @@
       flowLevel:'Conseil de niveau · chaque semaine',
       flowAssembly:'Assemblée citoyenne · chaque mois',
       flowReturn:'Suivi partagé avec les élèves',
+      flowStudentsText:'Les élèves partagent les idées, les questions et les besoins de leur classe.',
+      flowClassText:'Un représentant élu recueille les sujets et les transmet à son niveau.',
+      flowLevelText:'Les représentants rapprochent les enjeux communs et choisissent les sujets à faire avancer.',
+      flowAssemblyText:'Les représentants discutent des propositions et coordonnent le suivi avec l’école.',
       flowReturnText:'Les nouvelles et le suivi des sujets reviennent aux élèves par les Conseils de niveau.',
+      structureSub:'Un parcours proposé pour faire circuler les idées des élèves jusqu’à l’Assemblée, puis partager le suivi.',
       homeLevelsTitle:'Les Conseils de niveau',
       homeLevelsText:'Les élèves de chaque classe choisissent leur représentant. Les représentants d’un même niveau se réunissent chaque semaine pour écouter les besoins, discuter des enjeux et transmettre les sujets qui concernent l’ensemble de l’école.',
       homeAssemblyTitle:'L’Assemblée citoyenne',
@@ -128,15 +133,15 @@
       memberLeadTwoRole:'Vice-présidente',
       memberLeadTwoBio:'Exemple de présentation de la vice-présidente du Conseil des élèves.',
       assemblyMemberSecretary:'Louis Martel',
-      assemblyMemberPresident:'Remi Ouellet',
+      assemblyMemberPresident:'Émile Bouchard',
       assemblyMemberVicePresident:'Camille Gagnon',
       assemblyMemberHighSpokesperson:'Amélie Dubois',
       assemblyMemberTreasurer:'Noah Ali',
       assemblyMemberLowSpokesperson:'Jules Morin',
       leadreps:'Assemblée citoyenne',
-      leadsub:'Six rôles assurent la coordination et le suivi de l’Assemblée.',
+      leadsub:'Exemples de responsabilités à adapter et à confirmer avec les élèves et l’école.',
       classreps:'Représentants de classe',
-      classsub:'Exemples de profils pour présenter le modèle.',
+      classsub:'Exemples fictifs : chaque représentant recueille la voix de sa classe et partage le suivi.',
       classMemberOne:'Alexandre Roy',
       classMemberTwo:'Sofia Tremblay',
       classMemberThree:'Thomas Nguyen',
@@ -152,7 +157,8 @@
       classMemberGroupThree:'Groupes 301-306',
       classMemberGroupFour:'Groupes 401-406',
       classMemberGroupFive:'Groupes 511-516',
-      memberTemplateNote:'Profils fictifs pour présenter le modèle. Les noms et les portraits seront remplacés lorsque les représentants seront confirmés.',
+      memberTemplateNote:'MODÈLE À ADAPTER · Tous les noms et profils ci-dessous sont fictifs. Cette structure et ces responsabilités sont des propositions, pas des règles officielles; elles doivent être discutées et confirmées avec l’école.',
+      classRepResponsibility:'Recueille les idées de sa classe, les transmet au Conseil de niveau et partage le suivi avec ses camarades.',
       roleVicePresident:'Vice-président',
       roleVicePresidentText:'Remplace la présidence au besoin et apporte un second point de vue.',
       roleSecretary:'Secrétaire',
@@ -161,6 +167,8 @@
       roleTreasurerText:'Suit les dossiers financiers et les budgets proposés, selon les règles de l’école.',
       roleLowSpokesperson:'Basse-parole',
       roleHighSpokesperson:'Haute-parole',
+      roleLowSpokespersonText:'Transmet les idées et préoccupations des élèves du secondaire inférieur et leur partage les nouvelles de l’Assemblée.',
+      roleHighSpokespersonText:'Transmet les idées et préoccupations des élèves du secondaire supérieur et leur partage les nouvelles de l’Assemblée.',
       provisionalRole:'Responsabilités à préciser avec les organisateurs.',
       roleExperts:'Évaluateurs / experts',
       roleExpertsText:'Un ou plusieurs membres évaluent les propositions, apportent leur expertise et contribuent à examiner leur faisabilité.',
@@ -373,7 +381,12 @@
       flowLevel:'Level Council · weekly',
       flowAssembly:'Student Assembly · monthly',
       flowReturn:'Updates shared back with students',
+      flowStudentsText:'Students share ideas, questions, and concerns from their class.',
+      flowClassText:'An elected representative gathers topics and brings them to the level.',
+      flowLevelText:'Representatives connect shared concerns and choose topics to bring forward.',
+      flowAssemblyText:'Representatives discuss proposals and coordinate follow-up with the school.',
       flowReturnText:'Updates and follow-up are shared back with students through the Level Councils.',
+      structureSub:'A proposed path for student ideas to reach the Assembly and for updates to make their way back.',
       homeLevelsTitle:'Level Councils',
       homeLevelsText:'Students in each class elect their own representative. Representatives from the same level meet weekly to hear concerns, discuss level-wide issues, and bring relevant topics forward.',
       homeAssemblyTitle:'Student Assembly',
@@ -414,15 +427,15 @@
       memberLeadTwoRole:'Vice-President',
       memberLeadTwoBio:'Example profile for the Student Council vice-president.',
       assemblyMemberSecretary:'Louis Martel',
-      assemblyMemberPresident:'Remi Ouellet',
+      assemblyMemberPresident:'Emile Bouchard',
       assemblyMemberVicePresident:'Camille Gagnon',
       assemblyMemberHighSpokesperson:'Amélie Dubois',
       assemblyMemberTreasurer:'Noah Ali',
       assemblyMemberLowSpokesperson:'Jules Morin',
       leadreps:'Student Assembly',
-      leadsub:'Six roles support the Assembly’s coordination and follow-up.',
+      leadsub:'Example responsibilities to adapt and confirm with students and the school.',
       classreps:'Class representatives',
-      classsub:'Sample profiles to demonstrate the layout.',
+      classsub:'Fictional examples: each representative gathers their class’s views and shares updates.',
       classMemberOne:'Alexandre Roy',
       classMemberTwo:'Sofia Tremblay',
       classMemberThree:'Thomas Nguyen',
@@ -438,7 +451,8 @@
       classMemberGroupThree:'Groups 301-306',
       classMemberGroupFour:'Groups 401-406',
       classMemberGroupFive:'Groups 511-516',
-      memberTemplateNote:'Fictional profiles to demonstrate the design. Names and portraits will be replaced once representatives are confirmed.',
+      memberTemplateNote:'TEMPLATE TO ADAPT · All names and profiles below are fictional. This structure and these responsibilities are proposals, not official rules; they should be discussed and confirmed with the school.',
+      classRepResponsibility:'Gathers ideas from the class, brings them to the Level Council, and shares updates with classmates.',
       roleVicePresident:'Vice-President',
       roleVicePresidentText:'Steps in when needed and provides a second point of view.',
       roleSecretary:'Secretary',
@@ -447,6 +461,8 @@
       roleTreasurerText:'Oversees financial records and proposed budgets, subject to school rules.',
       roleLowSpokesperson:'Lower secondary spokesperson',
       roleHighSpokesperson:'Upper secondary spokesperson',
+      roleLowSpokespersonText:'Communicates ideas and concerns from lower secondary students and shares Assembly updates with them.',
+      roleHighSpokespersonText:'Communicates ideas and concerns from upper secondary students and shares Assembly updates with them.',
       provisionalRole:'Responsibilities to be clarified with the organizers.',
       roleExperts:'Evaluators / experts',
       roleExpertsText:'One or more members evaluate proposals, provide relevant expertise, and help assess feasibility.',
@@ -595,6 +611,122 @@
     participate:'Participer',
     news:'Actualités'
   });
+  Object.assign(copy.fr,{
+    navSettings:'Paramètres',
+    charterSoonTitle:'La charte est en préparation',
+    charterSoonText:'La charte sera publiée ici une fois qu’elle aura été composée et approuvée.',
+    candidateBlobTitle:'Comment devenir candidat ou candidate',
+    candidateBlobText:'Présente ton équipe, les personnes qui la composent et les idées que vous souhaitez défendre. Le formulaire de candidature est un prototype et conserve les informations uniquement dans ce navigateur.',
+    candidateRegister:'S’inscrire comme candidat',
+    candidateTeam:'Nom du parti ou de l’équipe',
+    candidateRoster:'Noms et postes des membres',
+    candidateRosterHelp:'Inscris une personne et son poste par ligne.',
+    candidateIdeas:'Idées et propositions de l’équipe',
+    candidatePicture:'Photo de l’équipe',
+    candidatePictureHelp:'Image JPG, PNG ou WebP de 500 Ko maximum.',
+    candidateBackground:'Couleur de fond',
+    candidateForeground:'Couleur du texte',
+    candidateSubmit:'Enregistrer la candidature',
+    candidatePrivacy:'Prototype uniquement : la candidature est enregistrée dans ce navigateur et n’est pas envoyée à l’école. N’ajoute pas de renseignements personnels réels.',
+    candidateSaved:'La candidature a été enregistrée dans ce navigateur seulement.',
+    candidateRequired:'Remplis le nom de l’équipe, les membres et les idées.',
+    candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 500 Ko maximum.',
+    candidateSaveError:'La candidature n’a pas pu être enregistrée dans ce navigateur.',
+    voteScheduleTitle:'Date et heure du vote',
+    voteScheduleMissing:'La date du vote n’a pas encore été définie.',
+    voteScheduleOpens:'Ouverture',
+    voteScheduleCloses:'Fermeture',
+    voteScheduleNotOpen:'Le vote n’est pas encore ouvert.',
+    voteScheduleClosed:'La période de vote est terminée.',
+    voteFormMissing:'Le formulaire de vote n’a pas encore été lié.',
+    voteScheduleReady:'Le vote est ouvert. Le formulaire s’ouvrira dans un nouvel onglet.',
+    voteSettingsNotice:'Ces réglages sont conservés dans ce navigateur uniquement; ils ne sont pas publiés pour les autres appareils.',
+    voteAdminTitle:'Paramètres du vote',
+    voteFormUrl:'Lien du formulaire de vote',
+    voteStartsAt:'Date et heure d’ouverture',
+    voteEndsAt:'Date et heure de fermeture (facultatif)',
+    voteConfigSave:'Enregistrer les paramètres du vote',
+    voteConfigSaved:'Les paramètres du vote ont été enregistrés sur cet appareil.',
+    voteConfigInvalid:'Entre un lien HTTPS valide. La fermeture doit suivre l’ouverture.',
+    settingsTitle:'Paramètres',
+    settingsIntro:'Personnalise l’affichage de ce site sur cet appareil.',
+    preferencesSaved:'Préférences enregistrées sur cet appareil.',
+    paletteTitle:'Préréglages de couleurs',
+    paletteForest:'Forêt',
+    paletteOcean:'Océan',
+    palettePlum:'Prune',
+    appearanceTitle:'Affichage',
+    themeLabel:'Mode sombre',
+    sloganLabel:'Afficher la ligne « Être · Faire · Agir »',
+    languageTitle:'Langue',
+    adminAccessTitle:'Administration',
+    adminAccessText:'Ouvre les outils de gestion du prototype.',
+    adminAccessButton:'Ouvrir la version admin',
+    legalTitle:'Légal',
+    legalText:'Modèle à compléter et à gérer par l’école avant la mise en ligne officielle.',
+    legalPrivacy:'Confidentialité et renseignements personnels',
+    legalTerms:'Conditions d’utilisation',
+    settingsSaveError:'Les préférences n’ont pas pu être enregistrées sur cet appareil.',
+    structureTitle:'Structure de représentation',
+  });
+  Object.assign(copy.en,{
+    navSettings:'Settings',
+    charterSoonTitle:'The charter is being prepared',
+    charterSoonText:'The charter will be published here once it has been drafted and approved.',
+    candidateBlobTitle:'How to become a candidate',
+    candidateBlobText:'Introduce your team, its members, and the ideas you want to support. This application form is a prototype and stores information only in this browser.',
+    candidateRegister:'Register as a candidate',
+    candidateTeam:'Party or team name',
+    candidateRoster:'Members’ names and positions',
+    candidateRosterHelp:'Enter one person and position per line.',
+    candidateIdeas:'Team ideas and proposals',
+    candidatePicture:'Team picture',
+    candidatePictureHelp:'JPG, PNG, or WebP image up to 500 KB.',
+    candidateBackground:'Background color',
+    candidateForeground:'Text color',
+    candidateSubmit:'Save application',
+    candidatePrivacy:'Prototype only: the application is saved in this browser and is not sent to the school. Do not enter real personal information.',
+    candidateSaved:'The application was saved in this browser only.',
+    candidateRequired:'Enter the team name, members, and ideas.',
+    candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 500 KB.',
+    candidateSaveError:'The application could not be saved in this browser.',
+    voteScheduleTitle:'Voting date and time',
+    voteScheduleMissing:'The voting date has not been set yet.',
+    voteScheduleOpens:'Opens',
+    voteScheduleCloses:'Closes',
+    voteScheduleNotOpen:'Voting is not open yet.',
+    voteScheduleClosed:'The voting period has ended.',
+    voteFormMissing:'The voting form has not been linked yet.',
+    voteScheduleReady:'Voting is open. The form will open in a new tab.',
+    voteSettingsNotice:'These settings are stored only in this browser; they are not published to other devices.',
+    voteAdminTitle:'Voting settings',
+    voteFormUrl:'Voting form link',
+    voteStartsAt:'Opening date and time',
+    voteEndsAt:'Closing date and time (optional)',
+    voteConfigSave:'Save voting settings',
+    voteConfigSaved:'Voting settings were saved on this device.',
+    voteConfigInvalid:'Enter a valid HTTPS link. Closing must be after opening.',
+    settingsTitle:'Settings',
+    settingsIntro:'Customize how this website looks on this device.',
+    preferencesSaved:'Preferences saved on this device.',
+    paletteTitle:'Color presets',
+    paletteForest:'Forest',
+    paletteOcean:'Ocean',
+    palettePlum:'Plum',
+    appearanceTitle:'Appearance',
+    themeLabel:'Dark mode',
+    sloganLabel:'Show the “Be · Do · Act” moving line',
+    languageTitle:'Language',
+    adminAccessTitle:'Administration',
+    adminAccessText:'Open the prototype management tools.',
+    adminAccessButton:'Open admin version',
+    legalTitle:'Legal',
+    legalText:'Template for the school to complete and manage before an official launch.',
+    legalPrivacy:'Privacy and personal information',
+    legalTerms:'Terms of use',
+    settingsSaveError:'Preferences could not be saved on this device.',
+    structureTitle:'Representation structure'
+  });
 
   const text=(key)=>copy[document.documentElement.lang==='en'?'en':'fr'][key];
   const completedTemplates={
@@ -697,6 +829,49 @@
     if(Number.isNaN(date.getTime()))return '';
     return new Intl.DateTimeFormat(document.documentElement.lang==='en'?'en-CA':'fr-CA',{year:'numeric',month:'short',day:'numeric'}).format(date);
   };
+  const candidateStorageKey='cdecc.candidate.application.v1';
+  const voteSettingsKey='cdecc.vote.settings.v1';
+  const preferencesKey='cdecc.ui.preferences.v1';
+  const palettes=new Set(['forest','ocean','plum']);
+  const validVoteSettings=value=>{
+    if(!value||typeof value!=='object')return false;
+    if(typeof value.formUrl!=='string'||value.formUrl.length>500)return false;
+    if(typeof value.startsAt!=='string'||typeof value.endsAt!=='string')return false;
+    if(value.formUrl){
+      try{if(new URL(value.formUrl).protocol!=='https:')return false}
+      catch{return false}
+    }
+    if(value.startsAt&&Number.isNaN(Date.parse(value.startsAt)))return false;
+    if(value.endsAt&&Number.isNaN(Date.parse(value.endsAt)))return false;
+    if(value.endsAt&&!value.startsAt)return false;
+    return !value.startsAt||!value.endsAt||Date.parse(value.endsAt)>Date.parse(value.startsAt);
+  };
+  let voteSettings={formUrl:'',startsAt:'',endsAt:''};
+  let voteSettingsLoadError='';
+  try{
+    const raw=localStorage.getItem(voteSettingsKey);
+    if(raw!==null){
+      const saved=JSON.parse(raw);
+      if(!validVoteSettings(saved))throw new Error(text('voteConfigInvalid'));
+      voteSettings=saved;
+    }
+  }catch(error){voteSettingsLoadError=error.message||text('voteConfigInvalid')}
+  let preferences={palette:'forest',dark:false,slogan:true};
+  let preferencesLoadError='';
+  try{
+    const raw=localStorage.getItem(preferencesKey);
+    if(raw!==null){
+      const saved=JSON.parse(raw);
+      if(!saved||!palettes.has(saved.palette)||typeof saved.dark!=='boolean'||typeof saved.slogan!=='boolean')throw new Error(text('settingsSaveError'));
+      preferences={palette:saved.palette,dark:saved.dark,slogan:saved.slogan};
+    }
+  }catch(error){preferencesLoadError=error.message||text('settingsSaveError')}
+  const applyPreferences=()=>{
+    document.body.dataset.palette=preferences.palette;
+    document.body.dataset.theme=preferences.dark?'dark':'light';
+    document.body.classList.toggle('slogan-hidden',!preferences.slogan);
+  };
+  applyPreferences();
   const isSuggestion=value=>value&&
     typeof value.id==='string'&&value.id.length<=80&&
     typeof value.title==='string'&&value.title.length<=100&&
@@ -869,11 +1044,14 @@
   vote.id='page-vote';
   const voteTeamDetail=make('section','page vote-team-detail');
   voteTeamDetail.id='page-vote-team-detail';
-  main.append(elections,resources,vote,voteTeamDetail);
+  const settings=make('section','page settings-page');
+  settings.id='page-settings';
+  main.append(elections,resources,vote,voteTeamDetail,settings);
   ['elections','resources','vote'].forEach(page=>{
     if(!pageNames.includes(page))pageNames.push(page);
   });
   if(!pageNames.includes('vote-team-detail'))pageNames.push('vote-team-detail');
+  if(!pageNames.includes('settings'))pageNames.push('settings');
   let selectedVoteTeam='';
 
   const makeInfoCard=(titleKey,descriptionKey,icon='•')=>{
@@ -886,74 +1064,172 @@
     link.dataset.page=page;
     return link;
   };
-  const renderGovernancePages=()=>{
-    const charterArticles=[
-      {title:'charterArticleOne',sectionKeys:['One','Two','Three','Four','Five'].map(key=>({number:`charterSection${key}`,title:`charterSection${key}Title`,copy:`charterSection${key}Text`}))},
-      {title:'charterArticleTwo',sectionKeys:['One','Two','Three','Four','Five'].map(key=>({number:`charterArticleTwoSection${key}`,title:`charterArticleTwoSection${key}Title`,copy:`charterArticleTwoSection${key}Text`}))}
+  const renderCharter=()=>{
+    const articles=[
+      {title:'charterArticleOne',prefix:'charterSection'},
+      {title:'charterArticleTwo',prefix:'charterArticleTwoSection'}
     ];
     const articlePanels=make('div','charter-template-articles');
-    charterArticles.forEach((article,index)=>{
-      const charterSections=make('div','charter-template-sections');
-      article.sectionKeys.forEach((section,sectionIndex)=>{
-        const sectionContent=make('section','charter-template-section');
-        sectionContent.setAttribute('aria-labelledby',`charter-article-${index+1}-section-${sectionIndex+1}-title`);
-        const title=make('h2','',text(section.title));
+    articles.forEach((article,index)=>{
+      const sections=make('div','charter-template-sections');
+      ['One','Two','Three','Four','Five'].forEach((part,sectionIndex)=>{
+        const key=`${article.prefix}${part}`;
+        const section=make('section','charter-template-section');
+        const title=make('h2','',text(`${key}Title`));
         title.id=`charter-article-${index+1}-section-${sectionIndex+1}-title`;
         const heading=make('div','charter-template-section-heading');
-        sectionContent.append(heading,make('p','charter-template-copy',text(section.copy)));
-        heading.append(make('p','charter-template-number',text(section.number)),title);
-        charterSections.append(sectionContent);
+        heading.append(make('p','charter-template-number',text(key)),title);
+        section.setAttribute('aria-labelledby',title.id);
+        section.append(heading,make('p','charter-template-copy',text(`${key}Text`)));
+        sections.append(section);
       });
-      const charterPanel=make('div','charter-template-panel');
-      charterPanel.append(make('h1','charter-template-article',text(article.title)),charterSections);
-      articlePanels.append(charterPanel);
+      const panel=make('div','charter-template-panel');
+      panel.append(make('h1','charter-template-article',text(article.title)),sections);
+      articlePanels.append(panel);
     });
-    const charterFrame=make('section','charter-template-frame');
-    charterFrame.append(make('p','charter-template-note',text('charterTemplateNote')),articlePanels);
-    how.replaceChildren(charterFrame);
+    const frame=make('section','charter-template-frame');
+    frame.append(make('p','charter-template-note',text('charterTemplateNote')),articlePanels);
+    how.replaceChildren(frame);
+  };
+  const voteAvailability=()=>{
+    const now=Date.now();
+    const startsAt=voteSettings.startsAt?Date.parse(voteSettings.startsAt):NaN;
+    const endsAt=voteSettings.endsAt?Date.parse(voteSettings.endsAt):NaN;
+    if(!voteSettings.formUrl)return {open:false,message:text('voteFormMissing')};
+    if(!Number.isFinite(startsAt))return {open:false,message:text('voteScheduleMissing')};
+    if(Number.isFinite(endsAt)&&endsAt<=now)return {open:false,message:text('voteScheduleClosed')};
+    if(startsAt>now)return {open:false,message:text('voteScheduleNotOpen')};
+    return {open:true,message:text('voteScheduleReady')};
+  };
+  const refreshVoteAvailability=()=>{
+    const voteButton=vote.querySelector('.vote-submit');
+    const status=vote.querySelector('.vote-disabled-note');
+    if(!voteButton||!status)return;
+    const availability=voteAvailability();
+    voteButton.disabled=!availability.open;
+    status.textContent=availability.message;
+  };
+  const renderGovernancePages=()=>{
+    renderCharter();
 
+    const candidateIntro=make('article','candidate-intro-blob');
+    candidateIntro.append(
+      make('span','gov-card-icon','✦'),
+      make('h2','',text('candidateBlobTitle')),
+      make('p','',text('candidateBlobText'))
+    );
+    const candidateRegister=button(text('candidateRegister'),'primary');
+    candidateRegister.dataset.candidateRegister='';
+    candidateIntro.append(candidateRegister);
+    const candidateForm=make('form','card site-form candidate-form');
+    candidateForm.hidden=true;
+    const appendCandidateField=(id,key,tag='input',type='text')=>{
+      const label=make('label','');
+      label.htmlFor=id;
+      label.append(make('span','',text(key)));
+      const field=document.createElement(tag);
+      field.id=id;
+      field.name=id;
+      if(tag==='input')field.type=type;
+      label.append(field);
+      candidateForm.append(label);
+      return field;
+    };
+    const teamName=appendCandidateField('candidate-team','candidateTeam');
+    teamName.maxLength=80;
+    teamName.required=true;
+    const roster=appendCandidateField('candidate-roster','candidateRoster','textarea');
+    roster.maxLength=1200;
+    roster.required=true;
+    roster.placeholder=text('candidateRosterHelp');
+    const ideas=appendCandidateField('candidate-ideas','candidateIdeas','textarea');
+    ideas.maxLength=2000;
+    ideas.required=true;
+    const picture=appendCandidateField('candidate-picture','candidatePicture','input','file');
+    picture.accept='image/jpeg,image/png,image/webp';
+    picture.required=true;
+    const pictureHelp=make('p','site-field-help',text('candidatePictureHelp'));
+    candidateForm.append(pictureHelp);
+    const backgroundColor=appendCandidateField('candidate-background','candidateBackground','input','color');
+    backgroundColor.value='#396d59';
+    const foregroundColor=appendCandidateField('candidate-foreground','candidateForeground','input','color');
+    foregroundColor.value='#ffffff';
+    const candidatePreview=make('div','candidate-preview');
+    candidatePreview.textContent=text('candidateTeam');
+    const updateCandidatePreview=()=>{
+      candidatePreview.style.backgroundColor=backgroundColor.value;
+      candidatePreview.style.color=foregroundColor.value;
+      candidatePreview.textContent=teamName.value.trim()||text('candidateTeam');
+    };
+    candidateForm.append(candidatePreview);
+    teamName.addEventListener('input',updateCandidatePreview);
+    backgroundColor.addEventListener('input',updateCandidatePreview);
+    foregroundColor.addEventListener('input',updateCandidatePreview);
+    const candidatePrivacy=make('p','site-privacy-note',text('candidatePrivacy'));
+    const candidateStatus=make('p','site-status');
+    candidateStatus.setAttribute('role','status');
+    candidateStatus.setAttribute('aria-live','polite');
+    const candidateSubmit=make('button','primary',text('candidateSubmit'));
+    candidateSubmit.type='submit';
+    candidateForm.append(candidatePrivacy,candidateStatus,candidateSubmit);
     elections.replaceChildren(
       makePageHeading(text('navCandidates'),text('candidatePageTitle'),text('candidatePageText')),
-      makeInfoCard('candidateInfoTitle','candidateInfoText','✦'),
-      make('p','gov-pending',text('candidatePending'))
+      candidateIntro,
+      candidateForm
     );
 
-    const makeMemberCard=(nameKey,roleKey,initials,usesSuppliedPortrait=false,groupKey='')=>{
+    const makeMemberCard=(nameKey,roleKey,initials,responsibilityKey='',groupKey='')=>{
       const card=make('article','member-card');
-      const portrait=make('div',`member-portrait${usesSuppliedPortrait?' member-portrait-photo':''}`);
-      if(usesSuppliedPortrait){
-        const image=document.createElement('img');
-        image.src='member-template-photo.png';
-        image.alt='';
-        image.loading='lazy';
-        portrait.append(image);
-      }else portrait.append(make('span','member-initials',initials));
-      const name=make('h3','',text(nameKey));
-      const role=make('p','member-role',text(roleKey));
-      card.append(portrait,name,role);
-      if(groupKey)card.append(make('p','member-group',text(groupKey)));
+      const portrait=make('div','member-portrait');
+      portrait.append(make('span','member-initials',initials));
+      const details=make('div','member-card-details');
+      details.append(make('h3','',text(nameKey)),make('p','member-role',text(roleKey)));
+      if(responsibilityKey)details.append(make('p','member-bio',text(responsibilityKey)));
+      if(groupKey)details.append(make('p','member-group',text(groupKey)));
+      card.append(portrait,details);
       return card;
     };
     const leadMembers=make('div','member-grid member-grid-leads');
     leadMembers.append(
-      makeMemberCard('assemblyMemberSecretary','roleSecretary','LM'),
-      makeMemberCard('assemblyMemberPresident','rolePresident','RO',true),
-      makeMemberCard('assemblyMemberVicePresident','roleVicePresident','CG'),
-      makeMemberCard('assemblyMemberHighSpokesperson','roleHighSpokesperson','AD'),
-      makeMemberCard('assemblyMemberTreasurer','roleTreasurer','NA'),
-      makeMemberCard('assemblyMemberLowSpokesperson','roleLowSpokesperson','JM')
+      makeMemberCard('assemblyMemberSecretary','roleSecretary','LM','roleSecretaryText'),
+      makeMemberCard('assemblyMemberPresident','rolePresident','EB','rolePresidentText'),
+      makeMemberCard('assemblyMemberVicePresident','roleVicePresident','CG','roleVicePresidentText'),
+      makeMemberCard('assemblyMemberHighSpokesperson','roleHighSpokesperson','AD','roleHighSpokespersonText'),
+      makeMemberCard('assemblyMemberTreasurer','roleTreasurer','NA','roleTreasurerText'),
+      makeMemberCard('assemblyMemberLowSpokesperson','roleLowSpokesperson','JM','roleLowSpokespersonText')
     );
-    const classMembers=make('div','member-grid member-grid-classes');
-    classMembers.append(
-      makeMemberCard('classMemberOne','classMemberRoleOne','AR',false,'classMemberGroupOne'),
-      makeMemberCard('classMemberTwo','classMemberRoleTwo','ST',false,'classMemberGroupTwo'),
-      makeMemberCard('classMemberThree','classMemberRoleThree','TN',false,'classMemberGroupThree'),
-      makeMemberCard('classMemberFour','classMemberRoleFour','MB',false,'classMemberGroupFour'),
-      makeMemberCard('classMemberFive','classMemberRoleFive','EG',false,'classMemberGroupFive')
-    );
+    const structure=make('ol','gov-flow members-structure');
+    [
+      ['flowStudents','flowStudentsText'],
+      ['flowClass','flowClassText'],
+      ['flowLevel','flowLevelText'],
+      ['flowAssembly','flowAssemblyText'],
+      ['flowReturn','flowReturnText']
+    ].forEach(([key,descriptionKey],index)=>{
+      const step=make('li','gov-flow-step');
+      step.append(make('span','gov-flow-number',String(index+1)),make('h3','',text(key)),make('p','',text(descriptionKey)));
+      structure.append(step);
+    });
+    const classMembers=make('div','member-groups');
+    [
+      ['classMemberOne','classMemberRoleOne','AR','classMemberGroupOne'],
+      ['classMemberTwo','classMemberRoleTwo','ST','classMemberGroupTwo'],
+      ['classMemberThree','classMemberRoleThree','TN','classMemberGroupThree'],
+      ['classMemberFour','classMemberRoleFour','MB','classMemberGroupFour'],
+      ['classMemberFive','classMemberRoleFive','EG','classMemberGroupFive']
+    ].forEach(([nameKey,roleKey,initials,groupKey])=>{
+      const group=make('section','member-group-section');
+      group.append(make('h3','',text(groupKey)));
+      const groupCards=make('div','member-grid member-grid-classes');
+      groupCards.append(makeMemberCard(nameKey,roleKey,initials,'classRepResponsibility',groupKey));
+      group.append(groupCards);
+      classMembers.append(group);
+    });
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
       make('p','member-template-note',text('memberTemplateNote')),
+      sectionHeading(text('structureTitle'),text('structureSub')),
+      structure,
       sectionHeading(text('leadreps'),text('leadsub')),
       leadMembers,
       sectionHeading(text('classreps'),text('classsub')),
@@ -989,12 +1265,26 @@
     });
     const voteButton=make('button','vote-submit',text('voteSubmit'));
     voteButton.type='button';
-    voteButton.disabled=true;
+    const availability=voteAvailability();
+    voteButton.disabled=!availability.open;
+    const scheduleBlob=make('div','vote-schedule-blob');
+    scheduleBlob.append(make('strong','',text('voteScheduleTitle')));
+    const formatDateTime=value=>new Intl.DateTimeFormat(
+      document.documentElement.lang==='en'?'en-CA':'fr-CA',
+      {dateStyle:'medium',timeStyle:'short'}
+    ).format(new Date(value));
+    if(voteSettings.startsAt){
+      scheduleBlob.append(make('span','',`${text('voteScheduleOpens')} : ${formatDateTime(voteSettings.startsAt)}`));
+      if(voteSettings.endsAt)scheduleBlob.append(make('span','',`${text('voteScheduleCloses')} : ${formatDateTime(voteSettings.endsAt)}`));
+    }else scheduleBlob.append(make('span','',text('voteScheduleMissing')));
+    const voteStatus=make('p','vote-disabled-note',availability.message);
+    const voteActionRow=make('div','vote-action-row');
+    voteActionRow.append(scheduleBlob,voteButton);
     vote.replaceChildren(
       makePageHeading(text('navVote'),text('votePageTitle'),text('votePageIntro')),
       voteGrid,
-      make('p','vote-disabled-note',text('voteReleaseNote')),
-      voteButton
+      voteActionRow,
+      voteStatus
     );
     if(selectedVoteTeam){
       const team=voteTeams.find(item=>item.key===selectedVoteTeam);
@@ -1017,7 +1307,14 @@
     }else voteTeamDetail.replaceChildren();
   };
   renderGovernancePages();
+  window.setInterval(refreshVoteAvailability,30000);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshVoteAvailability()});
   vote.addEventListener('click',event=>{
+    if(event.target.closest('.vote-submit')){
+      if(!voteSettings.formUrl||!validVoteSettings(voteSettings))return;
+      window.open(voteSettings.formUrl,'_blank','noopener,noreferrer');
+      return;
+    }
     const more=event.target.closest('[data-vote-team]');
     if(!more)return;
     selectedVoteTeam=more.dataset.voteTeam;
@@ -1030,12 +1327,62 @@
     voteTeamDetail.replaceChildren();
     window.showPage('vote');
   });
+  elections.addEventListener('click',event=>{
+    const register=event.target.closest('[data-candidate-register]');
+    if(!register)return;
+    const form=elections.querySelector('.candidate-form');
+    if(!form)return;
+    form.hidden=false;
+    form.scrollIntoView({behavior:'smooth',block:'start'});
+    form.querySelector('input')?.focus({preventScroll:true});
+  });
+  elections.addEventListener('submit',async event=>{
+    const form=event.target.closest('.candidate-form');
+    if(!form)return;
+    event.preventDefault();
+    const status=form.querySelector('.site-status');
+    const teamName=form.querySelector('#candidate-team').value.trim();
+    const roster=form.querySelector('#candidate-roster').value.trim();
+    const ideas=form.querySelector('#candidate-ideas').value.trim();
+    const picture=form.querySelector('#candidate-picture').files[0];
+    if(!teamName||!roster||!ideas){
+      setStatus(status,text('candidateRequired'),'error');
+      return;
+    }
+    if(!picture||picture.size>500*1024||!['image/jpeg','image/png','image/webp'].includes(picture.type)){
+      setStatus(status,text('candidateImageInvalid'),'error');
+      return;
+    }
+    try{
+      const pictureData=await new Promise((resolve,reject)=>{
+        const reader=new FileReader();
+        reader.onload=()=>resolve(String(reader.result));
+        reader.onerror=()=>reject(new Error(text('candidateImageInvalid')));
+        reader.readAsDataURL(picture);
+      });
+      const savedApplications=localStorage.getItem(candidateStorageKey);
+      const applications=savedApplications===null?[]:JSON.parse(savedApplications);
+      if(!Array.isArray(applications))throw new Error(text('candidateSaveError'));
+      applications.push({
+        teamName,roster,ideas,picture:pictureData,
+        background:form.querySelector('#candidate-background').value,
+        foreground:form.querySelector('#candidate-foreground').value,
+        submittedAt:new Date().toISOString()
+      });
+      localStorage.setItem(candidateStorageKey,JSON.stringify(applications));
+      form.reset();
+      form.querySelector('.candidate-preview').textContent=text('candidateTeam');
+      form.querySelector('.candidate-preview').style.backgroundColor=form.querySelector('#candidate-background').value;
+      form.querySelector('.candidate-preview').style.color=form.querySelector('#candidate-foreground').value;
+      setStatus(status,text('candidateSaved'),'success');
+    }catch(error){setStatus(status,error.message||text('candidateSaveError'),'error')}
+  });
 
   const sideNav=document.querySelector('.side');
   const sideRoutes=[
-    ['projects','navIdeas','✳'],
     ['elections','navCandidates','⚑'],
     ['how','navCharter','↗'],
+    ['projects','navIdeas','✳'],
     ['people','navMembers','♧'],
     ['vote','navVote','✓']
   ];
@@ -1051,14 +1398,6 @@
   const mobileNav=document.querySelector('.mobile');
   mobileNav.remove();
   const adminEntry=document.querySelector('.admin-entry');
-  const sortNavigation=(navigation,labelForNode)=>{
-    const collator=new Intl.Collator(document.documentElement.lang,{sensitivity:'base'});
-    const sorted=Array.from(navigation.children).sort((first,second)=>collator.compare(labelForNode(first),labelForNode(second)));
-    navigation.append(...sorted);
-    const charter=navigation.querySelector('[data-page="how"]');
-    const candidature=navigation.querySelector('[data-page="elections"]');
-    if(charter&&candidature&&candidature.nextElementSibling===charter)navigation.insertBefore(charter,candidature);
-  };
   const updateNavigation=()=>{
     const english=document.documentElement.lang==='en';
     routeLabels.forEach(({node,key})=>node.textContent=text(key));
@@ -1066,9 +1405,7 @@
       const key={home:'home',how:'navCharter',people:'navMembers',projects:'navIdeas',elections:'navCandidates',vote:'navVote'}[item.dataset.page];
       if(key)item.textContent=text(key);
     });
-    sortNavigation(sideNav,node=>node.querySelectorAll('span')[1].textContent);
-    const headerNav=document.querySelector('.header-nav');
-    sortNavigation(headerNav,node=>node.textContent);
+    document.querySelector('.settings-header-link').textContent=text('navSettings');
     document.querySelector('.branding-name small').textContent=english?'CDECC · Student Council':'CDECC · Conseil des élèves';
     adminEntry.textContent=english?'⚙ Admin version':'⚙ Version admin';
     adminEntry.setAttribute('aria-label',english?'Admin access':'Accès administrateur');
@@ -1202,7 +1539,136 @@
     filters.append(filter);
   });
   toolbar.append(searchLabel,filters);
-  admin.append(adminHeading,adminNotice,priorityHelp,adminStatus,toolbar,reviewList);
+  const voteSettingsPanel=make('section','card admin-vote-settings');
+  const voteSettingsStatus=make('p','site-status');
+  voteSettingsStatus.setAttribute('role','status');
+  voteSettingsStatus.setAttribute('aria-live','polite');
+  const renderVoteAdminSettings=()=>{
+    voteSettingsPanel.replaceChildren(
+      make('h2','',text('voteAdminTitle')),
+      make('p','site-admin-note',text('voteSettingsNotice'))
+    );
+    const form=make('form','site-form');
+    const addVoteField=(id,key,type,value)=>{
+      const label=make('label','');
+      label.htmlFor=id;
+      label.append(make('span','',text(key)));
+      const input=document.createElement('input');
+      input.id=id;
+      input.name=id;
+      input.type=type;
+      input.value=value;
+      if(type==='url')input.placeholder='https://forms.google.com/...';
+      label.append(input);
+      form.append(label);
+      return input;
+    };
+    addVoteField('vote-form-url','voteFormUrl','url',voteSettings.formUrl);
+    addVoteField('vote-starts-at','voteStartsAt','datetime-local',voteSettings.startsAt);
+    addVoteField('vote-ends-at','voteEndsAt','datetime-local',voteSettings.endsAt);
+    const status=make('p','site-status');
+    status.setAttribute('role','status');
+    status.setAttribute('aria-live','polite');
+    const submit=make('button','primary',text('voteConfigSave'));
+    submit.type='submit';
+    form.append(status,submit);
+    voteSettingsPanel.append(form);
+    if(voteSettingsLoadError)setStatus(status,voteSettingsLoadError,'error');
+  };
+  renderVoteAdminSettings();
+  admin.append(adminHeading,adminNotice,priorityHelp,adminStatus,toolbar,reviewList,voteSettingsPanel);
+  admin.addEventListener('submit',event=>{
+    const form=event.target.closest('.admin-vote-settings form');
+    if(!form)return;
+    event.preventDefault();
+    const next={
+      formUrl:form.querySelector('#vote-form-url').value.trim(),
+      startsAt:form.querySelector('#vote-starts-at').value,
+      endsAt:form.querySelector('#vote-ends-at').value
+    };
+    const status=form.querySelector('.site-status');
+    if(!validVoteSettings(next)){
+      setStatus(status,text('voteConfigInvalid'),'error');
+      return;
+    }
+    try{
+      localStorage.setItem(voteSettingsKey,JSON.stringify(next));
+      voteSettings=next;
+      voteSettingsLoadError='';
+      renderGovernancePages();
+      setStatus(voteSettingsPanel.querySelector('.site-status'),text('voteConfigSaved'),'success');
+    }catch(error){setStatus(status,error.message||text('settingsSaveError'),'error')}
+  });
+  const settingsStatus=make('p','site-status');
+  settingsStatus.setAttribute('role','status');
+  settingsStatus.setAttribute('aria-live','polite');
+  const languageButton=document.getElementById('lang');
+  const renderSettings=()=>{
+    const paletteCard=make('section','card settings-card');
+    paletteCard.append(make('h2','',text('paletteTitle')));
+    const paletteChoices=make('div','settings-choice-row');
+    ['forest','ocean','plum'].forEach(palette=>{
+      const choice=button(text(`palette${palette[0].toUpperCase()}${palette.slice(1)}`),'settings-choice');
+      choice.dataset.palette=palette;
+      choice.setAttribute('aria-pressed',String(preferences.palette===palette));
+      paletteChoices.append(choice);
+    });
+    paletteCard.append(paletteChoices);
+    const appearanceCard=make('section','card settings-card');
+    appearanceCard.append(make('h2','',text('appearanceTitle')));
+    const darkLabel=make('label','settings-switch');
+    const darkToggle=document.createElement('input');
+    darkToggle.type='checkbox';
+    darkToggle.dataset.preference='dark';
+    darkToggle.checked=preferences.dark;
+    darkLabel.append(make('span','',text('themeLabel')),darkToggle);
+    const sloganLabel=make('label','settings-switch');
+    const sloganToggle=document.createElement('input');
+    sloganToggle.type='checkbox';
+    sloganToggle.dataset.preference='slogan';
+    sloganToggle.checked=preferences.slogan;
+    sloganLabel.append(make('span','',text('sloganLabel')),sloganToggle);
+    appearanceCard.append(darkLabel,sloganLabel);
+    const languageCard=make('section','card settings-card');
+    languageCard.append(make('h2','',text('languageTitle')),languageButton);
+    const adminCard=make('section','card settings-card');
+    adminCard.append(
+      make('h2','',text('adminAccessTitle')),
+      make('p','',text('adminAccessText')),
+      adminEntry
+    );
+    settings.replaceChildren(
+      makePageHeading(text('navSettings'),text('settingsTitle'),text('settingsIntro')),
+      paletteCard,
+      appearanceCard,
+      languageCard,
+      adminCard,
+      settingsStatus
+    );
+    if(preferencesLoadError)setStatus(settingsStatus,preferencesLoadError,'error');
+  };
+  renderSettings();
+  const savePreferences=()=>{
+    applyPreferences();
+    try{
+      localStorage.setItem(preferencesKey,JSON.stringify(preferences));
+      preferencesLoadError='';
+      setStatus(settingsStatus,text('preferencesSaved'),'success');
+    }catch(error){setStatus(settingsStatus,error.message||text('settingsSaveError'),'error')}
+  };
+  settings.addEventListener('click',event=>{
+    const choice=event.target.closest('[data-palette]');
+    if(!choice||!palettes.has(choice.dataset.palette))return;
+    preferences.palette=choice.dataset.palette;
+    settings.querySelectorAll('[data-palette]').forEach(item=>item.setAttribute('aria-pressed',String(item===choice)));
+    savePreferences();
+  });
+  settings.addEventListener('change',event=>{
+    const toggle=event.target.closest('[data-preference]');
+    if(!toggle)return;
+    preferences[toggle.dataset.preference]=toggle.checked;
+    savePreferences();
+  });
   const drawerCards=document.getElementById('news-drawer-cards');
   const drawerIntro=document.querySelector('.news-drawer-intro');
   const drawerTitle=document.getElementById('news-drawer-title');
@@ -1443,6 +1909,8 @@
     projectSearchInput.placeholder=language.projectSearchPlaceholder;
     projectSearchInput.setAttribute('aria-label',language.projectSearch);
     syncGovernanceLanguage();
+    renderSettings();
+    renderVoteAdminSettings();
     renderAll();
   });
   window.addEventListener('storage',event=>{
