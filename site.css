@@ -6,6 +6,11 @@
 .scroll-down{color:#fff;opacity:1}
 .site-hero-actions .hero-more.secondary-action{border-color:var(--forest);background:var(--forest);color:#fff}
 .site-hero-actions .hero-more{min-height:46px}
+.site-hero-actions .deployment-test-button{border:2px dashed currentColor;background:transparent;color:var(--forest)}
+.home-hero .hero-story .deployment-test-button{border-style:dashed;border-color:#396d59;color:#396d59}
+.home-hero .hero-story .deployment-test-button:hover{background:#396d59;color:#fff}
+.deployment-test-status{margin:10px 0 0;color:#315f47;font-size:13px;font-weight:800}
+.deployment-test-status[hidden]{display:none}
 .site-section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:30px 0 14px}
 .site-section-title h2{margin:0;color:var(--forest);font-size:21px;letter-spacing:-.035em}
 .site-section-title p{margin:4px 0 0;color:var(--muted);font-size:12px}
