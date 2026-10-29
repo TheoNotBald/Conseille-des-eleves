@@ -16,7 +16,7 @@ Bilingual static website demo in French and English. This is a front-end prototy
 ## Important limitations
 - No backend, authentication, database, analytics, or email sending is implemented. A configured voting link opens an external form; this site does not collect votes.
 - Admin controls are not protected. Voting links, schedules, and appearance settings are saved in the current browser only, not published for other visitors.
-- Candidate applications are also stored only in the current browser. Do not enter real student information or upload real student photos.
+- Candidate application details are stored in localStorage and team photos (up to 50 MB each) in IndexedDB, both only in the current browser. Do not enter real student information or upload real student photos.
 - Names and election examples are fictional. The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 - The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 

@@ -124,7 +124,17 @@
 .candidate-intro-blob h2{color:#171b19;font-family:Georgia,"Times New Roman",serif;font-size:clamp(24px,3vw,34px);line-height:1.2}
 .candidate-intro-blob p{color:#343b36}
 .candidate-form[hidden]{display:none}
-.candidate-preview{display:grid;min-height:110px;place-items:center;border:1px solid var(--line);border-radius:14px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(20px,4vw,34px);font-weight:800;text-align:center;overflow-wrap:anywhere}
+.candidate-preview-card{display:grid;grid-column:1/-1;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);align-items:center;gap:clamp(20px,4vw,48px);min-height:360px;padding:clamp(20px,4vw,44px);border:1px solid var(--line);border-radius:36px;overflow:hidden}
+.candidate-preview-card *{color:inherit!important}
+.candidate-preview-copy{min-width:0}
+.candidate-preview-copy h2{margin:14px 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(27px,4vw,48px);line-height:1.1;overflow-wrap:anywhere}
+.candidate-preview-copy>p{font-family:Georgia,"Times New Roman",serif;font-size:clamp(15px,1.7vw,20px);line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.candidate-preview-roster h3{margin:18px 0 8px;font-size:13px;font-weight:850}
+.candidate-preview-roster ul{display:grid;gap:5px;margin:0;padding-left:20px;font-size:13px;line-height:1.45}
+.candidate-preview-media{display:grid;min-width:0;min-height:260px;place-items:center;overflow:hidden;border-radius:28px;background:rgba(255,255,255,.35)}
+.candidate-preview-media img{display:block;width:100%;height:100%;min-height:260px;max-height:430px;object-fit:cover}
+.candidate-preview-media p{max-width:24ch;padding:20px;font-size:14px;text-align:center}
+.candidate-preview-media [hidden],.candidate-preview-roster[hidden]{display:none}
 .candidate-form input[type="color"]{width:72px;height:46px;padding:4px}
 .members-structure{margin:16px 0 30px}
 .members-structure .gov-flow-step h3{min-height:2.6em}
@@ -366,6 +376,10 @@ body[data-theme="dark"] .news-drawer{border-color:var(--line);background:var(--p
   .vote-team-detail-page{padding:20px 14px}
   .vote-team-detail-card{grid-template-columns:1fr;gap:18px;min-height:0;padding:20px;border-radius:28px}
   .vote-team-detail-card img{height:240px;border-radius:20px}
+  .candidate-preview-card{grid-template-columns:1fr;gap:16px;min-height:0;padding:20px;border-radius:28px}
+  .candidate-preview-copy h2{font-size:clamp(26px,8vw,38px)}
+  .candidate-preview-media{min-height:190px;border-radius:20px}
+  .candidate-preview-media img{min-height:190px;max-height:280px}
   .member-grid{gap:14px}
   .member-grid-leads{grid-template-columns:repeat(2,minmax(0,1fr))}
   .member-grid-classes{grid-template-columns:repeat(2,minmax(0,1fr))}

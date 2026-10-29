@@ -623,14 +623,17 @@
     candidateRosterHelp:'Inscris une personne et son poste par ligne.',
     candidateIdeas:'Idées et propositions de l’équipe',
     candidatePicture:'Photo de l’équipe',
-    candidatePictureHelp:'Image JPG, PNG ou WebP de 500 Ko maximum.',
+    candidatePictureHelp:'Image JPG, PNG ou WebP de 50 Mo maximum.',
     candidateBackground:'Couleur de fond',
     candidateForeground:'Couleur du texte',
+    candidatePreviewLabel:'Aperçu de l’équipe',
+    candidatePreviewMembers:'Membres de l’équipe',
+    candidatePreviewImage:'La photo de l’équipe apparaîtra ici.',
     candidateSubmit:'Enregistrer la candidature',
     candidatePrivacy:'Prototype uniquement : la candidature est enregistrée dans ce navigateur et n’est pas envoyée à l’école. N’ajoute pas de renseignements personnels réels.',
     candidateSaved:'La candidature a été enregistrée dans ce navigateur seulement.',
     candidateRequired:'Remplis le nom de l’équipe, les membres et les idées.',
-    candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 500 Ko maximum.',
+    candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 50 Mo maximum.',
     candidateSaveError:'La candidature n’a pas pu être enregistrée dans ce navigateur.',
     voteScheduleTitle:'Date et heure du vote',
     voteScheduleMissing:'La date du vote n’a pas encore été définie.',
@@ -681,14 +684,17 @@
     candidateRosterHelp:'Enter one person and position per line.',
     candidateIdeas:'Team ideas and proposals',
     candidatePicture:'Team picture',
-    candidatePictureHelp:'JPG, PNG, or WebP image up to 500 KB.',
+    candidatePictureHelp:'JPG, PNG, or WebP image up to 50 MB.',
     candidateBackground:'Background color',
     candidateForeground:'Text color',
+    candidatePreviewLabel:'Team preview',
+    candidatePreviewMembers:'Team members',
+    candidatePreviewImage:'The team picture will appear here.',
     candidateSubmit:'Save application',
     candidatePrivacy:'Prototype only: the application is saved in this browser and is not sent to the school. Do not enter real personal information.',
     candidateSaved:'The application was saved in this browser only.',
     candidateRequired:'Enter the team name, members, and ideas.',
-    candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 500 KB.',
+    candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 50 MB.',
     candidateSaveError:'The application could not be saved in this browser.',
     voteScheduleTitle:'Voting date and time',
     voteScheduleMissing:'The voting date has not been set yet.',
@@ -830,6 +836,54 @@
     return new Intl.DateTimeFormat(document.documentElement.lang==='en'?'en-CA':'fr-CA',{year:'numeric',month:'short',day:'numeric'}).format(date);
   };
   const candidateStorageKey='cdecc.candidate.application.v1';
+  const candidateImageDatabase='cdecc.candidate.images.v1';
+  const candidateImageStore='images';
+  const maxCandidateImageSize=50*1024*1024;
+  const storeCandidateImage=(id,image)=>new Promise((resolve,reject)=>{
+    const request=indexedDB.open(candidateImageDatabase,1);
+    request.onerror=()=>reject(request.error||new Error(text('candidateSaveError')));
+    request.onblocked=()=>reject(new Error(text('candidateSaveError')));
+    request.onupgradeneeded=()=>{
+      if(!request.result.objectStoreNames.contains(candidateImageStore)){
+        request.result.createObjectStore(candidateImageStore);
+      }
+    };
+    request.onsuccess=()=>{
+      const database=request.result;
+      let transaction;
+      try{
+        transaction=database.transaction(candidateImageStore,'readwrite');
+        transaction.objectStore(candidateImageStore).put(image,id);
+      }catch(error){
+        database.close();
+        reject(error);
+        return;
+      }
+      transaction.oncomplete=()=>{database.close();resolve()};
+      transaction.onerror=()=>{database.close();reject(transaction.error||new Error(text('candidateSaveError')))};
+      transaction.onabort=()=>{database.close();reject(transaction.error||new Error(text('candidateSaveError')))};
+    };
+  });
+  const removeCandidateImage=id=>new Promise((resolve,reject)=>{
+    const request=indexedDB.open(candidateImageDatabase,1);
+    request.onerror=()=>reject(request.error||new Error(text('candidateSaveError')));
+    request.onblocked=()=>reject(new Error(text('candidateSaveError')));
+    request.onsuccess=()=>{
+      const database=request.result;
+      let transaction;
+      try{
+        transaction=database.transaction(candidateImageStore,'readwrite');
+        transaction.objectStore(candidateImageStore).delete(id);
+      }catch(error){
+        database.close();
+        reject(error);
+        return;
+      }
+      transaction.oncomplete=()=>{database.close();resolve()};
+      transaction.onerror=()=>{database.close();reject(transaction.error||new Error(text('candidateSaveError')))};
+      transaction.onabort=()=>{database.close();reject(transaction.error||new Error(text('candidateSaveError')))};
+    };
+  });
   const voteSettingsKey='cdecc.vote.settings.v1';
   const preferencesKey='cdecc.ui.preferences.v1';
   const palettes=new Set(['forest','ocean','plum']);
@@ -1154,17 +1208,60 @@
     backgroundColor.value='#396d59';
     const foregroundColor=appendCandidateField('candidate-foreground','candidateForeground','input','color');
     foregroundColor.value='#ffffff';
-    const candidatePreview=make('div','candidate-preview');
-    candidatePreview.textContent=text('candidateTeam');
+    const candidatePreview=make('article','candidate-preview-card');
+    const candidatePreviewCopy=make('div','candidate-preview-copy');
+    const candidatePreviewTitle=make('h2','');
+    const candidatePreviewIdeas=make('p','');
+    const candidatePreviewRoster=make('div','candidate-preview-roster');
+    const candidatePreviewRosterTitle=make('h3','',text('candidatePreviewMembers'));
+    const candidatePreviewRosterList=make('ul','');
+    candidatePreviewRoster.append(candidatePreviewRosterTitle,candidatePreviewRosterList);
+    candidatePreviewCopy.append(
+      make('span','pill',text('candidatePreviewLabel')),
+      candidatePreviewTitle,
+      candidatePreviewIdeas,
+      candidatePreviewRoster
+    );
+    const candidatePreviewMedia=make('div','candidate-preview-media');
+    const candidatePreviewImage=document.createElement('img');
+    candidatePreviewImage.alt='';
+    candidatePreviewImage.hidden=true;
+    const candidatePreviewPlaceholder=make('p','',text('candidatePreviewImage'));
+    candidatePreviewMedia.append(candidatePreviewImage,candidatePreviewPlaceholder);
+    candidatePreview.append(candidatePreviewCopy,candidatePreviewMedia);
+    let candidatePreviewImageUrl='';
     const updateCandidatePreview=()=>{
       candidatePreview.style.backgroundColor=backgroundColor.value;
       candidatePreview.style.color=foregroundColor.value;
-      candidatePreview.textContent=teamName.value.trim()||text('candidateTeam');
+      candidatePreviewTitle.textContent=teamName.value.trim()||text('candidateTeam');
+      candidatePreviewIdeas.textContent=ideas.value.trim()||text('candidateIdeas');
+      candidatePreviewRosterList.replaceChildren();
+      const members=roster.value.split(/\r?\n/).map(member=>member.trim()).filter(Boolean);
+      members.forEach(member=>candidatePreviewRosterList.append(make('li','',member)));
+      candidatePreviewRoster.hidden=members.length===0;
     };
     candidateForm.append(candidatePreview);
     teamName.addEventListener('input',updateCandidatePreview);
+    roster.addEventListener('input',updateCandidatePreview);
+    ideas.addEventListener('input',updateCandidatePreview);
     backgroundColor.addEventListener('input',updateCandidatePreview);
     foregroundColor.addEventListener('input',updateCandidatePreview);
+    picture.addEventListener('change',()=>{
+      if(candidatePreviewImageUrl)URL.revokeObjectURL(candidatePreviewImageUrl);
+      candidatePreviewImageUrl='';
+      const file=picture.files[0];
+      if(file&&file.size<=maxCandidateImageSize&&['image/jpeg','image/png','image/webp'].includes(file.type)){
+        candidatePreviewImageUrl=URL.createObjectURL(file);
+        candidatePreviewImage.src=candidatePreviewImageUrl;
+        candidatePreviewImage.hidden=false;
+        candidatePreviewPlaceholder.hidden=true;
+      }else{
+        candidatePreviewImage.removeAttribute('src');
+        candidatePreviewImage.hidden=true;
+        candidatePreviewPlaceholder.hidden=false;
+      }
+    });
+    updateCandidatePreview();
     const candidatePrivacy=make('p','site-privacy-note',text('candidatePrivacy'));
     const candidateStatus=make('p','site-status');
     candidateStatus.setAttribute('role','status');
@@ -1349,31 +1446,35 @@
       setStatus(status,text('candidateRequired'),'error');
       return;
     }
-    if(!picture||picture.size>500*1024||!['image/jpeg','image/png','image/webp'].includes(picture.type)){
+    if(!picture||picture.size>maxCandidateImageSize||!['image/jpeg','image/png','image/webp'].includes(picture.type)){
       setStatus(status,text('candidateImageInvalid'),'error');
       return;
     }
     try{
-      const pictureData=await new Promise((resolve,reject)=>{
-        const reader=new FileReader();
-        reader.onload=()=>resolve(String(reader.result));
-        reader.onerror=()=>reject(new Error(text('candidateImageInvalid')));
-        reader.readAsDataURL(picture);
-      });
       const savedApplications=localStorage.getItem(candidateStorageKey);
       const applications=savedApplications===null?[]:JSON.parse(savedApplications);
       if(!Array.isArray(applications))throw new Error(text('candidateSaveError'));
+      const pictureId=`candidate-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+      await storeCandidateImage(pictureId,picture);
       applications.push({
-        teamName,roster,ideas,picture:pictureData,
+        teamName,roster,ideas,pictureId,pictureType:picture.type,
         background:form.querySelector('#candidate-background').value,
         foreground:form.querySelector('#candidate-foreground').value,
         submittedAt:new Date().toISOString()
       });
-      localStorage.setItem(candidateStorageKey,JSON.stringify(applications));
+      try{
+        localStorage.setItem(candidateStorageKey,JSON.stringify(applications));
+      }catch(error){
+        await removeCandidateImage(pictureId);
+        throw error;
+      }
       form.reset();
-      form.querySelector('.candidate-preview').textContent=text('candidateTeam');
-      form.querySelector('.candidate-preview').style.backgroundColor=form.querySelector('#candidate-background').value;
-      form.querySelector('.candidate-preview').style.color=form.querySelector('#candidate-foreground').value;
+      if(candidatePreviewImageUrl)URL.revokeObjectURL(candidatePreviewImageUrl);
+      candidatePreviewImageUrl='';
+      candidatePreviewImage.removeAttribute('src');
+      candidatePreviewImage.hidden=true;
+      candidatePreviewPlaceholder.hidden=false;
+      updateCandidatePreview();
       setStatus(status,text('candidateSaved'),'success');
     }catch(error){setStatus(status,error.message||text('candidateSaveError'),'error')}
   });
