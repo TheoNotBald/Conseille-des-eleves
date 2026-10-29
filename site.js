@@ -4,8 +4,6 @@
   const copy={
     fr:{
       brand:'Conseil des élèves',
-      deploymentTestButton:'Test du déploiement',
-      deploymentTestPassed:'Le test fonctionne : le site répond.',
       heroTitle:'Bienvenue au Conseil des élèves du Collège Citoyen',
       heroText:'Le CDECC donne aux élèves une voix pour partager leurs idées, discuter des besoins de leur classe et contribuer à des projets qui améliorent la vie scolaire.',
       homeTitle:'Des idées pour faire avancer notre école.',
@@ -300,8 +298,6 @@
     },
     en:{
       brand:'Student Council',
-      deploymentTestButton:'Test deployment',
-      deploymentTestPassed:'Test works: the site is responding.',
       heroTitle:'Welcome to the Collège Citoyen Student Council',
       heroText:'CDECC gives students a voice to share ideas, discuss their class needs, and contribute to projects that improve school life.',
       homeTitle:'Ideas that move our school forward.',
@@ -2026,24 +2022,11 @@
   if(processNote)processNote.textContent=copy.fr.processNote;
   const originalToggleLabel=document.getElementById('news-toggle');
   const projectShortcut=document.querySelector('.header-tools [data-page="projects"]');
-  const deploymentTestButton=document.getElementById('deployment-test-button');
-  const deploymentTestStatus=document.getElementById('deployment-test-status');
-  const updateDeploymentTestLabels=()=>{
-    deploymentTestButton.textContent=text('deploymentTestButton');
-    if(deploymentTestStatus.dataset.passed==='true')deploymentTestStatus.textContent=text('deploymentTestPassed');
-  };
-  deploymentTestButton.addEventListener('click',()=>{
-    deploymentTestStatus.dataset.passed='true';
-    deploymentTestStatus.textContent=text('deploymentTestPassed');
-    deploymentTestStatus.hidden=false;
-  });
-  document.getElementById('lang').addEventListener('click',updateDeploymentTestLabels);
   const updateHeaderLabels=()=>{
     originalToggleLabel.setAttribute('aria-label',document.documentElement.lang==='en'?'Open news':'Ouvrir les actualités');
     projectShortcut.querySelector('.search-label').textContent=document.documentElement.lang==='en'?'Ideas':'Idées';
     projectShortcut.setAttribute('aria-label',document.documentElement.lang==='en'?'Open project search':'Ouvrir la recherche dans les projets');
   };
-  updateDeploymentTestLabels();
   updateHeaderLabels();
   projectShortcut.addEventListener('click',()=>setTimeout(()=>{
     projectSearchInput.focus();
