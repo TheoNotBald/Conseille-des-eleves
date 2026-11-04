@@ -5,7 +5,7 @@ The admin portal stays locked until a Supabase project is configured. The browse
 ## 1. Create and configure Supabase
 
 1. Create a Supabase project and keep its database credentials private.
-2. In **SQL Editor**, run [`supabase/migrations/20261104000000_admin_portal.sql`](./supabase/migrations/20261104000000_admin_portal.sql).
+2. Open [`supabase/migrations/20261104000000_admin_portal.sql`](./supabase/migrations/20261104000000_admin_portal.sql) in the repository, copy the entire file contents, paste the SQL into Supabase **SQL Editor**, then click **Run**. Do not paste the Markdown link itself; it is only a link to the SQL file.
 3. In **Authentication → Providers**, enable Google sign-in.
 4. Create a Google OAuth client. Add the Supabase callback URL shown by the Google provider settings to the OAuth client's authorized redirect URIs.
 5. In **Authentication → URL Configuration**, set the site URL and add the local/Vercel website URLs as allowed redirect URLs.

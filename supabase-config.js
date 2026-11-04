@@ -1,4 +1,4 @@
 window.CDECC_SUPABASE_CONFIG = Object.freeze({
-  url: '',
-  anonKey: ''
+  url: 'https://ogrlkjqwkukaxkngexpr.supabase.co',
+  anonKey: 'sb_publishable_lnHs3wsGEk5yl09MLTjNOA_qYB4_Ang'
 });
