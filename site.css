@@ -56,6 +56,40 @@
 .site-review-count{display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:23px;padding:0 7px;border-radius:999px;background:rgba(255,255,255,.2);font-size:11px}
 .site-admin-page .site-page-heading{margin-bottom:12px}
 .site-admin-page .site-review-toolbar{align-items:center}
+.admin-portal{min-width:0}
+.admin-portal [hidden]{display:none!important}
+.admin-portal-heading{margin:8px 0 16px}
+.admin-portal-heading h1{margin:8px 0;color:var(--forest);font-size:clamp(28px,4vw,40px);line-height:1.15}
+.admin-portal-heading p{margin:0;color:var(--muted)}
+.admin-portal-auth{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:16px 0}
+.admin-portal-auth .site-status{flex:1}
+.admin-portal-identity{color:var(--forest);font-size:13px;font-weight:800}
+.admin-portal-login{margin:18px 0;padding:20px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+.admin-portal-login h2{margin:0 0 8px;color:var(--forest);font-size:18px}
+.admin-portal-login p{margin:0;color:var(--muted);font-size:13px}
+.admin-portal-tabs{display:flex;gap:6px;overflow-x:auto;margin:18px 0 20px;padding:0 0 8px;border-bottom:3px solid var(--forest);scrollbar-width:thin}
+.admin-portal-tab{flex:0 0 auto;min-height:42px;padding:9px 16px;border:0;border-radius:10px 10px 0 0;background:transparent;color:var(--muted);font-size:13px;font-weight:850}
+.admin-portal-tab[aria-selected="true"]{background:var(--forest);color:#fff}
+.admin-portal-tab:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.admin-portal-panels,.admin-portal-panel{min-width:0}
+.admin-portal-panel[hidden],.admin-portal-panels[hidden],.admin-portal-tabs[hidden],.admin-portal-login[hidden]{display:none}
+.admin-portal-list{display:grid;gap:12px}
+.admin-portal-edit-form{display:grid;gap:12px;margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--paper)}
+.admin-portal-edit-form label{display:grid;gap:6px;color:var(--ink);font-size:12px;font-weight:800}
+.admin-portal-edit-form input:not([type="color"]):not([type="file"]),.admin-portal-edit-form textarea{width:100%;min-height:42px;padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:#fff;color:#222}
+.admin-portal-edit-form textarea{min-height:110px;resize:vertical}
+.admin-portal-edit-form [type="color"]{width:56px;height:40px;padding:3px}
+.admin-portal-edit-form .site-status{min-height:20px}
+.admin-portal-edit-form .primary{justify-self:start}
+.admin-candidate-photo{display:block;width:min(100%,520px);max-height:300px;margin:12px 0;border-radius:18px;object-fit:cover}
+.admin-candidate-status.is-approved{background:#e5f1e7;color:#285d39}
+.admin-candidate-status.is-rejected{background:#f6e9e5;color:#91463f}
+.admin-audit-table-wrap{max-width:100%;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.admin-audit-table{width:100%;border-collapse:collapse;font-size:12px}
+.admin-audit-table th,.admin-audit-table td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.admin-audit-table th{background:var(--soft);color:var(--forest);white-space:nowrap}
+.admin-audit-table td{overflow-wrap:anywhere}
+.admin-audit-table tr:last-child td{border-bottom:0}
 .site-date{color:var(--muted);font-size:11px}
 .site-rejection-label{background:#f6e9e5!important;color:#91463f!important}
 .mobile button:focus-visible,.header-nav button:focus-visible,.site-filter:focus-visible,.site-review-actions button:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
@@ -67,6 +101,10 @@
   .site-review-toolbar .admin-search-label{max-width:none}
   .site-review-filters{overflow-x:auto;flex-wrap:nowrap;padding:2px}
   .site-filter{flex:0 0 auto}
+  .admin-portal-auth{align-items:flex-start}
+  .admin-portal-auth .site-status{flex-basis:100%}
+  .admin-portal-tab{padding:8px 12px;font-size:12px}
+  .admin-audit-table{min-width:620px}
   .site-form{gap:14px}
   .site-admin-note,.site-privacy-note{font-size:11px}
 }

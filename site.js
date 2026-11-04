@@ -283,17 +283,17 @@
       projectStatus:'Projet approuvé',
       confirmRemove:'Supprimer définitivement cette proposition de ce navigateur ?',
       priorityHeader:'Priorité de révision',
-      priorityHelp:'Tri automatique par quelques mots-clés, sans IA : vérifie chaque proposition, car le classement peut se tromper. Rien n’est rejeté automatiquement et la priorité peut être modifiée.',
+      priorityHelp:'Seul le langage inapproprié est signalé automatiquement. Les propositions ne sont pas filtrées selon leur lien avec l’école; chaque proposition est examinée par un administrateur.',
       priorityNormal:'Normale',
       priorityYellow:'À vérifier',
       priorityRed:'Signalée',
       priorityManual:'Priorité modifiée manuellement',
       priorityAutomatic:'Automatique (suggestion)',
       prioritySet:'Modifier la priorité de révision',
-      priorityReasonSchool:'Des repères liés à l’école ont été détectés.',
-      priorityReasonUnclear:'Le lien avec l’école n’est pas clair; une vérification est suggérée.',
-      priorityReasonOffTopic:'Le sujet semble possiblement sans lien avec l’école.',
-      priorityReasonLanguage:'Le texte contient un langage à vérifier.',
+      priorityReasonSchool:'Aucun langage inapproprié détecté.',
+      priorityReasonUnclear:'À examiner par un administrateur.',
+      priorityReasonOffTopic:'À examiner par un administrateur.',
+      priorityReasonLanguage:'Le langage inapproprié doit être examiné.',
       noCategory:'Sans catégorie'
     },
     en:{
@@ -577,17 +577,17 @@
       projectStatus:'Approved project',
       confirmRemove:'Permanently delete this suggestion from this browser?',
       priorityHeader:'Review priority',
-      priorityHelp:'Automatic sorting uses a small set of keywords, not AI. Review every suggestion because the label can be wrong. Nothing is rejected automatically, and the priority can be changed.',
+      priorityHelp:'Only inappropriate language is automatically flagged. Suggestions are not screened for school relevance; an administrator reviews every submission.',
       priorityNormal:'Normal',
       priorityYellow:'Needs review',
       priorityRed:'Flagged',
       priorityManual:'Priority changed manually',
       priorityAutomatic:'Automatic (suggested)',
       prioritySet:'Change review priority',
-      priorityReasonSchool:'School-related terms were detected.',
-      priorityReasonUnclear:'The school connection is unclear; review is suggested.',
-      priorityReasonOffTopic:'The topic may be unrelated to school.',
-      priorityReasonLanguage:'The text contains language that needs review.',
+      priorityReasonSchool:'No inappropriate language detected.',
+      priorityReasonUnclear:'Needs administrator review.',
+      priorityReasonOffTopic:'Needs administrator review.',
+      priorityReasonLanguage:'Inappropriate language needs review.',
       noCategory:'No category'
     }
   };
@@ -752,32 +752,17 @@
   const priorities=['normal','yellow','red'];
   const priorityOrder={normal:0,yellow:1,red:2};
   const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
-  const schoolTerms=new Set((
-    'school schools student students class classroom classes teacher teachers lesson lessons learning course courses subject subjects homework study library book books reading cafeteria lunch food kitchen bathroom washroom locker hallway corridor playground gym sports club clubs event events meeting assembly council representative representatives safety safe wellbeing well-being health accessibility accessible inclusion inclusive bullying transport bus schoolyard uniform technology computer internet schedule timetable exam exams bench benches furniture support accommodation accommodations calendar '+
-    'ecole scolaire eleve eleves classe classes cours professeur professeurs enseignant enseignante enseignants enseignement apprentissage devoirs etude etudier bibliotheque livre livres lecture cafetaria cafet cafeteria repas diner nourriture cantine salle toilettes corridor casier cour recre gymnase sport club clubs evenement evenements reunion assemblee conseil representant representants securite sante accessibilite inclusion intimidation transport autobus horaire examen examens ordinateur ordinateurs banc bancs mobilier adaptation adaptations calendrier'
-  ).split(/\s+/));
-  const activityTerms=new Set('art arts music theater theatre chess robotics musique echecs robotique'.split(/\s+/));
   const profanityTerms=new Set((
     'fuck fucking fucked shit bullshit bitch bastard asshole assholes damn dick dumbass piss crap motherfucker '+
     'merde putain pute con connard connasse salope salaud enculer encule foutre bordel chiant chier'
   ).split(/\s+/));
-  const offTopicPatterns=[
-    /\b(?:bitcoin|cryptocurrency|crypto trading|stock portfolio|invest in stocks|tinder|dating app|my dating profile|my car|my dog|my cat|my personal business|sell my product|video games?|playstation|xbox|fortnite|minecraft|my vacation|holiday trip)\b/,
-    /\b(?:cryptomonnaie|trading crypto|portefeuille boursier|investir en bourse|tinder|application de rencontre|mon profil de rencontre|mon chien|mon chat|ma voiture|mon entreprise personnelle|vendre mon produit|jeux video|playstation|xbox|fortnite|minecraft|mes vacances|voyage de vacances)\b/
-  ];
   const normalizedWords=value=>String(value||'')
     .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase()
     .match(/[a-z0-9]+/g)||[];
   const classifySuggestion=suggestion=>{
-    const raw=`${suggestion.title} ${suggestion.details}`.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
-    const words=normalizedWords(raw);
+    const words=normalizedWords(`${suggestion.title} ${suggestion.details}`);
     if(words.some(word=>profanityTerms.has(word)))return {priority:'red',reason:'priorityReasonLanguage'};
-    const hasSchoolContext=words.some(word=>schoolTerms.has(word))||
-      (suggestion.category!=='other'&&words.some(word=>activityTerms.has(word)));
-    if(offTopicPatterns.some(pattern=>pattern.test(raw))&&!hasSchoolContext)return {priority:'red',reason:'priorityReasonOffTopic'};
-    if(offTopicPatterns.some(pattern=>pattern.test(raw)))return {priority:'yellow',reason:'priorityReasonUnclear'};
-    if(hasSchoolContext&&words.length>=4)return {priority:'normal',reason:'priorityReasonSchool'};
-    return {priority:'yellow',reason:'priorityReasonUnclear'};
+    return {priority:'normal',reason:'priorityReasonSchool'};
   };
   const suggestionPriority=item=>{
     if(priorities.includes(item.priority))return {priority:item.priority,reason:item.priorityReason||'priorityReasonUnclear',manual:item.priorityOverride===true};
@@ -1404,6 +1389,12 @@
     }else voteTeamDetail.replaceChildren();
   };
   renderGovernancePages();
+  window.cdeccApplyRemoteVoteSettings=settings=>{
+    voteSettings=settings;
+    voteSettingsLoadError='';
+    renderGovernancePages();
+    refreshVoteAvailability();
+  };
   window.setInterval(refreshVoteAvailability,30000);
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshVoteAvailability()});
   vote.addEventListener('click',event=>{

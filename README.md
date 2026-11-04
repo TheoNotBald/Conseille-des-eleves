@@ -7,16 +7,19 @@ Bilingual static website demo in French and English. This is a front-end prototy
 - French / English language toggle
 - Home, how it works, representatives grouped by level, projects, candidacies, news, suggestions, settings, and mock administration pages
 - Candidate application form, team photo, and team color preview
+- Admin tabs for proposition review, voting settings, candidacies, and read-only audit logs
 - Settings for color presets, light/dark mode, language, and the moving slogan
 - Admin controls for a voting-form link and voting schedule
 - Fictional sample representatives and clearly labelled fictional election results
-- Suggestions and candidate applications are stored in the current browser only; they are not sent to the school or shared across devices
+- Supabase integration scaffolding for cross-device suggestions, candidacies, candidate photos, vote settings, and audit events
 - Simulated admin news preview and section navigation
 
 ## Important limitations
-- No backend, authentication, database, analytics, or email sending is implemented. A configured voting link opens an external form; this site does not collect votes.
-- Admin controls are not protected. Voting links, schedules, and appearance settings are saved in the current browser only, not published for other visitors.
-- Candidate application details are stored in localStorage and team photos (up to 50 MB each) in IndexedDB, both only in the current browser. Do not enter real student information or upload real student photos.
+- Supabase must be configured and the migration applied before cross-device storage or Google admin sign-in works. See [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md). Until then, admin access is locked and public forms use local-browser prototype storage.
+- When configured, any Google account ending in `@gmail.com` can administer the prototype. This is intentionally broad and not suitable for production.
+- Admin audit logs are append-only for application users, but a Supabase project owner can still alter the database or disable protections.
+- Candidate application details are stored in localStorage and team photos (up to 50 MB each) in IndexedDB in local demo mode. Do not enter real student information or upload real student photos.
+- A configured voting link opens an external form; this site does not collect votes.
 - Names and election examples are fictional. The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 - The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.
 
