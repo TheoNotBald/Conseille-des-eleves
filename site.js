@@ -14,31 +14,17 @@
       completedIntro:'Des idées proposées par les élèves, réalisées ensemble pour améliorer la vie à l’école.',
       projectDetails:'Découvrir le projet',
       projectBack:'Retour aux projets terminés',
-      completedTemplateLabel:'Exemple fictif · modèle',
       moreInfo:'Découvrir plus →',
       voteTemplateTitle:'La boîte de vote',
-      voteTemplateText:'Cette maquette montre où un vote pourra apparaître. Aucun vote n’est ouvert ni enregistré pour le moment.',
+      voteTemplateText:'Aucun vote n’est ouvert ni enregistré pour le moment.',
       voteOptionOne:'Option de vote à définir',
       voteOptionTwo:'Une autre option à définir',
       voteDisabled:'Le vote en ligne n’est pas encore disponible.',
       votePageTitle:'Système du vote',
-      votePageIntro:'Découvrez les équipes candidates. Les équipes et leurs propositions sont des exemples fictifs; aucun vote n’est ouvert.',
-      voteTeamOne:'Parti du renouveau étudiant',
-      voteTeamOneText:'Une équipe fictive qui propose de mieux faire circuler les idées et les nouvelles entre les élèves.',
-      voteTeamTwo:'Parti de la vie scolaire',
-      voteTeamTwoText:'Une équipe fictive qui souhaite créer davantage d’activités et de moments rassembleurs.',
-      voteTeamThree:'Parti des espaces accueillants',
-      voteTeamThreeText:'Une équipe fictive qui veut améliorer les espaces communs et les rendre agréables pour tous.',
-      voteTeamFour:'Parti de la voix étudiante',
-      voteTeamFourText:'Une équipe fictive qui met l’écoute et la représentation des élèves au premier plan.',
-      voteTeamFive:'Parti des idées en action',
-      voteTeamFiveText:'Une équipe fictive qui souhaite accompagner les propositions jusqu’à leur réalisation.',
-      voteTeamSix:'Parti d’un collège durable',
-      voteTeamSixText:'Une équipe fictive qui propose des gestes concrets pour prendre soin de la communauté scolaire.',
+      votePageIntro:'Découvrez les équipes candidates. Le vote n’est pas encore ouvert.',
       voteTeamMore:'Plus d’information →',
       voteTeamBack:'Retour au vote',
-      voteTeamTemplateLabel:'Équipe fictive · modèle',
-      voteTeamImageAlt:'Photo modèle d’une équipe candidate fictive',
+      voteTeamImageAlt:'Photo de l’équipe candidate',
       voteSubmit:'Voter',
       voteReleaseNote:'Le vote n’est pas encore ouvert. Le bouton sera activé lorsque le scrutin sera officiellement lancé.',
       candidatePageTitle:'Les candidatures',
@@ -46,10 +32,12 @@
       candidateInfoTitle:'Se présenter au Conseil des élèves',
       candidateInfoText:'Les dates, les critères et les façons de déposer une candidature restent à confirmer avec l’école.',
       candidatePending:'Aucune candidature ni aucun résultat officiel n’est publié pour le moment.',
+      voteNoCandidates:'Aucune équipe candidate publiée',
+      voteNoCandidatesText:'Les candidatures approuvées apparaîtront ici.',
       navIdeas:'Idées',
       navCandidates:'Candidature',
       navMembers:'Membres',
-      charterTemplateNote:'Projet de charte constitutionnelle — à réviser et à faire approuver par l’école avant adoption.',
+      charterTemplateNote:'La charte doit être révisée et approuvée par l’école avant son adoption.',
       charterArticleOne:'Article 1',
       charterArticleTwo:'Article 2',
       charterSectionOne:'1.1',
@@ -126,39 +114,10 @@
       assemblyComposition:'La composition de l’Assemblée et la sélection de chaque titulaire de poste restent à confirmer.',
       rolePresident:'Président',
       rolePresidentText:'Dirige les réunions et coordonne les travaux de l’Assemblée.',
-      memberLeadOne:'Remi Ouellet',
-      memberLeadOneRole:'Président',
-      memberLeadOneBio:'Exemple de présentation du président du Conseil des élèves.',
-      memberLeadTwo:'Camille Gagnon',
-      memberLeadTwoRole:'Vice-présidente',
-      memberLeadTwoBio:'Exemple de présentation de la vice-présidente du Conseil des élèves.',
-      assemblyMemberSecretary:'Louis Martel',
-      assemblyMemberPresident:'Émile Bouchard',
-      assemblyMemberVicePresident:'Camille Gagnon',
-      assemblyMemberHighSpokesperson:'Amélie Dubois',
-      assemblyMemberTreasurer:'Noah Ali',
-      assemblyMemberLowSpokesperson:'Jules Morin',
       leadreps:'Assemblée citoyenne',
-      leadsub:'Exemples de responsabilités à adapter et à confirmer avec les élèves et l’école.',
+      leadsub:'Les membres seront présentés lorsque leur sélection sera confirmée.',
       classreps:'Représentants de classe',
-      classsub:'Exemples fictifs : chaque représentant recueille la voix de sa classe et partage le suivi.',
-      classMemberOne:'Alexandre Roy',
-      classMemberTwo:'Sofia Tremblay',
-      classMemberThree:'Thomas Nguyen',
-      classMemberFour:'Maya Bouchard',
-      classMemberFive:'Elliot Gagnon',
-      classMemberRoleOne:'Représentant de classe · Secondaire 1',
-      classMemberRoleTwo:'Représentante de classe · Secondaire 2',
-      classMemberRoleThree:'Représentant de classe · Secondaire 3',
-      classMemberRoleFour:'Représentante de classe · Secondaire 4',
-      classMemberRoleFive:'Représentant de classe · Secondaire 5',
-      classMemberGroupOne:'Groupes 101-106',
-      classMemberGroupTwo:'Groupes 201-206',
-      classMemberGroupThree:'Groupes 301-306',
-      classMemberGroupFour:'Groupes 401-406',
-      classMemberGroupFive:'Groupes 511-516',
-      memberTemplateNote:'MODÈLE À ADAPTER · Tous les noms et profils ci-dessous sont fictifs. Cette structure et ces responsabilités sont des propositions, pas des règles officielles; elles doivent être discutées et confirmées avec l’école.',
-      classRepResponsibility:'Recueille les idées de sa classe, les transmet au Conseil de niveau et partage le suivi avec ses camarades.',
+      classsub:'Les représentants seront présentés lorsque leur sélection sera confirmée.',
       roleVicePresident:'Vice-président',
       roleVicePresidentText:'Remplace la présidence au besoin et apporte un second point de vue.',
       roleSecretary:'Secrétaire',
@@ -220,12 +179,9 @@
       news:'Actualités',
       shareIdea:'Proposer une idée',
       viewProjects:'Découvrir les projets',
-      approvedProjects:'Projets approuvés',
       latestNews:'Actualités',
       noProjectsTitle:'Aucun projet pour le moment',
       noProjectsText:'Les projets approuvés par le Conseil des élèves apparaîtront ici.',
-      projectSearch:'Rechercher dans les idées',
-      projectSearchPlaceholder:'Titre, description ou catégorie',
       noNewsTitle:'Aucune actualité pour le moment',
       noNewsText:'Les actualités, les mises à jour des projets terminés et les comptes rendus approuvés seront publiés ici lorsqu’ils seront disponibles.',
       peopleTitle:'Représentants',
@@ -238,7 +194,7 @@
       completedStatus:'Projet terminé',
       processNote:'Le Conseil partage les nouvelles et le suivi des propositions avec la communauté scolaire.',
       participateTitle:'Une idée pour améliorer la vie à l’école ?',
-      participateText:'Décris ta proposition. Après examen, une idée approuvée sera publiée dans les projets.',
+      participateText:'Décris ta proposition. Après examen, une idée approuvée pourra être mise en vedette sur la page d’accueil.',
       category:'Catégorie',
       chooseCategory:'Choisir une catégorie',
       schoolLife:'Vie à l’école',
@@ -308,31 +264,17 @@
       completedIntro:'Student ideas brought to life together to make school a better place.',
       projectDetails:'Explore this project',
       projectBack:'Back to completed projects',
-      completedTemplateLabel:'Fictional example · template',
       moreInfo:'Discover more →',
       voteTemplateTitle:'The voting booth',
-      voteTemplateText:'This is a preview of where a vote could appear. No vote is currently open or recorded.',
+      voteTemplateText:'No vote is currently open or recorded.',
       voteOptionOne:'Voting option to be decided',
       voteOptionTwo:'Another option to be decided',
       voteDisabled:'Online voting is not available yet.',
       votePageTitle:'Voting system',
-      votePageIntro:'Explore the candidate teams. The teams and their platforms are fictional examples; voting is not open.',
-      voteTeamOne:'Student Renewal Party',
-      voteTeamOneText:'A fictional team proposing better ways to share ideas and updates among students.',
-      voteTeamTwo:'School Life Party',
-      voteTeamTwoText:'A fictional team hoping to create more activities and opportunities to come together.',
-      voteTeamThree:'Welcoming Spaces Party',
-      voteTeamThreeText:'A fictional team looking to improve shared spaces and make them welcoming for everyone.',
-      voteTeamFour:'Student Voice Party',
-      voteTeamFourText:'A fictional team putting listening to and representing students first.',
-      voteTeamFive:'Ideas in Action Party',
-      voteTeamFiveText:'A fictional team hoping to support proposals all the way through to completion.',
-      voteTeamSix:'Sustainable School Party',
-      voteTeamSixText:'A fictional team proposing practical ways to care for the school community.',
+      votePageIntro:'Explore the candidate teams. Voting is not open yet.',
       voteTeamMore:'More information →',
       voteTeamBack:'Back to voting',
-      voteTeamTemplateLabel:'Fictional team · template',
-      voteTeamImageAlt:'Template photo of a fictional candidate team',
+      voteTeamImageAlt:'Candidate team photo',
       voteSubmit:'Vote',
       voteReleaseNote:'Voting is not open yet. This button will be enabled when voting officially begins.',
       candidatePageTitle:'Candidate applications',
@@ -340,10 +282,12 @@
       candidateInfoTitle:'Run for Student Council',
       candidateInfoText:'Dates, eligibility, and application steps still need to be confirmed with the school.',
       candidatePending:'No candidates or official results are published yet.',
+      voteNoCandidates:'No candidate teams have been published',
+      voteNoCandidatesText:'Approved candidacies will appear here.',
       navIdeas:'Ideas',
       navCandidates:'Candidates',
       navMembers:'Members',
-      charterTemplateNote:'Draft constitution-style charter — to be reviewed and approved by the school before adoption.',
+      charterTemplateNote:'The charter must be reviewed and approved by the school before adoption.',
       charterArticleOne:'Article 1',
       charterArticleTwo:'Article 2',
       charterSectionOne:'1.1',
@@ -420,39 +364,10 @@
       assemblyComposition:'Assembly membership and the selection method for each position still need confirmation.',
       rolePresident:'President',
       rolePresidentText:'Leads meetings and coordinates the Assembly’s work.',
-      memberLeadOne:'Remi Ouellet',
-      memberLeadOneRole:'President',
-      memberLeadOneBio:'Example profile for the Student Council president.',
-      memberLeadTwo:'Camille Gagnon',
-      memberLeadTwoRole:'Vice-President',
-      memberLeadTwoBio:'Example profile for the Student Council vice-president.',
-      assemblyMemberSecretary:'Louis Martel',
-      assemblyMemberPresident:'Emile Bouchard',
-      assemblyMemberVicePresident:'Camille Gagnon',
-      assemblyMemberHighSpokesperson:'Amélie Dubois',
-      assemblyMemberTreasurer:'Noah Ali',
-      assemblyMemberLowSpokesperson:'Jules Morin',
       leadreps:'Student Assembly',
-      leadsub:'Example responsibilities to adapt and confirm with students and the school.',
+      leadsub:'Members will be introduced once their selection is confirmed.',
       classreps:'Class representatives',
-      classsub:'Fictional examples: each representative gathers their class’s views and shares updates.',
-      classMemberOne:'Alexandre Roy',
-      classMemberTwo:'Sofia Tremblay',
-      classMemberThree:'Thomas Nguyen',
-      classMemberFour:'Maya Bouchard',
-      classMemberFive:'Elliot Gagnon',
-      classMemberRoleOne:'Class representative · Secondary 1',
-      classMemberRoleTwo:'Class representative · Secondary 2',
-      classMemberRoleThree:'Class representative · Secondary 3',
-      classMemberRoleFour:'Class representative · Secondary 4',
-      classMemberRoleFive:'Class representative · Secondary 5',
-      classMemberGroupOne:'Groups 101-106',
-      classMemberGroupTwo:'Groups 201-206',
-      classMemberGroupThree:'Groups 301-306',
-      classMemberGroupFour:'Groups 401-406',
-      classMemberGroupFive:'Groups 511-516',
-      memberTemplateNote:'TEMPLATE TO ADAPT · All names and profiles below are fictional. This structure and these responsibilities are proposals, not official rules; they should be discussed and confirmed with the school.',
-      classRepResponsibility:'Gathers ideas from the class, brings them to the Level Council, and shares updates with classmates.',
+      classsub:'Representatives will be introduced once their selection is confirmed.',
       roleVicePresident:'Vice-President',
       roleVicePresidentText:'Steps in when needed and provides a second point of view.',
       roleSecretary:'Secretary',
@@ -514,12 +429,9 @@
       news:'News',
       shareIdea:'Suggest an idea',
       viewProjects:'Explore projects',
-      approvedProjects:'Approved projects',
       latestNews:'News',
       noProjectsTitle:'No projects yet',
       noProjectsText:'Projects approved by the Student Council will appear here.',
-      projectSearch:'Search ideas',
-      projectSearchPlaceholder:'Title, description, or category',
       noNewsTitle:'No news yet',
       noNewsText:'News, completed-project updates, and approved meeting summaries will be published here when available.',
       peopleTitle:'Representatives',
@@ -532,7 +444,7 @@
       completedStatus:'Completed project',
       processNote:'The Student Council shares updates and proposal follow-up with the school community.',
       participateTitle:'Have an idea to improve school life?',
-      participateText:'Describe your suggestion. Once reviewed, an approved idea will be published under Projects.',
+      participateText:'Describe your suggestion. Once reviewed, an approved idea may be featured on the home page.',
       category:'Category',
       chooseCategory:'Choose a category',
       schoolLife:'School life',
@@ -616,7 +528,7 @@
     charterSoonTitle:'La charte est en préparation',
     charterSoonText:'La charte sera publiée ici une fois qu’elle aura été composée et approuvée.',
     candidateBlobTitle:'Comment devenir candidat ou candidate',
-    candidateBlobText:'Présente ton équipe, les personnes qui la composent et les idées que vous souhaitez défendre. Le formulaire de candidature est un prototype et conserve les informations uniquement dans ce navigateur.',
+    candidateBlobText:'Présente ton équipe, les personnes qui la composent et les idées que vous souhaitez défendre.',
     candidateRegister:'S’inscrire comme candidat',
     candidateTeam:'Nom du parti ou de l’équipe',
     candidateRoster:'Noms et postes des membres',
@@ -624,14 +536,16 @@
     candidateIdeas:'Idées et propositions de l’équipe',
     candidatePicture:'Photo de l’équipe',
     candidatePictureHelp:'Image JPG, PNG ou WebP de 50 Mo maximum.',
+    candidateImageCropTitle:'Ajuster la photo à son cadre',
+    candidateImageCropHelp:'Fais glisser la photo pour la déplacer. Fais glisser un coin pour zoomer; les flèches et +/− fonctionnent aussi.',
     candidateBackground:'Couleur de fond',
     candidateForeground:'Couleur du texte',
     candidatePreviewLabel:'Aperçu de l’équipe',
     candidatePreviewMembers:'Membres de l’équipe',
     candidatePreviewImage:'La photo de l’équipe apparaîtra ici.',
     candidateSubmit:'Enregistrer la candidature',
-    candidatePrivacy:'Prototype uniquement : la candidature est enregistrée dans ce navigateur et n’est pas envoyée à l’école. N’ajoute pas de renseignements personnels réels.',
-    candidateSaved:'La candidature a été enregistrée dans ce navigateur seulement.',
+    candidatePrivacy:'La candidature est enregistrée uniquement sur cet appareil et n’est pas transmise à l’école. N’ajoute pas de renseignements personnels réels.',
+    candidateSaved:'La candidature a été enregistrée uniquement sur cet appareil.',
     candidateRequired:'Remplis le nom de l’équipe, les membres et les idées.',
     candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 50 Mo maximum.',
     candidateSaveError:'La candidature n’a pas pu être enregistrée dans ce navigateur.',
@@ -663,10 +577,10 @@
     sloganLabel:'Afficher la ligne « Être · Faire · Agir »',
     languageTitle:'Langue',
     adminAccessTitle:'Administration',
-    adminAccessText:'Ouvre les outils de gestion du prototype.',
+    adminAccessText:'Ouvre les outils de gestion du site.',
     adminAccessButton:'Ouvrir la version admin',
     legalTitle:'Légal',
-    legalText:'Modèle à compléter et à gérer par l’école avant la mise en ligne officielle.',
+    legalText:'Les renseignements juridiques doivent être complétés et approuvés par l’école avant publication.',
     legalPrivacy:'Confidentialité et renseignements personnels',
     legalTerms:'Conditions d’utilisation',
     settingsSaveError:'Les préférences n’ont pas pu être enregistrées sur cet appareil.',
@@ -677,7 +591,7 @@
     charterSoonTitle:'The charter is being prepared',
     charterSoonText:'The charter will be published here once it has been drafted and approved.',
     candidateBlobTitle:'How to become a candidate',
-    candidateBlobText:'Introduce your team, its members, and the ideas you want to support. This application form is a prototype and stores information only in this browser.',
+    candidateBlobText:'Introduce your team, its members, and the ideas you want to support.',
     candidateRegister:'Register as a candidate',
     candidateTeam:'Party or team name',
     candidateRoster:'Members’ names and positions',
@@ -685,14 +599,16 @@
     candidateIdeas:'Team ideas and proposals',
     candidatePicture:'Team picture',
     candidatePictureHelp:'JPG, PNG, or WebP image up to 50 MB.',
+    candidateImageCropTitle:'Fit the photo to its frame',
+    candidateImageCropHelp:'Drag the photo to reposition it. Drag a corner to zoom; arrow keys and +/− also work.',
     candidateBackground:'Background color',
     candidateForeground:'Text color',
     candidatePreviewLabel:'Team preview',
     candidatePreviewMembers:'Team members',
     candidatePreviewImage:'The team picture will appear here.',
     candidateSubmit:'Save application',
-    candidatePrivacy:'Prototype only: the application is saved in this browser and is not sent to the school. Do not enter real personal information.',
-    candidateSaved:'The application was saved in this browser only.',
+    candidatePrivacy:'The application is saved only on this device and is not sent to the school. Do not enter real personal information.',
+    candidateSaved:'The application was saved only on this device.',
     candidateRequired:'Enter the team name, members, and ideas.',
     candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 50 MB.',
     candidateSaveError:'The application could not be saved in this browser.',
@@ -724,10 +640,10 @@
     sloganLabel:'Show the “Be · Do · Act” moving line',
     languageTitle:'Language',
     adminAccessTitle:'Administration',
-    adminAccessText:'Open the prototype management tools.',
+    adminAccessText:'Open the site management tools.',
     adminAccessButton:'Open admin version',
     legalTitle:'Legal',
-    legalText:'Template for the school to complete and manage before an official launch.',
+    legalText:'Legal information must be completed and approved by the school before publication.',
     legalPrivacy:'Privacy and personal information',
     legalTerms:'Terms of use',
     settingsSaveError:'Preferences could not be saved on this device.',
@@ -735,20 +651,6 @@
   });
 
   const text=(key)=>copy[document.documentElement.lang==='en'?'en':'fr'][key];
-  const completedTemplates={
-    fr:[
-      {id:'template-reading',title:'Un coin lecture aménagé',date:'2026-06-12',details:'Un espace calme a été aménagé avec des livres et des places confortables pour lire ou se détendre pendant les pauses.'},
-      {id:'template-talents',title:'Une semaine des talents',date:'2026-05-22',details:'Les élèves ont partagé leurs créations, leurs passions et leurs talents lors d’activités organisées dans l’école.'},
-      {id:'template-welcome',title:'Des activités pour accueillir les élèves',date:'2026-04-17',details:'Des activités conçues par les élèves ont aidé chacun à découvrir les espaces, les ressources et la vie de l’école.'},
-      {id:'template-garden',title:'Un espace commun plus accueillant',date:'2026-03-20',details:'Une zone commune a été repensée avec des sièges et des idées choisies pour rendre les pauses plus agréables.'}
-    ],
-    en:[
-      {id:'template-reading',title:'A new reading corner',date:'2026-06-12',details:'A quiet space with books and comfortable seating was created for reading or relaxing during breaks.'},
-      {id:'template-talents',title:'A week of student talents',date:'2026-05-22',details:'Students shared their creations, interests, and talents through activities organized at school.'},
-      {id:'template-welcome',title:'Activities to welcome students',date:'2026-04-17',details:'Student-led activities helped everyone discover school spaces, resources, and community life.'},
-      {id:'template-garden',title:'A more welcoming shared space',date:'2026-03-20',details:'A common area was refreshed with seating and student-selected ideas to make breaks more enjoyable.'}
-    ]
-  };
   const priorities=['normal','yellow','red'];
   const priorityOrder={normal:0,yellow:1,red:2};
   const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
@@ -947,22 +849,9 @@
     article.append(make('p','',suggestion.details));
     return article;
   };
-  const renderApproved=(suggestions)=>{
-    const approved=suggestions.filter(item=>item.status==='approved'&&!item.completedAt).sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
-    const query=projectSearchInput.value.trim().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
-    const matches=query?approved.filter(item=>{
-      const searchable=[item.title,item.details,item.category,categoryName(item.category)].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase();
-      return searchable.includes(query);
-    }):approved;
-    const list=document.createElement('div');
-    list.className='site-project-list';
-    if(matches.length)matches.forEach(item=>list.append(makeProjectCard(item)));
-    else if(query)list.append(emptyState(text('noMatchesTitle'),text('noMatchesText')));
-    else list.append(emptyState(text('noProjectsTitle'),text('noProjectsText')));
-    document.querySelector('#page-projects .site-project-list')?.replaceWith(list);
-    return approved;
-  };
-
+  const getApprovedSuggestions=suggestions=>suggestions
+    .filter(item=>item.status==='approved'&&!item.completedAt)
+    .sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
   const home=document.getElementById('page-home');
   const homeMission=make('section','home-mission');
   homeMission.append(make('h2','',text('missionTitle')),make('p','',text('missionText')));
@@ -980,13 +869,18 @@
   document.querySelector('main').append(projectDetail);
   if(!pageNames.includes('completed-detail'))pageNames.push('completed-detail');
   let homeCompletedItems=new Map();
+  let remoteApprovedProjects=[];
   let selectedCompletedId='';
   const heroStory=document.querySelector('.hero-story');
   heroStory.replaceChildren();
   const heroHeading=make('h1','',text('homeTitle'));
+  const heroDescription=make('p','hero-project-description');
   const heroDate=make('time','hero-date');
   const heroMore=button(text('moreInfo'),'hero-more primary');
-  heroStory.append(heroHeading,heroDate,heroMore);
+  const heroProjectImage=document.createElement('img');
+  heroProjectImage.className='home-featured-image';
+  heroProjectImage.alt='';
+  heroStory.append(heroHeading,heroDescription,heroDate,heroMore);
   const renderProjectDetail=(project,navigate=false)=>{
     if(!project)return;
     selectedCompletedId=project.id;
@@ -994,14 +888,15 @@
     const back=button(`← ${text('projectBack')}`,'home-project-back');
     const content=make('article','home-project-detail-card');
     const image=document.createElement('img');
-    image.src='reading-corner-illustration.svg';
+    image.src=project.originalImageUrl||project.imageUrl||'reading-corner-illustration.svg';
+    if(project.originalImageUrl)image.classList.add('home-project-detail-image-original');
     image.alt='';
     image.loading='lazy';
     const description=make('div','home-project-detail-copy');
     description.append(
-      make('span','pill',project.isTemplate?text('completedTemplateLabel'):text('completedStatus')),
+      make('span','pill',project.completedAt?text('completedStatus'):text('projectStatus')),
       make('h2','',project.title),
-      make('time','site-date',formatDate(project.completedAt||project.date)),
+      make('time','site-date',formatDate(project.completedAt||project.approvedAt||project.date)),
       make('p','',project.details)
     );
     content.append(description,image);
@@ -1012,37 +907,61 @@
     }
   };
   const renderHomeProjects=suggestions=>{
-    const actual=suggestions
-      .filter(item=>item.status==='approved'&&item.completedAt)
-      .sort((a,b)=>b.completedAt.localeCompare(a.completedAt))
-      .map(item=>({...item,id:item.id,isTemplate:false}));
-    const templates=completedTemplates[document.documentElement.lang==='en'?'en':'fr'];
-    const entries=[...actual,...templates.slice(0,Math.max(0,4-actual.length)).map(item=>({...item,isTemplate:true}))];
-    homeCompletedItems=new Map(entries.map(item=>[item.id,item]));
+    const localEntries=suggestions
+      .filter(item=>item.status==='approved'&&(item.completedAt||!item.homePlacement||item.homePlacement==='completed'))
+      .map(item=>({...item,id:item.id,homePlacement:'completed',completedAt:item.completedAt||'',approvedAt:item.approvedAt||item.createdAt||''}))
+      .sort((a,b)=>(b.completedAt||b.approvedAt||'').localeCompare(a.completedAt||a.approvedAt||''));
+    const entries=[
+      ...localEntries,
+      ...remoteApprovedProjects.filter(item=>item.homePlacement==='completed')
+    ].sort((a,b)=>(b.completedAt||b.approvedAt||b.createdAt||'').localeCompare(a.completedAt||a.approvedAt||a.createdAt||''));
+    const featured=remoteApprovedProjects.find(item=>item.homePlacement==='featured');
+    homeCompletedItems=new Map([...entries,...(featured?[featured]:[])].map(item=>[item.id,item]));
     completedGrid.replaceChildren();
+    if(!entries.length)completedGrid.append(emptyState(text('noProjectsTitle'),text('noProjectsText')));
     entries.forEach(project=>{
       const card=button('', 'home-project-card');
       card.dataset.completedId=project.id;
       card.setAttribute('aria-label',`${text('projectDetails')}: ${project.title}`);
       const copyBlock=make('span','home-project-card-copy');
       copyBlock.append(
-        make('span','pill',project.isTemplate?text('completedTemplateLabel'):text('completedStatus')),
+        make('span','pill',project.completedAt?text('completedStatus'):text('projectStatus')),
         make('span','home-project-card-title',project.title),
         make('span','home-project-card-description',project.details),
-        make('time','site-date',formatDate(project.completedAt||project.date))
+        make('time','site-date',formatDate(project.completedAt||project.approvedAt||project.date))
       );
       const image=document.createElement('img');
-      image.src='reading-corner-illustration.svg';
+      image.src=project.imageUrl||'reading-corner-illustration.svg';
       image.alt='';
       image.loading='lazy';
       card.append(copyBlock,image);
       completedGrid.append(card);
     });
-    const featured=entries[0];
     if(featured){
+      const homeHero=document.querySelector('.home-hero');
+      homeHero.classList.add('has-featured-project');
+      if(heroProjectImage.parentElement!==homeHero)homeHero.append(heroProjectImage);
       heroHeading.textContent=featured.title;
-      heroDate.textContent=formatDate(featured.completedAt||featured.date);
+      heroDescription.textContent=featured.details;
+      heroDescription.hidden=!featured.details;
+      heroDate.textContent=formatDate(featured.completedAt||featured.approvedAt||featured.date);
       heroMore.dataset.completedId=featured.id;
+      heroDate.hidden=false;
+      heroMore.hidden=false;
+      heroMore.style.display='';
+      heroProjectImage.src=featured.imageUrl||'reading-corner-illustration.svg';
+    }else{
+      const homeHero=document.querySelector('.home-hero');
+      homeHero.classList.remove('has-featured-project');
+      heroProjectImage.remove();
+      heroHeading.textContent=text('homeTitle');
+      heroDescription.textContent='';
+      heroDescription.hidden=true;
+      heroDate.textContent='';
+      heroDate.hidden=true;
+      heroMore.hidden=true;
+      heroMore.style.display='none';
+      homeHero.style.backgroundImage='';
     }
     if(selectedCompletedId){
       const selected=homeCompletedItems.get(selectedCompletedId);
@@ -1056,6 +975,24 @@
         }
       }
     }
+  };
+  window.cdeccApplyRemoteSuggestions=records=>{
+    remoteApprovedProjects=(records||[]).filter(item=>item.status==='approved').map(item=>({
+      ...item,
+      title:item.presentation_title||item.title,
+      details:item.presentation_description||item.details,
+      homePlacement:item.home_placement||'completed',
+      completedAt:item.completed_at||'',
+      approvedAt:item.approved_at||'',
+      createdAt:item.created_at||'',
+      imageUrl:item.image_path&&window.cdeccSupabase
+        ?window.cdeccSupabase.storage.from('project-images').getPublicUrl(item.image_path).data.publicUrl
+        :'',
+      originalImageUrl:item.original_image_path&&window.cdeccSupabase
+        ?window.cdeccSupabase.storage.from('project-images').getPublicUrl(item.original_image_path).data.publicUrl
+        :''
+    }));
+    renderHomeProjects(readSuggestions());
   };
   completedGrid.addEventListener('click',event=>{
     const card=event.target.closest('[data-completed-id]');
@@ -1162,6 +1099,18 @@
     candidateIntro.append(candidateRegister);
     const candidateForm=make('form','card site-form candidate-form');
     candidateForm.hidden=true;
+    const toggleCandidateForm=(show)=>{
+      candidateForm.hidden=!show;
+      const label=show?(document.documentElement.lang==='en'?'Close form':'Fermer le formulaire'):text('candidateRegister');
+      candidateRegister.textContent=label;
+      candidateRegister.setAttribute('aria-expanded',String(show));
+      if(show){
+        candidateForm.scrollIntoView({behavior:'smooth',block:'start'});
+        const firstField=candidateForm.querySelector('input[name="candidate-team"]');
+        if(firstField){firstField.focus({preventScroll:true});}
+      }
+    };
+    candidateRegister.addEventListener('click',()=>toggleCandidateForm(candidateForm.hidden));
     const appendCandidateField=(id,key,tag='input',type='text')=>{
       const label=make('label','');
       label.htmlFor=id;
@@ -1189,11 +1138,45 @@
     picture.required=true;
     const pictureHelp=make('p','site-field-help',text('candidatePictureHelp'));
     candidateForm.append(pictureHelp);
+    const candidateImageCropEditor=make('div','candidate-image-crop-editor');
+    candidateImageCropEditor.hidden=true;
+    candidateImageCropEditor.append(make('p','candidate-image-crop-title',text('candidateImageCropTitle')));
+    const candidateImageCropCanvas=document.createElement('canvas');
+    candidateImageCropCanvas.className='candidate-image-crop-canvas';
+    candidateImageCropCanvas.tabIndex=0;
+    candidateImageCropCanvas.setAttribute('role','img');
+    candidateImageCropCanvas.setAttribute('aria-label',text('candidateImageCropHelp'));
+    candidateImageCropEditor.append(candidateImageCropCanvas,make('p','candidate-image-crop-help',text('candidateImageCropHelp')));
+    candidateForm.append(candidateImageCropEditor);
+    let candidateImageEditor=null;
+    const initializeCandidateImageEditor=()=>{
+      if(candidateImageEditor)return candidateImageEditor;
+      if(typeof window.cdeccCreateCandidateImageCropEditor!=='function')throw new Error(text('candidateImageInvalid'));
+      candidateImageEditor=window.cdeccCreateCandidateImageCropEditor(candidateImageCropCanvas,canvas=>{
+        candidateImageCropEditor.hidden=false;
+        candidatePreviewImage.src=canvas.toDataURL('image/webp',.8);
+        candidatePreviewImage.hidden=false;
+        candidatePreviewPlaceholder.hidden=true;
+      });
+      window.cdeccCandidateImageCropEditors??=new WeakMap();
+      window.cdeccCandidateImageCropEditors.set(candidateForm,candidateImageEditor);
+      return candidateImageEditor;
+    };
     const backgroundColor=appendCandidateField('candidate-background','candidateBackground','input','color');
     backgroundColor.value='#396d59';
     const foregroundColor=appendCandidateField('candidate-foreground','candidateForeground','input','color');
     foregroundColor.value='#ffffff';
     const candidatePreview=make('article','candidate-preview-card');
+    candidatePreview.tabIndex=0;
+    candidatePreview.setAttribute('role','button');
+    candidatePreview.style.cursor='pointer';
+    candidatePreview.addEventListener('click',()=>toggleCandidateForm(true));
+    candidatePreview.addEventListener('keydown',event=>{
+      if(event.key==='Enter'||event.key===' '){
+        event.preventDefault();
+        toggleCandidateForm(true);
+      }
+    });
     const candidatePreviewCopy=make('div','candidate-preview-copy');
     const candidatePreviewTitle=make('h2','');
     const candidatePreviewIdeas=make('p','');
@@ -1214,7 +1197,6 @@
     const candidatePreviewPlaceholder=make('p','',text('candidatePreviewImage'));
     candidatePreviewMedia.append(candidatePreviewImage,candidatePreviewPlaceholder);
     candidatePreview.append(candidatePreviewCopy,candidatePreviewMedia);
-    let candidatePreviewImageUrl='';
     const updateCandidatePreview=()=>{
       candidatePreview.style.backgroundColor=backgroundColor.value;
       candidatePreview.style.color=foregroundColor.value;
@@ -1232,18 +1214,22 @@
     backgroundColor.addEventListener('input',updateCandidatePreview);
     foregroundColor.addEventListener('input',updateCandidatePreview);
     picture.addEventListener('change',()=>{
-      if(candidatePreviewImageUrl)URL.revokeObjectURL(candidatePreviewImageUrl);
-      candidatePreviewImageUrl='';
       const file=picture.files[0];
       if(file&&file.size<=maxCandidateImageSize&&['image/jpeg','image/png','image/webp'].includes(file.type)){
-        candidatePreviewImageUrl=URL.createObjectURL(file);
-        candidatePreviewImage.src=candidatePreviewImageUrl;
-        candidatePreviewImage.hidden=false;
-        candidatePreviewPlaceholder.hidden=true;
+        try{
+          initializeCandidateImageEditor().load(file).catch(error=>{
+            reportError(error);
+            setError(candidateForm.querySelector('.site-status'),error);
+          });
+        }catch(error){
+          reportError(error);
+          setError(candidateForm.querySelector('.site-status'),error);
+        }
       }else{
         candidatePreviewImage.removeAttribute('src');
         candidatePreviewImage.hidden=true;
         candidatePreviewPlaceholder.hidden=false;
+        candidateImageCropEditor.hidden=true;
       }
     });
     updateCandidatePreview();
@@ -1260,26 +1246,6 @@
       candidateForm
     );
 
-    const makeMemberCard=(nameKey,roleKey,initials,responsibilityKey='',groupKey='')=>{
-      const card=make('article','member-card');
-      const portrait=make('div','member-portrait');
-      portrait.append(make('span','member-initials',initials));
-      const details=make('div','member-card-details');
-      details.append(make('h3','',text(nameKey)),make('p','member-role',text(roleKey)));
-      if(responsibilityKey)details.append(make('p','member-bio',text(responsibilityKey)));
-      if(groupKey)details.append(make('p','member-group',text(groupKey)));
-      card.append(portrait,details);
-      return card;
-    };
-    const leadMembers=make('div','member-grid member-grid-leads');
-    leadMembers.append(
-      makeMemberCard('assemblyMemberSecretary','roleSecretary','LM','roleSecretaryText'),
-      makeMemberCard('assemblyMemberPresident','rolePresident','EB','rolePresidentText'),
-      makeMemberCard('assemblyMemberVicePresident','roleVicePresident','CG','roleVicePresidentText'),
-      makeMemberCard('assemblyMemberHighSpokesperson','roleHighSpokesperson','AD','roleHighSpokespersonText'),
-      makeMemberCard('assemblyMemberTreasurer','roleTreasurer','NA','roleTreasurerText'),
-      makeMemberCard('assemblyMemberLowSpokesperson','roleLowSpokesperson','JM','roleLowSpokespersonText')
-    );
     const structure=make('ol','gov-flow members-structure');
     [
       ['flowStudents','flowStudentsText'],
@@ -1292,30 +1258,14 @@
       step.append(make('span','gov-flow-number',String(index+1)),make('h3','',text(key)),make('p','',text(descriptionKey)));
       structure.append(step);
     });
-    const classMembers=make('div','member-groups');
-    [
-      ['classMemberOne','classMemberRoleOne','AR','classMemberGroupOne'],
-      ['classMemberTwo','classMemberRoleTwo','ST','classMemberGroupTwo'],
-      ['classMemberThree','classMemberRoleThree','TN','classMemberGroupThree'],
-      ['classMemberFour','classMemberRoleFour','MB','classMemberGroupFour'],
-      ['classMemberFive','classMemberRoleFive','EG','classMemberGroupFive']
-    ].forEach(([nameKey,roleKey,initials,groupKey])=>{
-      const group=make('section','member-group-section');
-      group.append(make('h3','',text(groupKey)));
-      const groupCards=make('div','member-grid member-grid-classes');
-      groupCards.append(makeMemberCard(nameKey,roleKey,initials,'classRepResponsibility',groupKey));
-      group.append(groupCards);
-      classMembers.append(group);
-    });
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
-      make('p','member-template-note',text('memberTemplateNote')),
       sectionHeading(text('structureTitle'),text('structureSub')),
       structure,
       sectionHeading(text('leadreps'),text('leadsub')),
-      leadMembers,
+      emptyState(text('noPeopleTitle'),text('noPeopleText')),
       sectionHeading(text('classreps'),text('classsub')),
-      classMembers
+      emptyState(text('noPeopleTitle'),text('noPeopleText'))
     );
 
     const resourceCards=make('div','cards gov-resource-grid');
@@ -1330,21 +1280,34 @@
       make('p','gov-pending',text('trainingPending')),
       makePageLink('backToAssembly','how','primary')
     );
+    const makeVoteMoreLabel=label=>{
+      const more=make('span','vote-team-more');
+      more.textContent=label;
+      return more;
+    };
     const voteGrid=make('div','vote-team-grid');
-    const voteTeams=Array.from({length:6},(_,index)=>({
-      key:['voteTeamOne','voteTeamTwo','voteTeamThree','voteTeamFour','voteTeamFive','voteTeamSix'][index]
-    }));
-    voteTeams.forEach(team=>{
-      const card=make('article','vote-team-card');
-      const image=document.createElement('img');
-      image.src='vote-team-template.jpg';
-      image.alt=text('voteTeamImageAlt');
-      image.loading='lazy';
-      const more=button(text('voteTeamMore'),'vote-team-more');
-      more.dataset.voteTeam=team.key;
-      card.append(make('h2','',text(team.key)),image,more);
-      voteGrid.append(card);
-    });
+    const voteMoreLabel=document.documentElement.lang==='fr'?'Plus d’informations':'More information';
+    const publicVoteCandidates=Array.isArray(window.cdeccApprovedVoteCandidates)?window.cdeccApprovedVoteCandidates:[];
+    if(publicVoteCandidates.length){
+      publicVoteCandidates.forEach(candidate=>{
+        const card=make('button','vote-team-card');
+        card.type='button';
+        card.dataset.voteTeam=`candidate-${candidate.id}`;
+        card.setAttribute('aria-label',document.documentElement.lang==='fr' ? `${voteMoreLabel} sur ${candidate.team_name || 'Candidate'}` : `${voteMoreLabel} about ${candidate.team_name || 'Candidate'}`);
+        card.style.backgroundColor=candidate.background||'#396d59';
+        card.style.color=candidate.foreground||'#ffffff';
+        const image=document.createElement('img');
+        const photoUrl=candidate.photo_url||candidate.photo_path;
+        if(photoUrl)image.src=photoUrl;
+        else image.hidden=true;
+        image.alt=candidate.team_name || 'Candidate photo';
+        image.loading='lazy';
+        card.append(make('h2','',candidate.team_name || 'Candidate'),image,makeVoteMoreLabel(voteMoreLabel));
+        voteGrid.append(card);
+      });
+    }else{
+      voteGrid.append(emptyState(text('voteNoCandidates'),text('voteNoCandidatesText')));
+    }
     const voteButton=make('button','vote-submit',text('voteSubmit'));
     voteButton.type='button';
     const availability=voteAvailability();
@@ -1369,23 +1332,34 @@
       voteStatus
     );
     if(selectedVoteTeam){
-      const team=voteTeams.find(item=>item.key===selectedVoteTeam);
-      if(team){
+      const publicVoteCandidates=Array.isArray(window.cdeccApprovedVoteCandidates)?window.cdeccApprovedVoteCandidates:[];
+      const candidate=publicVoteCandidates.find(item=>`candidate-${item.id}`===selectedVoteTeam);
+      if(candidate){
         const detailCard=make('article','vote-team-detail-card');
+        detailCard.style.backgroundColor=candidate.background||'#396d59';
+        detailCard.style.color=candidate.foreground||'#ffffff';
         const detailImage=document.createElement('img');
-        detailImage.src='vote-team-template.jpg';
-        detailImage.alt=text('voteTeamImageAlt');
+        if(candidate.photo_url)detailImage.src=candidate.photo_url;
+        else detailImage.hidden=true;
+        detailImage.alt=candidate.team_name || 'Candidate photo';
         detailImage.loading='lazy';
         const detailCopy=make('div','vote-team-detail-copy');
+        const detailRoster=make('section','vote-team-detail-roster');
+        detailRoster.append(make('h2','',text('candidatePreviewMembers')));
+        const rosterList=make('ul','');
+        String(candidate.roster||'').split(/\r?\n/).map(member=>member.trim()).filter(Boolean)
+          .forEach(member=>rosterList.append(make('li','',member)));
+        detailRoster.hidden=rosterList.childElementCount===0;
+        detailRoster.append(rosterList);
         detailCopy.append(
-          make('span','pill',text('voteTeamTemplateLabel')),
-          make('h1','',text(team.key)),
-          make('p','',text(`${team.key}Text`))
+          make('h1','',candidate.team_name || 'Candidate'),
+          detailRoster,
+          make('p','',candidate.ideas || candidate.team_name || '')
         );
         detailCard.append(detailCopy,detailImage);
         const back=button(`← ${text('voteTeamBack')}`,'vote-team-back');
         voteTeamDetail.replaceChildren(back,detailCard);
-      }
+      }else voteTeamDetail.replaceChildren();
     }else voteTeamDetail.replaceChildren();
   };
   renderGovernancePages();
@@ -1511,20 +1485,6 @@
   };
 
   const projects=document.getElementById('page-projects');
-  const projectSearchLabel=make('label','site-project-search-label');
-  projectSearchLabel.append(make('span','',text('projectSearch')));
-  const projectSearchInput=document.createElement('input');
-  projectSearchInput.className='site-project-search';
-  projectSearchInput.type='search';
-  projectSearchInput.autocomplete='off';
-  projectSearchInput.placeholder=text('projectSearchPlaceholder');
-  projectSearchInput.setAttribute('aria-label',text('projectSearch'));
-  projectSearchLabel.append(projectSearchInput);
-  projects.replaceChildren(
-    makePageHeading(text('projects'),text('approvedProjects'),text('projectIntro')),
-    projectSearchLabel,
-    make('div','site-project-list')
-  );
 
   const news=document.getElementById('page-news');
   news.replaceChildren(
@@ -1600,7 +1560,7 @@
   const submit=make('button','primary',text('submit'));
   submit.type='submit';
   participationForm.append(categoryLabel,titleLabel,detailsLabel,privacy,formStatus,submit,hiddenCompatibility);
-  projects.insertBefore(participationForm,projectSearchLabel);
+  projects.replaceChildren(participationForm);
 
   const admin=document.getElementById('page-admin');
   admin.replaceChildren();
@@ -1855,7 +1815,7 @@
     setStatus(formStatus,text('storageStatus'));
     setStatus(adminStatus,text('storageStatus'));
     renderHomeProjects(suggestions);
-    const approved=renderApproved(suggestions);
+    const approved=getApprovedSuggestions(suggestions);
     renderAdmin(suggestions);
     updateDrawer(approved);
   };
@@ -1907,7 +1867,6 @@
     renderAll();
   });
   searchInput.addEventListener('input',()=>renderAll());
-  projectSearchInput.addEventListener('input',()=>renderAll());
   reviewList.addEventListener('change',event=>{
     const control=event.target.closest('[data-priority-id]');
     if(!control)return;
@@ -1967,8 +1926,6 @@
   document.querySelector('.news-drawer-all').addEventListener('click',()=>window.showPage('news'));
   document.getElementById('lang').addEventListener('click',()=>{
     const language=copy[document.documentElement.lang==='en'?'en':'fr'];
-    projects.querySelector('h1').textContent=language.approvedProjects;
-    projects.querySelector('.site-page-heading p').textContent=language.projectIntro;
     news.querySelector('.eyebrow').textContent=language.news;
     news.querySelector('h1').textContent=language.latestNews;
     news.querySelector('.site-page-heading p').textContent=language.noNewsText;
@@ -1979,6 +1936,7 @@
     completedHeading.querySelector('h2').textContent=language.completedTitle;
     completedSection.querySelector('.home-section-intro').textContent=language.completedIntro;
     homeFooter.textContent=`Collège Citoyen · ${language.brand}`;
+    participationForm.querySelector('.site-page-heading .eyebrow').textContent=language.participate;
     participationForm.querySelector('h1').textContent=language.participateTitle;
     participationForm.querySelector('.site-page-heading p').textContent=language.participateText;
     categoryLabel.querySelector('span').textContent=language.category;
@@ -1992,14 +1950,11 @@
     privacy.textContent=language.storageNotice;
     submit.textContent=language.submit;
     admin.querySelector('h1').textContent=language.adminTitle;
-    admin.querySelector('.site-page-heading p').textContent=language.adminText;
+    admin.querySelector('.admin-portal-heading p').textContent=language.adminText;
     adminNotice.textContent=language.adminNotice;
     priorityHelp.textContent=language.priorityHelp;
     searchLabel.querySelector('span').textContent=language.searchSuggestions;
     searchInput.setAttribute('aria-label',language.searchSuggestions);
-    projectSearchLabel.querySelector('span').textContent=language.projectSearch;
-    projectSearchInput.placeholder=language.projectSearchPlaceholder;
-    projectSearchInput.setAttribute('aria-label',language.projectSearch);
     syncGovernanceLanguage();
     renderSettings();
     renderVoteAdminSettings();
@@ -2012,17 +1967,177 @@
   const processNote=document.querySelector('[data-t="processnote"]');
   if(processNote)processNote.textContent=copy.fr.processNote;
   const originalToggleLabel=document.getElementById('news-toggle');
-  const projectShortcut=document.querySelector('.header-tools [data-page="projects"]');
+  const projectShortcut=document.getElementById('global-search-toggle');
   const updateHeaderLabels=()=>{
     originalToggleLabel.setAttribute('aria-label',document.documentElement.lang==='en'?'Open news':'Ouvrir les actualités');
-    projectShortcut.querySelector('.search-label').textContent=document.documentElement.lang==='en'?'Ideas':'Idées';
-    projectShortcut.setAttribute('aria-label',document.documentElement.lang==='en'?'Open project search':'Ouvrir la recherche dans les projets');
+    projectShortcut.querySelector('.search-label').textContent=document.documentElement.lang==='en'?'Search':'Rechercher';
+    projectShortcut.setAttribute('aria-label',document.documentElement.lang==='en'?'Search the whole site':'Rechercher sur tout le site');
   };
   updateHeaderLabels();
-  projectShortcut.addEventListener('click',()=>setTimeout(()=>{
-    projectSearchInput.focus();
-    projectSearchInput.scrollIntoView({behavior:'smooth',block:'center'});
-  },0));
+  const globalSearchButton=document.getElementById('global-search-toggle');
+  const searchAnchor=make('div','site-search-anchor');
+  globalSearchButton.parentElement.insertBefore(searchAnchor,globalSearchButton);
+  searchAnchor.append(globalSearchButton);
+  const searchDropdown=make('section','site-search-dropdown');
+  searchDropdown.hidden=true;
+  searchDropdown.setAttribute('aria-labelledby','site-search-title');
+  const searchHeading=make('div','site-search-heading');
+  const searchTitle=make('h2','',document.documentElement.lang==='en'?'Search the site':'Rechercher sur le site');
+  searchTitle.id='site-search-title';
+  const searchClose=button('×','site-search-close');
+  searchClose.setAttribute('aria-label',document.documentElement.lang==='en'?'Close search':'Fermer la recherche');
+  searchHeading.append(searchTitle,searchClose);
+  const globalSearchLabel=make('label','site-search-label');
+  const globalSearchInput=document.createElement('input');
+  globalSearchInput.type='search';
+  globalSearchInput.className='site-search-input';
+  globalSearchInput.autocomplete='off';
+  globalSearchInput.setAttribute('aria-label',document.documentElement.lang==='en'?'Search all pages except the charter':'Rechercher partout sauf dans la charte');
+  globalSearchInput.placeholder=document.documentElement.lang==='en'?'Search projects, teams, ideas…':'Rechercher des projets, des équipes, des idées…';
+  globalSearchLabel.append(make('span','',document.documentElement.lang==='en'?'Search all pages except the Charter':'Rechercher dans toutes les pages sauf la Charte'),globalSearchInput);
+  const globalSearchResults=make('div','site-search-results');
+  globalSearchResults.setAttribute('aria-label',document.documentElement.lang==='en'?'Search results':'Résultats de recherche');
+  globalSearchResults.setAttribute('aria-live','polite');
+  searchDropdown.append(searchHeading,globalSearchLabel,globalSearchResults);
+  searchAnchor.append(searchDropdown);
+  searchDropdown.id='site-search-dropdown';
+  searchDropdown.setAttribute('role','region');
+  globalSearchButton.setAttribute('aria-controls',searchDropdown.id);
+  globalSearchButton.setAttribute('aria-expanded','false');
+  let currentSearchResults=[];
+  const normalizeSearchText=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase().replace(/\s+/g,' ').trim();
+  const searchTerms=value=>normalizeSearchText(value).split(' ').filter(Boolean);
+  const searchablePageIds=new Set(['page-home','page-elections','page-resources','page-vote','page-projects','page-people','page-news','page-participate']);
+  const searchResultText=(value,query)=>{
+    const text=value.replace(/\s+/g,' ').trim();
+    if(text.length<=180)return text;
+    const position=normalizeSearchText(text).indexOf(normalizeSearchText(query));
+    const start=Math.max(0,position-65);
+    return `${start?'…':''}${text.slice(start,start+150).trim()}${start+150<text.length?'…':''}`;
+  };
+  const renderGlobalSearch=()=>{
+    const query=normalizeSearchText(globalSearchInput.value);
+    const terms=searchTerms(query);
+    globalSearchResults.replaceChildren();
+    currentSearchResults=[];
+    if(!query){
+      globalSearchResults.append(make('p','site-search-empty',document.documentElement.lang==='en'?'Enter a word or phrase to search the site.':'Saisis un mot ou une expression pour lancer la recherche.'));
+      return;
+    }
+    const candidates=[];
+    const selectors='h1,h2,h3,h4,p,li,button,a,.home-project-card,.site-project-card,.vote-team-card';
+    const addRoot=(root,pageId)=>{
+      const elements=[];
+      if(root.matches(selectors))elements.push(root);
+      elements.push(...root.querySelectorAll(selectors));
+      elements.forEach(element=>{
+        const container=element.closest('.home-project-card,.site-project-card,.vote-team-card');
+        if(container&&container!==element)return;
+        if(element.closest('[hidden]'))return;
+        const value=(element.innerText||element.textContent||'').replace(/\s+/g,' ').trim();
+        const normalizedValue=normalizeSearchText(value);
+        if(!value||!terms.every(term=>normalizedValue.includes(term)))return;
+        candidates.push({element,pageId,value});
+      });
+    };
+    document.querySelectorAll('main .page').forEach(root=>{
+      if(searchablePageIds.has(root.id))addRoot(root,root.id);
+    });
+    const hero=document.querySelector('.home-hero');
+    if(hero&&!hero.hidden)addRoot(hero,'page-home');
+    (window.cdeccApprovedVoteCandidates||[]).forEach(candidate=>{
+      const value=`${candidate.team_name||''} ${candidate.ideas||''}`.trim();
+      const card=document.querySelector(`.vote-team-card[data-candidacy-id="${CSS.escape(String(candidate.id))}"]`);
+      if(value&&terms.every(term=>normalizeSearchText(value).includes(term))&&
+        !(card&&terms.every(term=>normalizeSearchText(card.innerText).includes(term)))){
+        candidates.push({candidate,pageId:'page-vote-team-detail',value});
+      }
+    });
+    currentSearchResults=candidates.slice(0,40);
+    if(!currentSearchResults.length){
+      globalSearchResults.append(make('p','site-search-empty',document.documentElement.lang==='en'?'No results found. Try another word or phrase.':'Aucun résultat. Essaie un autre mot ou une autre expression.'));
+      return;
+    }
+    currentSearchResults.forEach((result,index)=>{
+      const item=button('', 'site-search-result');
+      item.dataset.searchResult=String(index);
+      const pageRoute=result.pageId.replace(/^page-/,'');
+      const pageButton=document.querySelector(`.header-nav [data-page="${pageRoute}"],.side [data-page="${pageRoute}"],.mobile [data-page="${pageRoute}"]`);
+      const pageTitle=document.getElementById(result.pageId)?.querySelector('h1')?.innerText.trim();
+      const pageLabel=result.candidate?(document.documentElement.lang==='en'?'Voting':'Vote'):(pageButton?.innerText.trim()||pageTitle||'');
+      item.append(make('strong','',pageLabel),make('span','',searchResultText(result.value,globalSearchInput.value)));
+      globalSearchResults.append(item);
+    });
+  };
+  const updateGlobalSearchLanguage=()=>{
+    const english=document.documentElement.lang==='en';
+    updateHeaderLabels();
+    searchTitle.textContent=english?'Search the site':'Rechercher sur le site';
+    globalSearchLabel.querySelector('span').textContent=english?'Search all pages except the Charter':'Rechercher dans toutes les pages sauf la Charte';
+    globalSearchResults.setAttribute('aria-label',english?'Search results':'Résultats de recherche');
+    globalSearchInput.setAttribute('aria-label',english?'Search all pages except the charter':'Rechercher partout sauf dans la charte');
+    globalSearchInput.placeholder=english?'Search projects, teams, ideas…':'Rechercher des projets, des équipes, des idées…';
+    searchClose.setAttribute('aria-label',english?'Close search':'Fermer la recherche');
+    if(!searchDropdown.hidden)renderGlobalSearch();
+  };
+  updateGlobalSearchLanguage();
+  new MutationObserver(updateGlobalSearchLanguage).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  globalSearchButton?.addEventListener('click',()=>{
+    const opening=searchDropdown.hidden;
+    searchDropdown.hidden=!opening;
+    globalSearchButton.setAttribute('aria-expanded',String(opening));
+    if(opening){
+      positionGlobalSearch();
+      globalSearchInput.value='';
+      renderGlobalSearch();
+      globalSearchInput.focus();
+    }
+  });
+  const closeGlobalSearch=(restoreFocus=true)=>{
+    if(searchDropdown.hidden)return;
+    searchDropdown.hidden=true;
+    globalSearchButton.setAttribute('aria-expanded','false');
+    if(restoreFocus)globalSearchButton.focus();
+  };
+  const positionGlobalSearch=()=>{
+    const anchorRight=searchAnchor.getBoundingClientRect().right;
+    const width=searchDropdown.getBoundingClientRect().width;
+    const left=Math.max(12,Math.min(anchorRight-width,window.innerWidth-12-width));
+    searchDropdown.style.right=`${anchorRight-width-left}px`;
+  };
+  searchClose.addEventListener('click',()=>closeGlobalSearch());
+  globalSearchInput.addEventListener('input',renderGlobalSearch);
+  window.addEventListener('resize',()=>{if(!searchDropdown.hidden)positionGlobalSearch()});
+  document.addEventListener('click',event=>{
+    if(!searchAnchor.contains(event.target))closeGlobalSearch(false);
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&!searchDropdown.hidden){
+      event.preventDefault();
+      closeGlobalSearch();
+    }
+  });
+  globalSearchResults.addEventListener('click',event=>{
+    const resultButton=event.target.closest('[data-search-result]');
+    if(!resultButton)return;
+    const result=currentSearchResults[Number(resultButton.dataset.searchResult)];
+    if(!result)return;
+    closeGlobalSearch(false);
+    if(result.candidate){
+      selectedVoteTeam=`candidate-${result.candidate.id}`;
+      renderGovernancePages();
+      window.showPage('vote-team-detail');
+      const hero=document.querySelector('.home-hero');
+      if(hero)hero.hidden=true;
+      return;
+    }
+    const page=result.element.closest('.page');
+    const route=page?.id.replace(/^page-/,'')||'home';
+    window.showPage(route);
+    const hero=document.querySelector('.home-hero');
+    if(hero)hero.hidden=route!=='home';
+    result.element.scrollIntoView({behavior:'smooth',block:'center'});
+  });
   originalToggleLabel.addEventListener('click',()=>{if(document.getElementById('news-drawer').open)renderAll()});
   document.getElementById('lang').addEventListener('click',()=>{
     updateHeaderLabels();
