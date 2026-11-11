@@ -115,8 +115,8 @@
       roleSecretaryText:'Consigne les comptes rendus, les décisions et les renseignements importants.',
       roleTreasurer:'Trésorier',
       roleTreasurerText:'Suit les dossiers financiers et les budgets proposés, selon les règles de l’école.',
-      roleLowSpokesperson:'Basse-parole',
-      roleHighSpokesperson:'Haute-parole',
+      roleLowSpokesperson:'Parole étudiante',
+      roleHighSpokesperson:'Parole administrative',
       roleLowSpokespersonText:'Recueille les idées et préoccupations des élèves et les transmet à l’Assemblée.',
       roleHighSpokespersonText:'Partage avec les élèves les nouvelles et les suivis de l’Assemblée.',
       provisionalRole:'Responsabilités à préciser avec les organisateurs.',
@@ -360,8 +360,8 @@
       roleSecretaryText:'Records meeting minutes, decisions, and important information.',
       roleTreasurer:'Treasurer',
       roleTreasurerText:'Oversees financial records and proposed budgets, subject to school rules.',
-      roleLowSpokesperson:'Student voice spokesperson',
-      roleHighSpokesperson:'Assembly updates spokesperson',
+      roleLowSpokesperson:'Student spokesperson',
+      roleHighSpokesperson:'Administrative spokesperson',
       roleLowSpokespersonText:'Gathers students’ ideas and concerns and brings them to the Assembly.',
       roleHighSpokespersonText:'Shares Assembly news and follow-up with students.',
       provisionalRole:'Responsibilities to be clarified with the organizers.',
@@ -526,8 +526,10 @@
     candidateVicePresident:'Vice-président',
     candidateTreasurer:'Trésorier',
     candidateSecretary:'Secrétaire',
-    candidateHighVoice:'Haute Parole',
-    candidateLowVoice:'Basse Parole',
+    candidateHighVoice:'Parole administrative',
+    candidateLowVoice:'Parole étudiante',
+    candidateVoicePlaceholder:'Maximum 3 membres — un nom par ligne',
+    candidateVoiceLimitError:'Maximum 3 membres par poste.',
     candidateSectionRepresentative:'Représentant · Sec {section}',
     candidateIdeas:'Idées et propositions de l’équipe',
     candidatePicture:'Photo de l’équipe',
@@ -609,8 +611,10 @@
     candidateVicePresident:'Vice-President',
     candidateTreasurer:'Treasurer',
     candidateSecretary:'Secretary',
-    candidateHighVoice:'Haute Parole',
-    candidateLowVoice:'Basse Parole',
+    candidateHighVoice:'Administrative spokesperson',
+    candidateLowVoice:'Student spokesperson',
+    candidateVoicePlaceholder:'Maximum 3 members — one name per line',
+    candidateVoiceLimitError:'Maximum 3 members per position.',
     candidateSectionRepresentative:'Representative · Sec {section}',
     candidateIdeas:'Team ideas and proposals',
     candidatePicture:'Team picture',
@@ -1422,13 +1426,8 @@
       {id:'candidate-vice-president',key:'candidateVicePresident'},
       {id:'candidate-treasurer',key:'candidateTreasurer'},
       {id:'candidate-secretary',key:'candidateSecretary'},
-      {id:'candidate-high-voice',key:'candidateHighVoice',multiple:true},
-      {id:'candidate-low-voice',key:'candidateLowVoice',multiple:true},
-      ...Array.from({length:5},(_,index)=>({
-        id:`candidate-representative-sec-${index+1}`,
-        key:'candidateSectionRepresentative',
-        section:index+1
-      }))
+      {id:'candidate-high-voice',key:'candidateHighVoice',multiple:true,maxMembers:3},
+      {id:'candidate-low-voice',key:'candidateLowVoice',multiple:true,maxMembers:3}
     ];
     positionFields.forEach(position=>{
       const label=make('label','candidate-position-field');
@@ -1437,10 +1436,17 @@
         :text(position.key)));
       const field=document.createElement(position.multiple?'textarea':'input');
       if(!position.multiple)field.type='text';
-      else field.rows=2;
+      else field.rows=position.maxMembers||2;
       field.id=position.id;
       field.name=position.id;
       field.maxLength=position.multiple?500:100;
+      if(position.maxMembers){
+        field.placeholder=text('candidateVoicePlaceholder');
+        field.addEventListener('input',()=>{
+          const memberCount=field.value.split(/\r?\n/).map(name=>name.trim()).filter(Boolean).length;
+          field.setCustomValidity(memberCount>position.maxMembers?text('candidateVoiceLimitError'):'');
+        });
+      }
       field.dataset.candidatePosition=position.id;
       label.append(field);
       positionFieldset.append(label);
@@ -1734,7 +1740,11 @@
         const detailRoster=make('section','vote-team-detail-roster');
         detailRoster.append(make('h2','',text('candidatePreviewMembers')));
         const rosterList=make('ul','');
-        String(candidate.roster||'').split(/\r?\n/).map(member=>member.trim()).filter(Boolean)
+        String(candidate.roster||'').split(/\r?\n/).map(member=>member.trim())
+          .filter(Boolean)
+          .map(member=>member
+            .replace(/^Haute Parole(?=\s*:)/i,'Parole administrative')
+            .replace(/^Basse Parole(?=\s*:)/i,'Parole étudiante'))
           .forEach(member=>rosterList.append(make('li','',member)));
         detailRoster.hidden=rosterList.childElementCount===0;
         detailRoster.append(rosterList);

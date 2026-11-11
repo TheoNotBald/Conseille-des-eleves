@@ -190,6 +190,12 @@
     if(content)node.textContent=content;
     return node;
   };
+  const normalizeCandidateRoster=value=>String(value||'').split(/\r?\n/)
+    .map(member=>member.trim())
+    .filter(Boolean)
+    .map(member=>member
+      .replace(/^Haute Parole(?=\s*:)/i,'Parole administrative')
+      .replace(/^Basse Parole(?=\s*:)/i,'Parole étudiante'));
   const button=(label,action,className='secondary')=>{
     const node=make('button',className,label);
     node.type='button';
@@ -1308,7 +1314,7 @@
     const rosterSection=make('section','admin-candidate-blob-members');
     rosterSection.append(make('h3','',messages.members));
     const rosterList=make('ul','admin-candidate-blob-roster');
-    const rosterMembers=item.roster.split(/\r?\n/).map(member=>member.trim()).filter(Boolean);
+    const rosterMembers=normalizeCandidateRoster(item.roster);
     rosterMembers.forEach(member=>rosterList.append(make('li','',member)));
     blob.classList.toggle('has-many-members',rosterMembers.length>=6);
     blob.classList.toggle('has-many-members-dense',rosterMembers.length>=9);
@@ -1328,7 +1334,7 @@
     blob.classList.toggle('is-editing',!form.hidden);
     const fields=[
       ['team_name',messages.teamName,'text',item.team_name,80],
-      ['roster',messages.roster,'textarea',item.roster,1200],
+      ['roster',messages.roster,'textarea',normalizeCandidateRoster(item.roster).join('\n'),1200],
       ['ideas',messages.ideas,'textarea',item.ideas,2000]
     ];
     if(item.status==='pending'){
