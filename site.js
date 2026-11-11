@@ -1516,8 +1516,8 @@
     candidatePreviewCopy.append(
       make('span','pill',text('candidatePreviewLabel')),
       candidatePreviewTitle,
-      candidatePreviewIdeas,
-      candidatePreviewRoster
+      candidatePreviewRoster,
+      candidatePreviewIdeas
     );
     const candidatePreviewMedia=make('div','candidate-preview-media');
     const candidatePreviewImage=document.createElement('img');
@@ -1547,6 +1547,17 @@
       candidatePreview.classList.toggle('has-many-members',members.length>=6);
       candidatePreview.classList.toggle('has-many-members-dense',members.length>=9);
     };
+    candidateForm.addEventListener('reset',()=>{
+      window.setTimeout(()=>{
+        updateCandidatePreview();
+        candidateImageEditor?.reset();
+        candidatePreviewImage.removeAttribute('src');
+        candidatePreviewImage.hidden=true;
+        candidateImageCropCanvas.hidden=true;
+        candidatePreviewPlaceholder.hidden=false;
+        candidateImageCropEditor.hidden=true;
+      },0);
+    });
     candidateForm.append(candidatePreview);
     teamName.addEventListener('input',updateCandidatePreview);
     positionFields.forEach(position=>position.field.addEventListener('input',updateCandidatePreview));
