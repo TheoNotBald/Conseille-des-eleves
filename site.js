@@ -119,6 +119,10 @@
       roleHighSpokesperson:'Parole administrative',
       roleLowSpokespersonText:'Recueille les idées et préoccupations des élèves et les transmet à l’Assemblée.',
       roleHighSpokespersonText:'Partage avec les élèves les nouvelles et les suivis de l’Assemblée.',
+      memberProfilesTitle:'Membres de l’Assemblée Citoyenne',
+      memberSecondaryRepsTitle:'Représentants du secondaire',
+      memberPhotoPlaceholder:'Photo à venir',
+      memberNamePlaceholder:'Nom à confirmer',
       provisionalRole:'Responsabilités à préciser avec les organisateurs.',
       roleExperts:'Évaluateurs / experts',
       roleExpertsText:'Un ou plusieurs membres évaluent les propositions, apportent leur expertise et contribuent à examiner leur faisabilité.',
@@ -364,6 +368,10 @@
       roleHighSpokesperson:'Administrative spokesperson',
       roleLowSpokespersonText:'Gathers students’ ideas and concerns and brings them to the Assembly.',
       roleHighSpokespersonText:'Shares Assembly news and follow-up with students.',
+      memberProfilesTitle:'Student Assembly members',
+      memberSecondaryRepsTitle:'Secondary representatives',
+      memberPhotoPlaceholder:'Photo coming soon',
+      memberNamePlaceholder:'Name to be confirmed',
       provisionalRole:'Responsibilities to be clarified with the organizers.',
       roleExperts:'Evaluators / experts',
       roleExpertsText:'One or more members evaluate proposals, provide relevant expertise, and help assess feasibility.',
@@ -1659,17 +1667,77 @@
       group.append(make('span','member-structure-arrow','↑'),classCard);
       classRepresentativeSlots.append(group);
     }
-    const memberStructure=make('div','member-structure-chart');
     const classRepresentativePanel=make('section','member-class-panel');
     classRepresentativePanel.append(
       make('h3','member-class-title',text('classreps')),
       make('p','member-class-description',text('levelResponsibilities')),
       classRepresentativeSlots
     );
+    const memberStructure=make('div','member-structure-chart');
     memberStructure.append(assemblyStructure,classRepresentativePanel);
+    const memberProfiles=make('section','member-profile-section');
+    memberProfiles.append(make('h2','member-profile-title',text('memberProfilesTitle')));
+    const memberProfileGrid=make('div','member-profile-grid');
+    [
+      'rolePresident',
+      'roleVicePresident',
+      'roleSecretary',
+      'roleTreasurer',
+      'roleHighSpokesperson',
+      'roleLowSpokesperson'
+    ].forEach(roleKey=>{
+      const card=make('article','member-profile-card');
+      const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
+      photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
+      const name=make('h3','member-profile-name',text('memberNamePlaceholder'));
+      const role=make('p','member-profile-role',text(roleKey));
+      card.append(photoPlaceholder,name,role);
+      memberProfileGrid.append(card);
+    });
+    memberProfiles.append(memberProfileGrid);
+    const secondaryRepsSection=make('section','member-secondary-reps');
+    secondaryRepsSection.append(make('h3','member-profile-title',text('memberSecondaryRepsTitle')));
+    const secondaryRepsGrid=make('div','member-secondary-reps-grid');
+    ['levelOne','levelTwo','levelThree','levelFour','levelFive'].forEach(levelKey=>{
+      const card=make('article','member-profile-card member-secondary-rep-card');
+      const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
+      photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
+      card.append(
+        photoPlaceholder,
+        make('h4','member-profile-name',text('memberNamePlaceholder')),
+        make('p','member-profile-role',text(levelKey))
+      );
+      secondaryRepsGrid.append(card);
+    });
+    secondaryRepsSection.append(secondaryRepsGrid);
+    const classRepresentativeSection=make('section','member-class-reps-section');
+    classRepresentativeSection.append(
+      make('h3','member-profile-title',text('classreps'))
+    );
+    ['levelOne','levelTwo','levelThree','levelFour','levelFive'].forEach(levelKey=>{
+      const levelGroup=make('div','member-class-reps-level');
+      levelGroup.append(make('h4','member-class-reps-level-title',text(levelKey)));
+      const representatives=make('div','member-class-reps-grid');
+      for(let representativeIndex=0;representativeIndex<5;representativeIndex++){
+        const card=make('article','member-profile-card member-class-rep-card');
+        const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
+        photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
+        card.append(
+          photoPlaceholder,
+          make('h5','member-profile-name',text('memberNamePlaceholder')),
+          make('p','member-profile-role',text('classRepresentative'))
+        );
+        representatives.append(card);
+      }
+      levelGroup.append(representatives);
+      classRepresentativeSection.append(levelGroup);
+    });
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
-      memberStructure
+      memberStructure,
+      memberProfiles,
+      secondaryRepsSection,
+      classRepresentativeSection
     );
 
     const resourceCards=make('div','cards gov-resource-grid');

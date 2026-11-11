@@ -302,21 +302,15 @@
 .member-structure-role-copy{display:grid;gap:5px;min-width:0}
 .member-structure-role{min-width:0;margin:0;color:inherit;font-size:14px;font-weight:850;line-height:1.25;overflow-wrap:anywhere}
 .member-structure-description{min-width:0;margin:0;color:inherit;font-size:12px;line-height:1.4;opacity:.88;overflow-wrap:anywhere}
-.member-person-icon{position:relative;display:block;width:40px;height:44px;flex:none;color:#f4eadc}
-.member-person-icon:before{position:absolute;top:0;left:12px;width:16px;height:16px;border-radius:50%;background:currentColor;content:""}
-.member-person-icon:after{position:absolute;bottom:0;left:3px;width:34px;height:23px;border-radius:55% 55% 8% 8%;background:currentColor;content:""}
-.member-person-icon.is-small{width:26px;height:30px}
-.member-person-icon.is-small:before{left:8px;width:12px;height:12px}
-.member-person-icon.is-small:after{left:1px;width:24px;height:15px}
 .member-assembly-representatives{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
 .member-assembly-representative{display:flex;min-width:0;min-height:54px;align-items:center;justify-content:center;gap:8px;padding:8px;border-radius:10px;background:#315f4d;color:#f4eadc;font-size:13px;font-weight:850;line-height:1.2}
 .member-assembly-representative>span:last-child{min-width:0;overflow-wrap:anywhere}
 .member-class-panel{display:grid;gap:12px}
-.member-class-title{margin:0;color:#315f4d;font-size:17px}
+.member-class-title{margin:0;color:var(--forest);font-size:17px}
 .member-class-description{max-width:950px;margin:0;color:var(--muted);font-size:13px;line-height:1.5}
 .member-class-representative-slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .member-class-group{display:grid;justify-items:center;gap:8px}
-.member-structure-arrow{height:34px;color:#315f4d;font-size:30px;font-weight:800;line-height:1}
+.member-structure-arrow{height:34px;color:var(--forest);font-size:30px;font-weight:800;line-height:1}
 .member-class-card{display:grid;width:100%;min-height:210px;align-content:start;gap:12px;padding:12px;border-radius:14px;background:#68a98e;color:#f4eadc}
 .member-class-card-heading{display:flex;min-height:52px;align-items:center;gap:7px;padding:7px;border-radius:9px;background:#315f4d;color:#f4eadc;font-size:12px;font-weight:850;line-height:1.2}
 .member-class-card-heading>span:last-child{min-width:0;overflow-wrap:anywhere}
@@ -324,6 +318,33 @@
 .member-person-icon.is-student{width:34px;height:37px}
 .member-person-icon.is-student:before{left:10px;width:14px;height:14px}
 .member-person-icon.is-student:after{left:2px;width:30px;height:19px}
+.member-person-icon{position:relative;display:block;width:40px;height:44px;flex:none;color:#f4eadc}
+.member-person-icon:before{position:absolute;top:0;left:12px;width:16px;height:16px;border-radius:50%;background:currentColor;content:""}
+.member-person-icon:after{position:absolute;bottom:0;left:3px;width:34px;height:23px;border-radius:55% 55% 8% 8%;background:currentColor;content:""}
+.member-person-icon.is-small{width:26px;height:30px}
+.member-person-icon.is-small:before{left:8px;width:12px;height:12px}
+.member-person-icon.is-small:after{left:1px;width:24px;height:15px}
+.member-profile-section{display:grid;gap:18px;margin:26px 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
+.member-profile-title{margin:0;color:var(--forest);font-size:clamp(19px,2.4vw,25px);letter-spacing:-.03em}
+.member-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.member-profile-card{display:grid;justify-items:center;align-content:start;gap:10px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:24px;background:var(--paper);text-align:center}
+.member-profile-photo-placeholder{display:grid;width:min(100%,240px);aspect-ratio:1/1;place-items:center;padding:14px;border:1px dashed var(--line);border-radius:20px;background:var(--soft);color:var(--muted);font-size:13px;font-weight:700}
+.member-profile-name{margin:2px 0 0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,2vw,24px);font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.member-profile-role{margin:0;color:var(--forest);font-size:12px;font-weight:850;letter-spacing:.08em;line-height:1.4;overflow-wrap:anywhere}
+.member-secondary-reps{display:grid;gap:18px;margin:0 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
+.member-secondary-reps-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.member-secondary-rep-card{padding:12px;border-radius:20px}
+.member-secondary-rep-card .member-profile-photo-placeholder{width:100%;border-radius:16px;font-size:12px}
+.member-secondary-rep-card .member-profile-name{font-size:clamp(15px,1.5vw,19px)}
+.member-secondary-rep-card .member-profile-role{font-size:11px}
+.member-class-reps-section{display:grid;gap:18px;margin:0 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
+.member-class-reps-level{display:grid;gap:14px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--paper)}
+.member-class-reps-level-title{margin:0;color:var(--forest);font-size:16px;font-weight:850}
+.member-class-reps-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.member-class-rep-card{padding:12px;border-radius:20px}
+.member-class-rep-card .member-profile-photo-placeholder{width:100%;border-radius:16px;font-size:12px}
+.member-class-rep-card .member-profile-name{font-size:clamp(15px,1.5vw,19px)}
+.member-class-rep-card .member-profile-role{font-size:11px}
 .member-group-section{padding:17px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.55)}
 .member-group-section>h3{margin:0;color:var(--forest);font-size:15px}
 .member-group-section .member-grid-classes{grid-template-columns:minmax(0,1fr);margin:12px 0 0}
@@ -472,8 +493,8 @@ body[data-theme="dark"] .news-drawer{border-color:var(--line);background:var(--p
   body{padding-bottom:72px}
 }
 
-.candidate-intro-blob .primary,.candidate-form>.primary{background:#233d33;color:#fff}
-.candidate-intro-blob .primary:hover,.candidate-form>.primary:hover{background:#1a2e2a;filter:brightness(1.08)}
+.candidate-intro-blob .primary,.candidate-form>.primary{border-color:var(--green);background:var(--green);color:#fff}
+.candidate-intro-blob .primary:hover,.candidate-form>.primary:hover{border-color:var(--green);background:var(--green);color:#fff;filter:brightness(.92)}
 .candidate-form input[type="hidden"]{display:none!important}
 .candidate-position-fieldset{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--paper)}
 .candidate-position-fieldset legend{padding:0 7px;color:var(--forest);font-size:14px;font-weight:850}
@@ -566,7 +587,11 @@ body[data-theme="dark"] .custom-palette-editor{border-color:var(--line);backgrou
 @media(max-width:1000px){
   .member-assembly-panel{grid-template-columns:1fr}
   .member-assembly-slots{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .member-assembly-representatives,.member-class-representative-slots{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .member-assembly-representatives{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .member-class-representative-slots{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .member-profile-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .member-secondary-reps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .member-class-reps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
 .charter-template-frame{width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(24px,6vw,80px);background:#396d59}
 .charter-template-note{max-width:1180px;margin:0 auto 14px;color:#fff;font-size:12px}
@@ -642,20 +667,28 @@ body[data-theme="dark"] .custom-palette-editor{border-color:var(--line);backgrou
   .member-grid{gap:14px}
   .member-grid-leads{grid-template-columns:repeat(2,minmax(0,1fr))}
   .member-grid-classes{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .member-profile-grid{gap:12px}
+  .member-profile-card{padding:12px;border-radius:20px}
+  .member-profile-photo-placeholder{border-radius:16px;font-size:11px}
+  .member-secondary-reps-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
   .member-structure-chart{gap:16px;margin-top:18px;padding:14px}
   .member-assembly-structure{gap:8px;padding:8px}
   .member-assembly-panel{gap:16px;padding:18px}
   .member-assembly-slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 10px}
+  .member-assembly-representatives{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .member-assembly-representative{font-size:11px}
+  .member-class-representative-slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .member-class-card{min-height:190px;padding:10px}
   .member-structure-role-card{grid-template-columns:30px minmax(0,1fr);gap:7px}
   .member-structure-role{font-size:12px}
   .member-structure-description{font-size:11px}
   .member-person-icon:not(.is-small):not(.is-student){width:30px;height:34px}
   .member-person-icon:not(.is-small):not(.is-student):before{left:9px;width:12px;height:12px}
   .member-person-icon:not(.is-small):not(.is-student):after{left:2px;width:26px;height:18px}
-  .member-assembly-representatives{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .member-assembly-representative{font-size:11px}
-  .member-class-representative-slots{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-  .member-class-card{min-height:190px;padding:10px}
+  .member-class-reps-section{gap:14px}
+  .member-class-reps-level{gap:10px;padding:12px}
+  .member-class-reps-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .member-class-rep-card{padding:10px}
   .member-card{padding:14px 10px 18px;border-radius:28px}
   .member-portrait,.member-grid-leads .member-portrait{width:100%;border-radius:20px}
   .member-card h3{font-size:clamp(16px,5vw,24px)}
