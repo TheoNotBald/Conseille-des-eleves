@@ -15,6 +15,8 @@
       projectDetails:'Découvrir le projet',
       projectBack:'Retour aux projets terminés',
       moreInfo:'Découvrir plus →',
+      untitledProject:'Projet sans titre',
+      projectDescriptionUnavailable:'Aucune description disponible pour ce projet.',
       voteTemplateTitle:'La boîte de vote',
       voteTemplateText:'Aucun vote n’est ouvert ni enregistré pour le moment.',
       voteOptionOne:'Option de vote à définir',
@@ -70,17 +72,6 @@
       charterArticleTwoSectionFive:'2.5',
       charterArticleTwoSectionFiveTitle:'Interprétation et conformité',
       charterArticleTwoSectionFiveText:'La charte est interprétée conformément aux politiques et aux règles de l’école. En cas de conflit, les règles de l’école prévalent et le Conseil consulte la personne responsable désignée.',
-      flowStudents:'Élèves',
-      flowClass:'Élection du représentant de classe',
-      flowLevel:'Conseil de niveau · chaque semaine',
-      flowAssembly:'Assemblée citoyenne · chaque mois',
-      flowReturn:'Suivi partagé avec les élèves',
-      flowStudentsText:'Les élèves partagent les idées, les questions et les besoins de leur classe.',
-      flowClassText:'Un représentant élu recueille les sujets et les transmet à son niveau.',
-      flowLevelText:'Les représentants rapprochent les enjeux communs et choisissent les sujets à faire avancer.',
-      flowAssemblyText:'Les représentants discutent des propositions et coordonnent le suivi avec l’école.',
-      flowReturnText:'Les nouvelles et le suivi des sujets reviennent aux élèves par les Conseils de niveau.',
-      structureSub:'Un parcours proposé pour faire circuler les idées des élèves jusqu’à l’Assemblée, puis partager le suivi.',
       homeLevelsTitle:'Les Conseils de niveau',
       homeLevelsText:'Les élèves de chaque classe choisissent leur représentant. Les représentants d’un même niveau se réunissent chaque semaine pour écouter les besoins, discuter des enjeux et transmettre les sujets qui concernent l’ensemble de l’école.',
       homeAssemblyTitle:'L’Assemblée citoyenne',
@@ -186,8 +177,6 @@
       noNewsText:'Les actualités, les mises à jour des projets terminés et les comptes rendus approuvés seront publiés ici lorsqu’ils seront disponibles.',
       peopleTitle:'Représentants',
       peopleText:'Les représentants assurent le lien entre les classes et le Conseil des élèves.',
-      noPeopleTitle:'Les représentants seront bientôt présentés',
-      noPeopleText:'Les informations sur les représentants seront ajoutées lorsqu’elles seront confirmées.',
       projectIntro:'Les idées approuvées par le Conseil des élèves sont réunies ici.',
       markCompleted:'Marquer comme terminé',
       reopenIdea:'Remettre dans Idées',
@@ -197,6 +186,14 @@
       participateText:'Décris ta proposition. Après examen, une idée approuvée pourra être mise en vedette sur la page d’accueil.',
       category:'Catégorie',
       chooseCategory:'Choisir une catégorie',
+      studentGrade:'Niveau scolaire',
+      chooseGrade:'Choisir un niveau',
+      gradeOne:'Secondaire 1',
+      gradeTwo:'Secondaire 2',
+      gradeThree:'Secondaire 3',
+      gradeFour:'Secondaire 4',
+      gradeFive:'Secondaire 5',
+      generalGrade:'Général (tous les niveaux)',
       schoolLife:'Vie à l’école',
       activity:'Activité ou événement',
       sharedSpaces:'Espaces communs',
@@ -206,10 +203,9 @@
       details:'Décris ton idée',
       detailsPlaceholder:'Explique ce que tu proposes et en quoi cela aiderait la communauté.',
       submit:'Envoyer la proposition',
-      storageNotice:'Pour le moment, les propositions sont enregistrées uniquement dans ce navigateur, sans compte ni base de données. Elles ne sont pas partagées entre appareils et toute personne utilisant cet appareil peut les consulter. N’indique aucun nom, renseignement personnel ou détail confidentiel.',
       submitted:'La proposition a été enregistrée. Merci de contribuer !',
       submitError:'Impossible d’enregistrer la proposition dans ce navigateur. Réessaie plus tard.',
-      required:'Ajoute un titre, une catégorie et une description avant l’envoi.',
+      required:'Ajoute un titre, une catégorie, un niveau et une description avant l’envoi.',
       adminTitle:'Gestion des propositions',
       adminTab:'Gestion',
       adminText:'Examine les idées reçues et décide lesquelles publier dans les projets.',
@@ -235,7 +231,6 @@
       loadError:'Les propositions enregistrées sont illisibles. Elles n’ont pas été modifiées.',
       saveError:'Les modifications n’ont pas pu être enregistrées dans ce navigateur.',
       storageError:'Le stockage local est indisponible. La proposition n’a pas été enregistrée.',
-      storageStatus:'Les propositions de cet appareil sont enregistrées dans ce navigateur uniquement.',
       projectStatus:'Projet approuvé',
       confirmRemove:'Supprimer définitivement cette proposition de ce navigateur ?',
       priorityHeader:'Priorité de révision',
@@ -265,6 +260,8 @@
       projectDetails:'Explore this project',
       projectBack:'Back to completed projects',
       moreInfo:'Discover more →',
+      untitledProject:'Untitled project',
+      projectDescriptionUnavailable:'No description is available for this project.',
       voteTemplateTitle:'The voting booth',
       voteTemplateText:'No vote is currently open or recorded.',
       voteOptionOne:'Voting option to be decided',
@@ -320,17 +317,6 @@
       charterArticleTwoSectionFive:'2.5',
       charterArticleTwoSectionFiveTitle:'Interpretation and compliance',
       charterArticleTwoSectionFiveText:'The charter is interpreted in accordance with school policies and rules. If a conflict arises, school rules prevail and the Council consults the designated school contact.',
-      flowStudents:'Students',
-      flowClass:'Class representative elected',
-      flowLevel:'Level Council · weekly',
-      flowAssembly:'Student Assembly · monthly',
-      flowReturn:'Updates shared back with students',
-      flowStudentsText:'Students share ideas, questions, and concerns from their class.',
-      flowClassText:'An elected representative gathers topics and brings them to the level.',
-      flowLevelText:'Representatives connect shared concerns and choose topics to bring forward.',
-      flowAssemblyText:'Representatives discuss proposals and coordinate follow-up with the school.',
-      flowReturnText:'Updates and follow-up are shared back with students through the Level Councils.',
-      structureSub:'A proposed path for student ideas to reach the Assembly and for updates to make their way back.',
       homeLevelsTitle:'Level Councils',
       homeLevelsText:'Students in each class elect their own representative. Representatives from the same level meet weekly to hear concerns, discuss level-wide issues, and bring relevant topics forward.',
       homeAssemblyTitle:'Student Assembly',
@@ -436,8 +422,6 @@
       noNewsText:'News, completed-project updates, and approved meeting summaries will be published here when available.',
       peopleTitle:'Representatives',
       peopleText:'Representatives connect their classes with the Student Council.',
-      noPeopleTitle:'Representatives will be introduced soon',
-      noPeopleText:'Representative information will be added once it has been confirmed.',
       projectIntro:'Ideas approved by the Student Council are collected here.',
       markCompleted:'Mark as completed',
       reopenIdea:'Return to Ideas',
@@ -447,6 +431,14 @@
       participateText:'Describe your suggestion. Once reviewed, an approved idea may be featured on the home page.',
       category:'Category',
       chooseCategory:'Choose a category',
+      studentGrade:'Grade level',
+      chooseGrade:'Choose a grade',
+      gradeOne:'Grade 1',
+      gradeTwo:'Grade 2',
+      gradeThree:'Grade 3',
+      gradeFour:'Grade 4',
+      gradeFive:'Grade 5',
+      generalGrade:'General (all grades)',
       schoolLife:'School life',
       activity:'Activity or event',
       sharedSpaces:'Shared spaces',
@@ -456,10 +448,9 @@
       details:'Describe your idea',
       detailsPlaceholder:'Explain what you suggest and how it would help the community.',
       submit:'Submit suggestion',
-      storageNotice:'For now, suggestions are saved only in this browser, without an account or database. They are not shared across devices, and anyone using this device may be able to view them. Do not include names, personal information, or confidential details.',
       submitted:'Your suggestion has been saved. Thank you for contributing!',
       submitError:'This browser could not save your suggestion. Please try again later.',
-      required:'Add a title, category, and description before submitting.',
+      required:'Add a title, category, grade, and description before submitting.',
       adminTitle:'Suggestion review',
       adminTab:'Admin',
       adminText:'Review incoming ideas and decide which ones to publish under Projects.',
@@ -485,7 +476,6 @@
       loadError:'Saved suggestions could not be read. They have not been changed.',
       saveError:'Changes could not be saved in this browser.',
       storageError:'Local browser storage is unavailable. The suggestion was not saved.',
-      storageStatus:'Suggestions on this device are saved in this browser only.',
       projectStatus:'Approved project',
       confirmRemove:'Permanently delete this suggestion from this browser?',
       priorityHeader:'Review priority',
@@ -531,8 +521,14 @@
     candidateBlobText:'Présente ton équipe, les personnes qui la composent et les idées que vous souhaitez défendre.',
     candidateRegister:'S’inscrire comme candidat',
     candidateTeam:'Nom du parti ou de l’équipe',
-    candidateRoster:'Noms et postes des membres',
-    candidateRosterHelp:'Inscris une personne et son poste par ligne.',
+    candidateRoster:'Postes et représentantes et représentants',
+    candidatePresident:'Président',
+    candidateVicePresident:'Vice-président',
+    candidateTreasurer:'Trésorier',
+    candidateSecretary:'Secrétaire',
+    candidateHighVoice:'Haute Parole',
+    candidateLowVoice:'Basse Parole',
+    candidateSectionRepresentative:'Représentant · Sec {section}',
     candidateIdeas:'Idées et propositions de l’équipe',
     candidatePicture:'Photo de l’équipe',
     candidatePictureHelp:'Image JPG, PNG ou WebP de 50 Mo maximum.',
@@ -544,9 +540,24 @@
     candidatePreviewMembers:'Membres de l’équipe',
     candidatePreviewImage:'La photo de l’équipe apparaîtra ici.',
     candidateSubmit:'Enregistrer la candidature',
-    candidatePrivacy:'La candidature est enregistrée uniquement sur cet appareil et n’est pas transmise à l’école. N’ajoute pas de renseignements personnels réels.',
+    charterSearchLabel:'Rechercher dans la charte',
+    charterSearchTrigger:'Rechercher',
+    charterSearchPlaceholder:'Rechercher un titre ou un mot-clé…',
+    charterSearchHint:'Les résultats apparaissent pendant la saisie.',
+    charterSearchClose:'Fermer la recherche',
+    charterSearchNoResults:'Aucune section trouvée.',
+    charterSearchResults:'Sections correspondantes',
+    customPalette:'Personnalisé',
+    createCustomPalette:'Créer un préréglage personnalisé',
+    editCustomPalette:'Modifier le préréglage personnalisé',
+    saveCustomPalette:'Enregistrer le préréglage',
+    customPaletteSaved:'Préréglage personnalisé enregistré sur cet appareil.',
+    customPaletteForest:'Couleur principale',
+    customPaletteDeep:'Couleur sombre',
+    customPaletteGreen:'Couleur d’accent',
+    customPaletteLime:'Couleur secondaire',
     candidateSaved:'La candidature a été enregistrée uniquement sur cet appareil.',
-    candidateRequired:'Remplis le nom de l’équipe, les membres et les idées.',
+    candidateRequired:'Remplis le nom de l’équipe, au moins un poste et les idées.',
     candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 50 Mo maximum.',
     candidateSaveError:'La candidature n’a pas pu être enregistrée dans ce navigateur.',
     voteScheduleTitle:'Date et heure du vote',
@@ -584,7 +595,6 @@
     legalPrivacy:'Confidentialité et renseignements personnels',
     legalTerms:'Conditions d’utilisation',
     settingsSaveError:'Les préférences n’ont pas pu être enregistrées sur cet appareil.',
-    structureTitle:'Structure de représentation',
   });
   Object.assign(copy.en,{
     navSettings:'Settings',
@@ -594,8 +604,14 @@
     candidateBlobText:'Introduce your team, its members, and the ideas you want to support.',
     candidateRegister:'Register as a candidate',
     candidateTeam:'Party or team name',
-    candidateRoster:'Members’ names and positions',
-    candidateRosterHelp:'Enter one person and position per line.',
+    candidateRoster:'Positions and representatives',
+    candidatePresident:'President',
+    candidateVicePresident:'Vice-President',
+    candidateTreasurer:'Treasurer',
+    candidateSecretary:'Secretary',
+    candidateHighVoice:'Haute Parole',
+    candidateLowVoice:'Basse Parole',
+    candidateSectionRepresentative:'Representative · Sec {section}',
     candidateIdeas:'Team ideas and proposals',
     candidatePicture:'Team picture',
     candidatePictureHelp:'JPG, PNG, or WebP image up to 50 MB.',
@@ -607,9 +623,24 @@
     candidatePreviewMembers:'Team members',
     candidatePreviewImage:'The team picture will appear here.',
     candidateSubmit:'Save application',
-    candidatePrivacy:'The application is saved only on this device and is not sent to the school. Do not enter real personal information.',
+    charterSearchLabel:'Search the Charter',
+    charterSearchTrigger:'Search',
+    charterSearchPlaceholder:'Search a heading or keyword…',
+    charterSearchHint:'Results appear as you type.',
+    charterSearchClose:'Close search',
+    charterSearchNoResults:'No sections found.',
+    charterSearchResults:'Matching sections',
+    customPalette:'Custom',
+    createCustomPalette:'Create a custom preset',
+    editCustomPalette:'Edit custom preset',
+    saveCustomPalette:'Save preset',
+    customPaletteSaved:'Custom preset saved on this device.',
+    customPaletteForest:'Primary color',
+    customPaletteDeep:'Dark color',
+    customPaletteGreen:'Accent color',
+    customPaletteLime:'Secondary color',
     candidateSaved:'The application was saved only on this device.',
-    candidateRequired:'Enter the team name, members, and ideas.',
+    candidateRequired:'Enter the team name, at least one position, and the ideas.',
     candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 50 MB.',
     candidateSaveError:'The application could not be saved in this browser.',
     voteScheduleTitle:'Voting date and time',
@@ -647,10 +678,25 @@
     legalPrivacy:'Privacy and personal information',
     legalTerms:'Terms of use',
     settingsSaveError:'Preferences could not be saved on this device.',
-    structureTitle:'Representation structure'
   });
 
   const text=(key)=>copy[document.documentElement.lang==='en'?'en':'fr'][key];
+  const isRepeatedPresentationError=value=>{
+    const phrase=document.documentElement.lang==='en'
+      ?'Could not save the change.'
+      :'La modification n’a pas pu être enregistrée.';
+    let remaining=String(value||'').trim();
+    let repetitions=0;
+    while(remaining.startsWith(phrase)){
+      remaining=remaining.slice(phrase.length).trimStart();
+      repetitions++;
+    }
+    return repetitions>=2&&(!remaining||phrase.startsWith(remaining));
+  };
+  const cleanPresentationValue=(value,original,fallback)=>{
+    const safeOriginal=isRepeatedPresentationError(original)||!String(original||'').trim()?fallback:original;
+    return isRepeatedPresentationError(value)||!String(value||'').trim()?safeOriginal:value;
+  };
   const priorities=['normal','yellow','red'];
   const priorityOrder={normal:0,yellow:1,red:2};
   const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
@@ -678,6 +724,14 @@
       other:'other'
     }[value];
     return key?text(key):value||text('noCategory');
+  };
+  const gradeName=value=>{
+    if(value==='general')return text('generalGrade');
+    const grade=Number(value);
+    if(Number.isInteger(grade)&&grade>=1&&grade<=5){
+      return text(['','gradeOne','gradeTwo','gradeThree','gradeFour','gradeFive'][grade]);
+    }
+    return document.documentElement.lang==='en'?'Grade not specified':'Niveau non précisé';
   };
   const make=(tag,className,content)=>{
     const node=document.createElement(tag);
@@ -773,7 +827,31 @@
   });
   const voteSettingsKey='cdecc.vote.settings.v1';
   const preferencesKey='cdecc.ui.preferences.v1';
-  const palettes=new Set(['forest','ocean','plum']);
+  const preferencesCookieName='cdecc_ui_preferences';
+  const defaultCustomPalette={forest:'#233d33',deep:'#1a2e2a',green:'#4a6d60',lime:'#d9d7a5'};
+  const customPaletteKeys=Object.keys(defaultCustomPalette);
+  const palettes=new Set(['forest','ocean','plum','custom']);
+  const isValidCustomPalette=value=>value&&typeof value==='object'&&
+    customPaletteKeys.every(key=>typeof value[key]==='string'&&/^#[0-9a-f]{6}$/i.test(value[key]));
+  const parsePreferences=value=>{
+    const saved=JSON.parse(value);
+    if(!saved||!palettes.has(saved.palette)||typeof saved.dark!=='boolean'||typeof saved.slogan!=='boolean')return null;
+    const customPalette=saved.customPalette==null?null:saved.customPalette;
+    if(customPalette&&!isValidCustomPalette(customPalette))return null;
+    if(saved.palette==='custom'&&!customPalette)return null;
+    return {
+      palette:saved.palette,
+      dark:saved.dark,
+      slogan:saved.slogan,
+      customPalette:customPalette?Object.fromEntries(customPaletteKeys.map(key=>[key,customPalette[key]])):null,
+      updatedAt:Number.isFinite(saved.updatedAt)?saved.updatedAt:0
+    };
+  };
+  const readPreferenceCookie=()=>{
+    const prefix=`${preferencesCookieName}=`;
+    const entry=document.cookie.split('; ').find(cookie=>cookie.startsWith(prefix));
+    return entry?decodeURIComponent(entry.slice(prefix.length)):null;
+  };
   const validVoteSettings=value=>{
     if(!value||typeof value!=='object')return false;
     if(typeof value.formUrl!=='string'||value.formUrl.length>500)return false;
@@ -797,20 +875,41 @@
       voteSettings=saved;
     }
   }catch(error){voteSettingsLoadError=error.message||text('voteConfigInvalid')}
-  let preferences={palette:'forest',dark:false,slogan:true};
+  let preferences={palette:'forest',dark:false,slogan:true,customPalette:null,updatedAt:0};
   let preferencesLoadError='';
+  const storedPreferences=[];
   try{
     const raw=localStorage.getItem(preferencesKey);
     if(raw!==null){
-      const saved=JSON.parse(raw);
-      if(!saved||!palettes.has(saved.palette)||typeof saved.dark!=='boolean'||typeof saved.slogan!=='boolean')throw new Error(text('settingsSaveError'));
-      preferences={palette:saved.palette,dark:saved.dark,slogan:saved.slogan};
+      const saved=parsePreferences(raw);
+      if(!saved)throw new Error(text('settingsSaveError'));
+      storedPreferences.push(saved);
     }
   }catch(error){preferencesLoadError=error.message||text('settingsSaveError')}
+  try{
+    const raw=readPreferenceCookie();
+    if(raw!==null){
+      const saved=parsePreferences(raw);
+      if(!saved)throw new Error(text('settingsSaveError'));
+      storedPreferences.push(saved);
+    }
+  }catch(error){preferencesLoadError=error.message||text('settingsSaveError')}
+  storedPreferences.sort((a,b)=>b.updatedAt-a.updatedAt);
+  if(storedPreferences.length){
+    preferences=storedPreferences[0];
+    preferencesLoadError='';
+  }
   const applyPreferences=()=>{
     document.body.dataset.palette=preferences.palette;
     document.body.dataset.theme=preferences.dark?'dark':'light';
     document.body.classList.toggle('slogan-hidden',!preferences.slogan);
+    if(preferences.palette==='custom'&&isValidCustomPalette(preferences.customPalette)){
+      customPaletteKeys.forEach(key=>document.body.style.setProperty(`--${key}`,preferences.customPalette[key]));
+    }else{
+      customPaletteKeys.forEach(key=>document.body.style.removeProperty(`--${key}`));
+    }
+    const themeColor=document.querySelector('meta[name="theme-color"]');
+    if(themeColor)themeColor.content=preferences.dark?'#171d1a':preferences.customPalette?.forest||'#174c38';
   };
   applyPreferences();
   const isSuggestion=value=>value&&
@@ -818,6 +917,7 @@
     typeof value.title==='string'&&value.title.length<=100&&
     typeof value.details==='string'&&value.details.length<=1200&&
     typeof value.category==='string'&&value.category.length<=40&&
+    (value.grade===undefined||value.grade==='general'||['1','2','3','4','5'].includes(value.grade))&&
     typeof value.createdAt==='string'&&
     (value.completedAt===undefined||(typeof value.completedAt==='string'&&!Number.isNaN(Date.parse(value.completedAt))))&&
     (value.priority===undefined||priorities.includes(value.priority))&&
@@ -909,7 +1009,15 @@
   const renderHomeProjects=suggestions=>{
     const localEntries=suggestions
       .filter(item=>item.status==='approved'&&(item.completedAt||!item.homePlacement||item.homePlacement==='completed'))
-      .map(item=>({...item,id:item.id,homePlacement:'completed',completedAt:item.completedAt||'',approvedAt:item.approvedAt||item.createdAt||''}))
+      .map(item=>({
+        ...item,
+        id:item.id,
+        title:cleanPresentationValue(item.presentation_title,item.title,text('untitledProject')),
+        details:cleanPresentationValue(item.presentation_description,item.details,text('projectDescriptionUnavailable')),
+        homePlacement:'completed',
+        completedAt:item.completedAt||'',
+        approvedAt:item.approvedAt||item.createdAt||''
+      }))
       .sort((a,b)=>(b.completedAt||b.approvedAt||'').localeCompare(a.completedAt||a.approvedAt||''));
     const entries=[
       ...localEntries,
@@ -979,8 +1087,8 @@
   window.cdeccApplyRemoteSuggestions=records=>{
     remoteApprovedProjects=(records||[]).filter(item=>item.status==='approved').map(item=>({
       ...item,
-      title:item.presentation_title||item.title,
-      details:item.presentation_description||item.details,
+      title:cleanPresentationValue(item.presentation_title,item.title,text('untitledProject')),
+      details:cleanPresentationValue(item.presentation_description,item.details,text('projectDescriptionUnavailable')),
       homePlacement:item.home_placement||'completed',
       completedAt:item.completed_at||'',
       approvedAt:item.approved_at||'',
@@ -992,7 +1100,10 @@
         ?window.cdeccSupabase.storage.from('project-images').getPublicUrl(item.original_image_path).data.publicUrl
         :''
     }));
-    renderHomeProjects(readSuggestions());
+    let localSuggestions=[];
+    try{localSuggestions=readSuggestions()}
+    catch(error){reportError(error.message||text('loadError'))}
+    renderHomeProjects(localSuggestions);
   };
   completedGrid.addEventListener('click',event=>{
     const card=event.target.closest('[data-completed-id]');
@@ -1040,7 +1151,20 @@
     link.dataset.page=page;
     return link;
   };
+  let activeCharterSearch=null;
+  document.addEventListener('click',event=>{
+    if(activeCharterSearch&&!activeCharterSearch.container.contains(event.target)){
+      activeCharterSearch.close(false);
+    }
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&activeCharterSearch?.isOpen()){
+      event.preventDefault();
+      activeCharterSearch.close();
+    }
+  });
   const renderCharter=()=>{
+    activeCharterSearch?.clearHighlight();
     const articles=[
       {title:'charterArticleOne',prefix:'charterSection'},
       {title:'charterArticleTwo',prefix:'charterArticleTwoSection'}
@@ -1063,8 +1187,173 @@
       panel.append(make('h1','charter-template-article',text(article.title)),sections);
       articlePanels.append(panel);
     });
+    const charterSearch=make('div','site-search-anchor charter-search-anchor');
+    const charterSearchToggle=button('', 'search-mark charter-search-toggle');
+    charterSearchToggle.setAttribute('aria-label',text('charterSearchLabel'));
+    charterSearchToggle.setAttribute('aria-expanded','false');
+    charterSearchToggle.append(
+      make('span','search-glyph','⌕'),
+      make('span','search-label',text('charterSearchTrigger'))
+    );
+    const charterSearchDropdown=make('section','site-search-dropdown');
+    charterSearchDropdown.hidden=true;
+    charterSearchDropdown.setAttribute('role','region');
+    const charterSearchHeading=make('div','site-search-heading');
+    const charterSearchTitle=make('h2','',text('charterSearchLabel'));
+    charterSearchTitle.id='charter-search-title';
+    charterSearchDropdown.id='charter-search-dropdown';
+    charterSearchToggle.setAttribute('aria-controls',charterSearchDropdown.id);
+    const charterSearchClose=button('×','site-search-close charter-search-close');
+    charterSearchClose.setAttribute('aria-label',text('charterSearchClose'));
+    charterSearchHeading.append(charterSearchTitle,charterSearchClose);
+    const charterSearchLabel=make('label','site-search-label');
+    charterSearchLabel.append(make('span','',text('charterSearchLabel')));
+    const charterSearchInput=document.createElement('input');
+    charterSearchInput.type='search';
+    charterSearchInput.className='site-search-input';
+    charterSearchInput.autocomplete='off';
+    charterSearchInput.placeholder=text('charterSearchPlaceholder');
+    charterSearchInput.setAttribute('aria-label',text('charterSearchLabel'));
+    charterSearchLabel.append(charterSearchInput);
+    const charterSearchResults=make('div','site-search-results');
+    charterSearchResults.setAttribute('aria-label',text('charterSearchResults'));
+    charterSearchResults.setAttribute('aria-live','polite');
+    charterSearchInput.setAttribute('aria-controls','charter-search-results');
+    charterSearchInput.setAttribute('aria-expanded','false');
+    charterSearchResults.id='charter-search-results';
+    charterSearchDropdown.setAttribute('aria-labelledby',charterSearchTitle.id);
+    charterSearchDropdown.append(charterSearchHeading,charterSearchLabel,charterSearchResults);
+    charterSearch.append(charterSearchToggle,charterSearchDropdown);
     const frame=make('section','charter-template-frame');
-    frame.append(make('p','charter-template-note',text('charterTemplateNote')),articlePanels);
+    frame.append(make('p','charter-template-note',text('charterTemplateNote')),charterSearch,articlePanels);
+    const charterSections=[...articlePanels.querySelectorAll('.charter-template-section')];
+    let matchingSections=[];
+    let highlightedSection=null;
+    let highlightTimer=0;
+    const clearCharterHighlight=()=>{
+      window.clearTimeout(highlightTimer);
+      if(!highlightedSection)return;
+      highlightedSection.querySelectorAll('mark.charter-search-highlight').forEach(mark=>{
+        mark.replaceWith(document.createTextNode(mark.textContent));
+        mark.parentElement?.normalize();
+      });
+      highlightedSection=null;
+    };
+    const highlightCharterTerms=(section,terms)=>{
+      clearCharterHighlight();
+      if(!terms.length)return;
+      const walker=document.createTreeWalker(section,NodeFilter.SHOW_TEXT);
+      const textNodes=[];
+      while(walker.nextNode())if(walker.currentNode.data.trim())textNodes.push(walker.currentNode);
+      textNodes.forEach(node=>{
+        const source=node.data;
+        const characters=[...source];
+        const positions=[];
+        let normalized='';
+        let sourceOffset=0;
+        characters.forEach(character=>{
+          const normalizedCharacter=normalizeSearchText(character);
+          for(let index=0;index<normalizedCharacter.length;index++){
+            positions.push({start:sourceOffset,end:sourceOffset+character.length});
+          }
+          normalized+=normalizedCharacter;
+          sourceOffset+=character.length;
+        });
+        const matches=[];
+        terms.forEach(term=>{
+          let index=normalized.indexOf(term);
+          while(index!==-1){
+            const first=positions[index];
+            const last=positions[index+term.length-1];
+            if(first&&last)matches.push({start:first.start,end:last.end});
+            index=normalized.indexOf(term,index+term.length);
+          }
+        });
+        matches.sort((a,b)=>a.start-b.start||a.end-b.end);
+        const merged=matches.reduce((ranges,match)=>{
+          const previous=ranges[ranges.length-1];
+          if(previous&&match.start<=previous.end)previous.end=Math.max(previous.end,match.end);
+          else ranges.push({...match});
+          return ranges;
+        },[]);
+        if(!merged.length)return;
+        const fragment=document.createDocumentFragment();
+        let cursor=0;
+        merged.forEach(({start,end})=>{
+          if(start>cursor)fragment.append(document.createTextNode(source.slice(cursor,start)));
+          const mark=make('mark','charter-search-highlight',source.slice(start,end));
+          fragment.append(mark);
+          cursor=end;
+        });
+        if(cursor<source.length)fragment.append(document.createTextNode(source.slice(cursor)));
+        node.replaceWith(fragment);
+      });
+      highlightedSection=section;
+      highlightTimer=window.setTimeout(clearCharterHighlight,3000);
+    };
+    const renderCharterSearch=()=>{
+      const terms=searchTerms(charterSearchInput.value);
+      charterSearchResults.replaceChildren();
+      matchingSections=[];
+      charterSearchInput.setAttribute('aria-expanded',String(terms.length>0));
+      if(!terms.length)return;
+      matchingSections=charterSections.filter(section=>{
+        const content=normalizeSearchText(section.innerText);
+        return terms.every(term=>content.includes(term));
+      });
+      if(!matchingSections.length){
+        charterSearchResults.append(make('p','site-search-empty',text('charterSearchNoResults')));
+        return;
+      }
+      matchingSections.forEach((section,index)=>{
+        const result=button('', 'site-search-result charter-search-result');
+        result.dataset.charterSearchResult=String(index);
+        const heading=section.querySelector('h2');
+        const title=heading?.textContent.trim()||'';
+        const excerpt=section.querySelector('.charter-template-copy')?.textContent||'';
+        result.append(make('strong','',title),make('span','',searchResultText(excerpt,charterSearchInput.value)));
+        charterSearchResults.append(result);
+      });
+    };
+    charterSearchInput.addEventListener('input',renderCharterSearch);
+    charterSearchResults.addEventListener('click',event=>{
+      const result=event.target.closest('[data-charter-search-result]');
+      if(!result)return;
+      const section=matchingSections[Number(result.dataset.charterSearchResult)];
+      if(!section)return;
+      const terms=searchTerms(charterSearchInput.value);
+      charterSearchInput.value='';
+      renderCharterSearch();
+      section.tabIndex=-1;
+      section.scrollIntoView({behavior:'smooth',block:'center'});
+      section.focus({preventScroll:true});
+      highlightCharterTerms(section,terms);
+      closeCharterSearch(false);
+    });
+    const closeCharterSearch=(restoreFocus=true)=>{
+      if(charterSearchDropdown.hidden)return;
+      charterSearchDropdown.hidden=true;
+      charterSearchToggle.setAttribute('aria-expanded','false');
+      if(restoreFocus)charterSearchToggle.focus();
+    };
+    activeCharterSearch={
+      container:charterSearch,
+      close:closeCharterSearch,
+      isOpen:()=>!charterSearchDropdown.hidden,
+      clearHighlight:clearCharterHighlight
+    };
+    charterSearchToggle.addEventListener('click',()=>{
+      const opening=charterSearchDropdown.hidden;
+      charterSearchDropdown.hidden=!opening;
+      charterSearchToggle.setAttribute('aria-expanded',String(opening));
+      if(opening){
+        charterSearchInput.value='';
+        charterSearchResults.replaceChildren(make('p','site-search-empty',text('charterSearchHint')));
+        charterSearchInput.setAttribute('aria-expanded','false');
+        charterSearchInput.focus();
+      }
+    });
+    charterSearchClose.addEventListener('click',()=>closeCharterSearch());
     how.replaceChildren(frame);
   };
   const voteAvailability=()=>{
@@ -1126,10 +1415,41 @@
     const teamName=appendCandidateField('candidate-team','candidateTeam');
     teamName.maxLength=80;
     teamName.required=true;
-    const roster=appendCandidateField('candidate-roster','candidateRoster','textarea');
-    roster.maxLength=1200;
-    roster.required=true;
-    roster.placeholder=text('candidateRosterHelp');
+    const positionFieldset=make('fieldset','candidate-position-fieldset');
+    positionFieldset.append(make('legend','',text('candidateRoster')));
+    const positionFields=[
+      {id:'candidate-president',key:'candidatePresident'},
+      {id:'candidate-vice-president',key:'candidateVicePresident'},
+      {id:'candidate-treasurer',key:'candidateTreasurer'},
+      {id:'candidate-secretary',key:'candidateSecretary'},
+      {id:'candidate-high-voice',key:'candidateHighVoice',multiple:true},
+      {id:'candidate-low-voice',key:'candidateLowVoice',multiple:true},
+      ...Array.from({length:5},(_,index)=>({
+        id:`candidate-representative-sec-${index+1}`,
+        key:'candidateSectionRepresentative',
+        section:index+1
+      }))
+    ];
+    positionFields.forEach(position=>{
+      const label=make('label','candidate-position-field');
+      label.append(make('span','',position.key==='candidateSectionRepresentative'
+        ?text(position.key).replace('{section}',String(position.section))
+        :text(position.key)));
+      const field=document.createElement(position.multiple?'textarea':'input');
+      if(!position.multiple)field.type='text';
+      else field.rows=2;
+      field.id=position.id;
+      field.name=position.id;
+      field.maxLength=position.multiple?500:100;
+      field.dataset.candidatePosition=position.id;
+      label.append(field);
+      positionFieldset.append(label);
+      position.field=field;
+    });
+    const roster=document.createElement('input');
+    roster.type='hidden';
+    roster.id='candidate-roster';
+    roster.name='candidate-roster';
     const ideas=appendCandidateField('candidate-ideas','candidateIdeas','textarea');
     ideas.maxLength=2000;
     ideas.required=true;
@@ -1137,25 +1457,26 @@
     picture.accept='image/jpeg,image/png,image/webp';
     picture.required=true;
     const pictureHelp=make('p','site-field-help',text('candidatePictureHelp'));
-    candidateForm.append(pictureHelp);
+    candidateForm.append(positionFieldset,roster,pictureHelp);
     const candidateImageCropEditor=make('div','candidate-image-crop-editor');
     candidateImageCropEditor.hidden=true;
-    candidateImageCropEditor.append(make('p','candidate-image-crop-title',text('candidateImageCropTitle')));
+    candidateImageCropEditor.append(
+      make('p','candidate-image-crop-title',text('candidateImageCropTitle')),
+      make('p','candidate-image-crop-help',text('candidateImageCropHelp'))
+    );
     const candidateImageCropCanvas=document.createElement('canvas');
     candidateImageCropCanvas.className='candidate-image-crop-canvas';
     candidateImageCropCanvas.tabIndex=0;
     candidateImageCropCanvas.setAttribute('role','img');
     candidateImageCropCanvas.setAttribute('aria-label',text('candidateImageCropHelp'));
-    candidateImageCropEditor.append(candidateImageCropCanvas,make('p','candidate-image-crop-help',text('candidateImageCropHelp')));
-    candidateForm.append(candidateImageCropEditor);
     let candidateImageEditor=null;
     const initializeCandidateImageEditor=()=>{
       if(candidateImageEditor)return candidateImageEditor;
       if(typeof window.cdeccCreateCandidateImageCropEditor!=='function')throw new Error(text('candidateImageInvalid'));
       candidateImageEditor=window.cdeccCreateCandidateImageCropEditor(candidateImageCropCanvas,canvas=>{
         candidateImageCropEditor.hidden=false;
-        candidatePreviewImage.src=canvas.toDataURL('image/webp',.8);
-        candidatePreviewImage.hidden=false;
+        candidateImageCropCanvas.hidden=false;
+        candidatePreviewImage.hidden=true;
         candidatePreviewPlaceholder.hidden=true;
       });
       window.cdeccCandidateImageCropEditors??=new WeakMap();
@@ -1163,20 +1484,22 @@
       return candidateImageEditor;
     };
     const backgroundColor=appendCandidateField('candidate-background','candidateBackground','input','color');
-    backgroundColor.value='#396d59';
+    backgroundColor.defaultValue='#396d59';
     const foregroundColor=appendCandidateField('candidate-foreground','candidateForeground','input','color');
-    foregroundColor.value='#ffffff';
+    foregroundColor.defaultValue='#ffffff';
     const candidatePreview=make('article','candidate-preview-card');
     candidatePreview.tabIndex=0;
     candidatePreview.setAttribute('role','button');
     candidatePreview.style.cursor='pointer';
     candidatePreview.addEventListener('click',()=>toggleCandidateForm(true));
     candidatePreview.addEventListener('keydown',event=>{
+      if(event.target===candidateImageCropCanvas)return;
       if(event.key==='Enter'||event.key===' '){
         event.preventDefault();
         toggleCandidateForm(true);
       }
     });
+    candidateImageCropCanvas.addEventListener('click',event=>event.stopPropagation());
     const candidatePreviewCopy=make('div','candidate-preview-copy');
     const candidatePreviewTitle=make('h2','');
     const candidatePreviewIdeas=make('p','');
@@ -1195,21 +1518,32 @@
     candidatePreviewImage.alt='';
     candidatePreviewImage.hidden=true;
     const candidatePreviewPlaceholder=make('p','',text('candidatePreviewImage'));
-    candidatePreviewMedia.append(candidatePreviewImage,candidatePreviewPlaceholder);
-    candidatePreview.append(candidatePreviewCopy,candidatePreviewMedia);
+    candidateImageCropCanvas.hidden=true;
+    candidatePreviewMedia.append(candidatePreviewImage,candidatePreviewPlaceholder,candidateImageCropCanvas);
+    candidatePreview.append(candidatePreviewCopy,candidatePreviewMedia,candidateImageCropEditor);
     const updateCandidatePreview=()=>{
       candidatePreview.style.backgroundColor=backgroundColor.value;
       candidatePreview.style.color=foregroundColor.value;
       candidatePreviewTitle.textContent=teamName.value.trim()||text('candidateTeam');
       candidatePreviewIdeas.textContent=ideas.value.trim()||text('candidateIdeas');
+      roster.value=positionFields.map(position=>{
+        const names=position.field.value.split(/\r?\n/).map(name=>name.trim()).filter(Boolean);
+        if(!names.length)return '';
+        const label=position.key==='candidateSectionRepresentative'
+          ?text(position.key).replace('{section}',String(position.section))
+          :text(position.key);
+        return `${label}: ${names.join(', ')}`;
+      }).filter(Boolean).join('\n');
       candidatePreviewRosterList.replaceChildren();
       const members=roster.value.split(/\r?\n/).map(member=>member.trim()).filter(Boolean);
       members.forEach(member=>candidatePreviewRosterList.append(make('li','',member)));
       candidatePreviewRoster.hidden=members.length===0;
+      candidatePreview.classList.toggle('has-many-members',members.length>=6);
+      candidatePreview.classList.toggle('has-many-members-dense',members.length>=9);
     };
     candidateForm.append(candidatePreview);
     teamName.addEventListener('input',updateCandidatePreview);
-    roster.addEventListener('input',updateCandidatePreview);
+    positionFields.forEach(position=>position.field.addEventListener('input',updateCandidatePreview));
     ideas.addEventListener('input',updateCandidatePreview);
     backgroundColor.addEventListener('input',updateCandidatePreview);
     foregroundColor.addEventListener('input',updateCandidatePreview);
@@ -1217,55 +1551,108 @@
       const file=picture.files[0];
       if(file&&file.size<=maxCandidateImageSize&&['image/jpeg','image/png','image/webp'].includes(file.type)){
         try{
+          candidateImageCropCanvas.hidden=false;
+          candidatePreviewImage.hidden=true;
+          candidatePreviewPlaceholder.hidden=true;
+          candidateImageCropEditor.hidden=false;
           initializeCandidateImageEditor().load(file).catch(error=>{
             reportError(error);
+            candidateImageCropCanvas.hidden=true;
+            candidatePreviewPlaceholder.hidden=false;
+            candidateImageCropEditor.hidden=true;
             setError(candidateForm.querySelector('.site-status'),error);
           });
         }catch(error){
           reportError(error);
+          candidateImageCropCanvas.hidden=true;
+          candidatePreviewPlaceholder.hidden=false;
+          candidateImageCropEditor.hidden=true;
           setError(candidateForm.querySelector('.site-status'),error);
         }
       }else{
         candidatePreviewImage.removeAttribute('src');
         candidatePreviewImage.hidden=true;
+        candidateImageCropCanvas.hidden=true;
         candidatePreviewPlaceholder.hidden=false;
         candidateImageCropEditor.hidden=true;
       }
     });
     updateCandidatePreview();
-    const candidatePrivacy=make('p','site-privacy-note',text('candidatePrivacy'));
     const candidateStatus=make('p','site-status');
     candidateStatus.setAttribute('role','status');
     candidateStatus.setAttribute('aria-live','polite');
     const candidateSubmit=make('button','primary',text('candidateSubmit'));
     candidateSubmit.type='submit';
-    candidateForm.append(candidatePrivacy,candidateStatus,candidateSubmit);
+    candidateForm.append(candidateStatus,candidateSubmit);
     elections.replaceChildren(
       makePageHeading(text('navCandidates'),text('candidatePageTitle'),text('candidatePageText')),
       candidateIntro,
       candidateForm
     );
 
-    const structure=make('ol','gov-flow members-structure');
+    const makePersonIcon=className=>{
+      const icon=make('span',`member-person-icon${className?` ${className}`:''}`);
+      icon.setAttribute('aria-hidden','true');
+      return icon;
+    };
+    const makeMemberRole=(role,description)=>{
+      const card=make('article','member-structure-role-card');
+      card.append(makePersonIcon());
+      const copy=make('div','member-structure-role-copy');
+      copy.append(make('h4','member-structure-role',role));
+      if(description)copy.append(make('p','member-structure-description',description));
+      card.append(copy);
+      return card;
+    };
+    const assemblyStructure=make('section','member-assembly-structure');
+    const assemblyPanel=make('div','member-assembly-panel');
+    assemblyPanel.append(make('h3','member-assembly-title',text('leadreps')));
+    const assemblySlots=make('div','member-assembly-slots');
     [
-      ['flowStudents','flowStudentsText'],
-      ['flowClass','flowClassText'],
-      ['flowLevel','flowLevelText'],
-      ['flowAssembly','flowAssemblyText'],
-      ['flowReturn','flowReturnText']
-    ].forEach(([key,descriptionKey],index)=>{
-      const step=make('li','gov-flow-step');
-      step.append(make('span','gov-flow-number',String(index+1)),make('h3','',text(key)),make('p','',text(descriptionKey)));
-      structure.append(step);
-    });
+      ['rolePresident','rolePresidentText'],
+      ['roleTreasurer','roleTreasurerText'],
+      ['roleHighSpokesperson','roleHighSpokespersonText'],
+      ['roleVicePresident','roleVicePresidentText'],
+      ['roleSecretary','roleSecretaryText'],
+      ['roleLowSpokesperson','roleLowSpokespersonText']
+    ].forEach(([role,description])=>
+      assemblySlots.append(makeMemberRole(text(role),text(description)))
+    );
+    assemblyPanel.append(assemblySlots);
+    assemblyStructure.append(assemblyPanel);
+    const assemblyRepresentatives=make('div','member-assembly-representatives');
+    for(let section=1;section<=5;section++){
+      const role=text('candidateSectionRepresentative').replace('{section}',String(section));
+      const representative=make('div','member-assembly-representative');
+      representative.append(makePersonIcon('is-small'),make('span','',role));
+      assemblyRepresentatives.append(representative);
+    }
+    assemblyStructure.append(assemblyRepresentatives);
+    const classRepresentativeSlots=make('div','member-class-representative-slots');
+    for(let section=1;section<=5;section++){
+      const role=text('candidateSectionRepresentative').replace('{section}',String(section));
+      const group=make('div','member-class-group');
+      const classCard=make('article','member-class-card');
+      const classHeading=make('div','member-class-card-heading');
+      classHeading.append(makePersonIcon('is-small'),make('span','',role));
+      const students=make('div','member-student-icons');
+      students.setAttribute('aria-hidden','true');
+      for(let student=0;student<6;student++)students.append(makePersonIcon('is-student'));
+      classCard.append(classHeading,students);
+      group.append(make('span','member-structure-arrow','↑'),classCard);
+      classRepresentativeSlots.append(group);
+    }
+    const memberStructure=make('div','member-structure-chart');
+    const classRepresentativePanel=make('section','member-class-panel');
+    classRepresentativePanel.append(
+      make('h3','member-class-title',text('classreps')),
+      make('p','member-class-description',text('levelResponsibilities')),
+      classRepresentativeSlots
+    );
+    memberStructure.append(assemblyStructure,classRepresentativePanel);
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
-      sectionHeading(text('structureTitle'),text('structureSub')),
-      structure,
-      sectionHeading(text('leadreps'),text('leadsub')),
-      emptyState(text('noPeopleTitle'),text('noPeopleText')),
-      sectionHeading(text('classreps'),text('classsub')),
-      emptyState(text('noPeopleTitle'),text('noPeopleText'))
+      memberStructure
     );
 
     const resourceCards=make('div','cards gov-resource-grid');
@@ -1434,6 +1821,9 @@
         throw error;
       }
       form.reset();
+      candidateImageEditor?.reset();
+      candidateImageCropCanvas.hidden=true;
+      candidateImageCropEditor.hidden=true;
       if(candidatePreviewImageUrl)URL.revokeObjectURL(candidatePreviewImageUrl);
       candidatePreviewImageUrl='';
       candidatePreviewImage.removeAttribute('src');
@@ -1521,13 +1911,34 @@
     categorySelect.append(option);
   });
   categoryLabel.append(categorySelect);
+  const gradeLabel=make('label','');
+  gradeLabel.htmlFor='suggestion-grade';
+  gradeLabel.append(make('span','',text('studentGrade')));
+  const gradeSelect=document.createElement('select');
+  gradeSelect.id='suggestion-grade';
+  gradeSelect.name='grade';
+  gradeSelect.required=true;
+  [
+    ['',text('chooseGrade')],
+    ['1',text('gradeOne')],
+    ['2',text('gradeTwo')],
+    ['3',text('gradeThree')],
+    ['4',text('gradeFour')],
+    ['5',text('gradeFive')],
+    ['general',text('generalGrade')]
+  ].forEach(([value,label])=>{
+    const option=make('option','',label);
+    option.value=value;
+    gradeSelect.append(option);
+  });
+  gradeLabel.append(gradeSelect);
   const titleLabel=make('label','');
   titleLabel.htmlFor='title';
   titleLabel.append(make('span','',text('ideaTitle')));
   const titleInput=document.createElement('input');
   titleInput.id='title';
   titleInput.name='title';
-  titleInput.maxLength=100;
+  titleInput.maxLength=160;
   titleInput.required=true;
   titleInput.placeholder=text('ideaTitlePlaceholder');
   titleLabel.append(titleInput);
@@ -1552,14 +1963,13 @@
   const bodyCompatibility=document.createElement('textarea');
   bodyCompatibility.id='body';
   hiddenCompatibility.append(nameCompatibility,classCompatibility,adminCompatibility,bodyCompatibility);
-  const privacy=make('p','site-privacy-note',text('storageNotice'));
   const formStatus=make('p','site-status');
   formStatus.setAttribute('role','status');
   formStatus.setAttribute('aria-live','polite');
   formStatus.dataset.storageStatus='';
   const submit=make('button','primary',text('submit'));
   submit.type='submit';
-  participationForm.append(categoryLabel,titleLabel,detailsLabel,privacy,formStatus,submit,hiddenCompatibility);
+  participationForm.append(categoryLabel,gradeLabel,titleLabel,detailsLabel,formStatus,submit,hiddenCompatibility);
   projects.replaceChildren(participationForm);
 
   const admin=document.getElementById('page-admin');
@@ -1665,7 +2075,42 @@
       choice.setAttribute('aria-pressed',String(preferences.palette===palette));
       paletteChoices.append(choice);
     });
-    paletteCard.append(paletteChoices);
+    if(preferences.customPalette){
+      const customChoice=button(text('customPalette'),'settings-choice');
+      customChoice.dataset.palette='custom';
+      customChoice.setAttribute('aria-pressed',String(preferences.palette==='custom'));
+      paletteChoices.append(customChoice);
+    }
+    const customPaletteToggle=button(
+      text(preferences.customPalette?'editCustomPalette':'createCustomPalette'),
+      'custom-palette-toggle'
+    );
+    customPaletteToggle.dataset.customPaletteEditor='';
+    customPaletteToggle.setAttribute('aria-expanded','false');
+    const customPaletteEditor=make('div','custom-palette-editor');
+    customPaletteEditor.hidden=true;
+    const customColorFields=make('div','custom-palette-colors');
+    const customColorLabels={
+      forest:'customPaletteForest',
+      deep:'customPaletteDeep',
+      green:'customPaletteGreen',
+      lime:'customPaletteLime'
+    };
+    customPaletteKeys.forEach(key=>{
+      const label=make('label','custom-palette-color');
+      label.append(make('span','',text(customColorLabels[key])));
+      const input=document.createElement('input');
+      input.type='color';
+      input.value=preferences.customPalette?.[key]||defaultCustomPalette[key];
+      input.dataset.customPaletteColor=key;
+      input.setAttribute('aria-label',text(customColorLabels[key]));
+      label.append(input);
+      customColorFields.append(label);
+    });
+    const saveCustomPalette=button(text('saveCustomPalette'),'save-custom-palette','primary');
+    saveCustomPalette.dataset.saveCustomPalette='';
+    customPaletteEditor.append(customColorFields,saveCustomPalette);
+    paletteCard.append(paletteChoices,customPaletteToggle,customPaletteEditor);
     const appearanceCard=make('section','card settings-card');
     appearanceCard.append(make('h2','',text('appearanceTitle')));
     const darkLabel=make('label','settings-switch');
@@ -1701,16 +2146,56 @@
   };
   renderSettings();
   const savePreferences=()=>{
+    preferences.updatedAt=Date.now();
     applyPreferences();
+    const serialized=JSON.stringify(preferences);
+    let saved=false;
+    let saveError;
     try{
-      localStorage.setItem(preferencesKey,JSON.stringify(preferences));
-      preferencesLoadError='';
-      setStatus(settingsStatus,text('preferencesSaved'),'success');
-    }catch(error){setStatus(settingsStatus,error.message||text('settingsSaveError'),'error')}
+      localStorage.setItem(preferencesKey,serialized);
+      saved=true;
+    }catch(error){saveError=error}
+    try{
+      const secure=location.protocol==='https:'?'; Secure':'';
+      document.cookie=`${preferencesCookieName}=${encodeURIComponent(serialized)}; Path=/; Max-Age=31536000; SameSite=Lax${secure}`;
+      saved=saved||readPreferenceCookie()===serialized;
+    }catch(error){saveError??=error}
+    if(!saved){
+      const error=saveError||new Error(text('settingsSaveError'));
+      preferencesLoadError=error.message||text('settingsSaveError');
+      setStatus(settingsStatus,preferencesLoadError,'error');
+      return;
+    }
+    preferencesLoadError='';
+    setStatus(settingsStatus,text('preferencesSaved'),'success');
   };
   settings.addEventListener('click',event=>{
+    const editCustom=event.target.closest('[data-custom-palette-editor]');
+    if(editCustom){
+      const editor=settings.querySelector('.custom-palette-editor');
+      editor.hidden=!editor.hidden;
+      editCustom.setAttribute('aria-expanded',String(!editor.hidden));
+      return;
+    }
+    const saveCustom=event.target.closest('[data-save-custom-palette]');
+    if(saveCustom){
+      const customPalette=Object.fromEntries(customPaletteKeys.map(key=>[
+        key,settings.querySelector(`[data-custom-palette-color="${key}"]`).value
+      ]));
+      if(!isValidCustomPalette(customPalette)){
+        setStatus(settingsStatus,text('settingsSaveError'),'error');
+        return;
+      }
+      preferences.customPalette=customPalette;
+      preferences.palette='custom';
+      savePreferences();
+      renderSettings();
+      setStatus(settingsStatus,text('customPaletteSaved'),'success');
+      return;
+    }
     const choice=event.target.closest('[data-palette]');
     if(!choice||!palettes.has(choice.dataset.palette))return;
+    if(choice.dataset.palette==='custom'&&!preferences.customPalette)return;
     preferences.palette=choice.dataset.palette;
     settings.querySelectorAll('[data-palette]').forEach(item=>item.setAttribute('aria-pressed',String(item===choice)));
     savePreferences();
@@ -1720,6 +2205,38 @@
     if(!toggle)return;
     preferences[toggle.dataset.preference]=toggle.checked;
     savePreferences();
+  });
+  const syncSavedPreferences=()=>{
+    const candidates=[];
+    try{
+      const raw=localStorage.getItem(preferencesKey);
+      if(raw!==null){
+        const saved=parsePreferences(raw);
+        if(saved)candidates.push(saved);
+      }
+    }catch(error){preferencesLoadError=error.message||text('settingsSaveError')}
+    try{
+      const raw=readPreferenceCookie();
+      if(raw!==null){
+        const saved=parsePreferences(raw);
+        if(saved)candidates.push(saved);
+      }
+    }catch(error){preferencesLoadError=error.message||text('settingsSaveError')}
+    candidates.sort((a,b)=>b.updatedAt-a.updatedAt);
+    const latest=candidates[0];
+    if(latest&&latest.updatedAt>preferences.updatedAt){
+      preferences=latest;
+      applyPreferences();
+      renderSettings();
+    }
+  };
+  window.addEventListener('storage',event=>{
+    if(event.key===preferencesKey||event.key===null)syncSavedPreferences();
+  });
+  window.addEventListener('focus',syncSavedPreferences);
+  window.addEventListener('pageshow',syncSavedPreferences);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible')syncSavedPreferences();
   });
   const drawerCards=document.getElementById('news-drawer-cards');
   const drawerIntro=document.querySelector('.news-drawer-intro');
@@ -1748,7 +2265,7 @@
     const searchTerm=searchInput.value.trim().toLocaleLowerCase();
     const visible=suggestions
       .filter(item=>item.status===activeFilter)
-      .filter(item=>`${item.title} ${item.details} ${categoryName(item.category)}`.toLocaleLowerCase().includes(searchTerm))
+      .filter(item=>`${item.title} ${item.details} ${categoryName(item.category)} ${gradeName(item.grade)}`.toLocaleLowerCase().includes(searchTerm))
       .sort((a,b)=>{
         const priorityDifference=priorityOrder[suggestionPriority(a).priority]-priorityOrder[suggestionPriority(b).priority];
         return priorityDifference||b.createdAt.localeCompare(a.createdAt);
@@ -1775,6 +2292,7 @@
       priorityRow.append(make('span',priority.manual?'site-priority-manual':'site-priority-reason',text(priority.manual?'priorityManual':priority.reason)));
       article.append(priorityRow);
       article.append(make('span','muted',categoryName(item.category)));
+      article.append(make('span','muted',gradeName(item.grade)));
       article.append(make('p','',item.details));
       const priorityLabel=make('label','site-priority-control');
       priorityLabel.append(make('span','',text('priorityHeader')));
@@ -1812,8 +2330,6 @@
       reviewList.replaceChildren(emptyState(text('loadError'),text('loadError')));
       return;
     }
-    setStatus(formStatus,text('storageStatus'));
-    setStatus(adminStatus,text('storageStatus'));
     renderHomeProjects(suggestions);
     const approved=getApprovedSuggestions(suggestions);
     renderAdmin(suggestions);
@@ -1829,9 +2345,11 @@
     const title=titleInput.value.trim();
     const details=detailsInput.value.trim();
     const category=categorySelect.value;
-    if(!title||!details||!category){
+    const grade=gradeSelect.value;
+    if(!title||!details||!category||!grade){
       setStatus(formStatus,text('required'),'error');
       if(!category)categorySelect.focus();
+      else if(!grade)gradeSelect.focus();
       else if(!title)titleInput.focus();
       else detailsInput.focus();
       return;
@@ -1844,6 +2362,7 @@
         title,
         details,
         category,
+        grade,
         createdAt:new Date().toISOString(),
         status:'pending',
         priority:priority.priority,
@@ -1943,11 +2462,22 @@
     Array.from(categorySelect.options).forEach((option,index)=>{
       option.textContent=[language.chooseCategory,language.schoolLife,language.activity,language.sharedSpaces,language.other][index];
     });
+    gradeLabel.querySelector('span').textContent=language.studentGrade;
+    Array.from(gradeSelect.options).forEach((option,index)=>{
+      option.textContent=[
+        language.chooseGrade,
+        language.gradeOne,
+        language.gradeTwo,
+        language.gradeThree,
+        language.gradeFour,
+        language.gradeFive,
+        language.generalGrade
+      ][index];
+    });
     titleLabel.querySelector('span').textContent=language.ideaTitle;
     titleInput.placeholder=language.ideaTitlePlaceholder;
     detailsLabel.querySelector('span').textContent=language.details;
     detailsInput.placeholder=language.detailsPlaceholder;
-    privacy.textContent=language.storageNotice;
     submit.textContent=language.submit;
     admin.querySelector('h1').textContent=language.adminTitle;
     admin.querySelector('.admin-portal-heading p').textContent=language.adminText;
@@ -2099,6 +2629,17 @@
     globalSearchButton.setAttribute('aria-expanded','false');
     if(restoreFocus)globalSearchButton.focus();
   };
+  const updateGlobalSearchAvailability=()=>{
+    const charterActive=how.classList.contains('active');
+    globalSearchButton.disabled=charterActive;
+    globalSearchButton.setAttribute('aria-disabled',String(charterActive));
+    document.body.classList.toggle('charter-search-active',charterActive);
+    if(charterActive)closeGlobalSearch(false);
+  };
+  updateGlobalSearchAvailability();
+  new MutationObserver(updateGlobalSearchAvailability).observe(document.querySelector('main'),{
+    subtree:true,attributes:true,attributeFilter:['class']
+  });
   const positionGlobalSearch=()=>{
     const anchorRight=searchAnchor.getBoundingClientRect().right;
     const width=searchDropdown.getBoundingClientRect().width;

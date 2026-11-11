@@ -7,7 +7,7 @@ Bilingual static website in French and English.
 - French / English language toggle
 - Home, how it works, representatives grouped by level, projects, candidacies, news, suggestions, settings, and administration pages
 - Candidate application form, team photo, and team color preview
-- Admin tabs for proposition review, voting settings, candidacies, and read-only audit logs
+- Admin tabs for proposition review, voting settings, and candidacies
 - Settings for color presets, light/dark mode, language, and the moving slogan
 - Admin controls for a voting-form link and voting schedule
 - Supabase integration scaffolding for cross-device suggestions, candidacies, candidate photos, vote settings, and audit events
@@ -16,7 +16,7 @@ Bilingual static website in French and English.
 ## Important limitations
 - Supabase must be configured and the migration applied before cross-device storage or Google admin sign-in works. See [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md). Until then, admin access is locked and public forms use local-browser storage.
 - When configured, any Google account ending in `@gmail.com` can administer the site. This is intentionally broad and not suitable for a school launch.
-- Admin audit logs are append-only for application users, but a Supabase project owner can still alter the database or disable protections.
+- Database audit events are available on the admin Journaux page without displaying IP addresses; see [`SUPABASE_SETUP.md`](./SUPABASE_SETUP.md) for access and privacy limitations.
 - Without Supabase, candidate application details are stored in localStorage and team photos (up to 50 MB each) in IndexedDB on the current device. Do not enter real student information or upload real student photos.
 - A configured voting link opens an external form; this site does not collect votes.
 - The school must approve privacy, accessibility, roles, identity verification, election rules, and official content before production use.

@@ -23,9 +23,9 @@
     approve:'Accepter et publier',
     reject:'Refuser',
     reopen:'Remettre à examiner',
-    edit:'Modifier',
     save:'Enregistrer',
     cancel:'Annuler',
+    confirmDiscardAdminEdits:'Abandonner les modifications non enregistrées pour changer de filtre ?',
     delete:'Supprimer',
     deleteCandidacy:'Supprimer complètement',
     confirmDeleteCandidacy:'Supprimer définitivement la candidature de « {team} » et toutes ses photos ? Cette action est irréversible.',
@@ -40,6 +40,9 @@
     titleField:'Titre',
     details:'Description',
     category:'Catégorie',
+    grade:'Niveau',
+    grades:['Secondaire 1','Secondaire 2','Secondaire 3','Secondaire 4','Secondaire 5'],
+    generalGrade:'Général',
     priority:'Priorité',
     priorityOptions:['Normale','À vérifier','Langage inapproprié'],
     candidateTitle:'Candidature',
@@ -47,7 +50,6 @@
     roster:'Membres et postes',
     ideas:'Propositions',
     photo:'Photo',
-    editBlobHint:'Clique sur l’aperçu pour modifier le parti',
     background:'Couleur de fond',
     foreground:'Couleur du texte',
     upload:'Choisir une nouvelle photo (50 Mo maximum)',
@@ -72,18 +74,17 @@
     photoError:'Choisissez une image JPG, PNG ou WebP de 50 Mo maximum.',
     projectPlacement:'Afficher sur',
     projectPlacements:{none:'Ne pas publier',featured:'Accueil — À la une',completed:'Accueil — Projets terminés'},
-    projectImageEditor:'Modifier l’image',
     projectImage:'Image du projet (JPG, PNG ou WebP, 50 Mo maximum)',
-    projectDisplayTitle:'Titre affiché',
-    projectDisplayDescription:'Description affichée',
+    untitledProject:'Projet sans titre',
+    projectDescriptionUnavailable:'Aucune description disponible pour ce projet.',
     projectMigrationRequired:'La mise à jour Supabase manque. Exécutez 20261105030000_project_presentation_copy.sql dans SQL Editor, puis réessayez.',
     projectCropPreview:'Aperçu sur la page d’accueil',
     projectCropHelp:'Fais glisser l’image pour la déplacer. Fais glisser un coin pour ajuster le cadrage; les flèches la déplacent et +/− ajustent le zoom.',
     projectPreviewFeatured:'À la une',
     projectPreviewCompleted:'Projets terminés',
     projectPreviewMoreInfo:'Découvrir plus →',
-    saveProjectDisplay:'Enregistrer l’affichage',
-    projectDisplaySaved:'Affichage du projet enregistré.',
+    proposalActionSaved:'Les modifications et l’action ont été enregistrées.',
+    projectActionPartialFailure:'La publication a été annulée, mais le titre ou la priorité a peut-être été enregistré.',
     projectImageError:'Choisissez une image JPG, PNG ou WebP de 50 Mo maximum.',
     projectImageCleanupError:'Le projet est enregistré, mais son ancienne image n’a pas pu être supprimée.',
     projectImagesDeletedError:'La proposition est supprimée, mais certaines images n’ont pas pu être effacées du stockage Supabase.',
@@ -112,9 +113,9 @@
     approve:'Accept and publish',
     reject:'Decline',
     reopen:'Reopen for review',
-    edit:'Edit',
     save:'Save',
     cancel:'Cancel',
+    confirmDiscardAdminEdits:'Discard unsaved changes to switch filters?',
     delete:'Delete',
     deleteCandidacy:'Delete permanently',
     confirmDeleteCandidacy:'Permanently delete the candidacy for “{team}” and all its photos? This cannot be undone.',
@@ -129,6 +130,9 @@
     titleField:'Title',
     details:'Description',
     category:'Category',
+    grade:'Grade',
+    grades:['Grade 1','Grade 2','Grade 3','Grade 4','Grade 5'],
+    generalGrade:'General',
     priority:'Priority',
     priorityOptions:['Normal','Review','Profanity detected'],
     candidateTitle:'Candidacy',
@@ -136,7 +140,6 @@
     roster:'Members and positions',
     ideas:'Proposals',
     photo:'Photo',
-    editBlobHint:'Click the preview to edit this party',
     background:'Background color',
     foreground:'Text color',
     upload:'Choose a new photo (50 MB max)',
@@ -161,18 +164,17 @@
     photoError:'Choose a JPG, PNG, or WebP image up to 50 MB.',
     projectPlacement:'Show on',
     projectPlacements:{none:'Do not publish',featured:'Home — Featured',completed:'Home — Completed projects'},
-    projectImageEditor:'Edit image',
     projectImage:'Project image (JPG, PNG, or WebP, up to 50 MB)',
-    projectDisplayTitle:'Display title',
-    projectDisplayDescription:'Display description',
+    untitledProject:'Untitled project',
+    projectDescriptionUnavailable:'No description is available for this project.',
     projectMigrationRequired:'The Supabase update is missing. Run 20261105030000_project_presentation_copy.sql in SQL Editor, then try again.',
     projectCropPreview:'Home page preview',
     projectCropHelp:'Drag the image to reposition it. Drag a corner to resize the crop; arrow keys move it and +/− adjust zoom.',
     projectPreviewFeatured:'Featured',
     projectPreviewCompleted:'Completed projects',
     projectPreviewMoreInfo:'Discover more →',
-    saveProjectDisplay:'Save project display',
-    projectDisplaySaved:'Project display saved.',
+    proposalActionSaved:'Changes and moderation action saved.',
+    projectActionPartialFailure:'Publishing was rolled back, but the title or priority may have been saved.',
     projectImageError:'Choose a JPG, PNG, or WebP image up to 50 MB.',
     projectImageCleanupError:'The project was saved, but its previous image could not be removed.',
     projectImagesDeletedError:'The proposal was deleted, but some images could not be removed from Supabase Storage.',
@@ -198,6 +200,16 @@
     node.textContent=error?.message||messages.saveError;
     node.hidden=false;
     node.dataset.kind='error';
+  };
+  const isRepeatedSaveError=value=>{
+    const phrase=messages.saveError;
+    let remaining=String(value||'').trim();
+    let repetitions=0;
+    while(remaining.startsWith(phrase)){
+      remaining=remaining.slice(phrase.length).trimStart();
+      repetitions++;
+    }
+    return repetitions>=2&&(!remaining||phrase.startsWith(remaining));
   };
   const setSuccess=(node,message)=>{
     node.textContent=message;
@@ -257,14 +269,12 @@
       return;
     }
     try{
-      const [suggestionsResult,candidaciesResult,logsResult]=await Promise.all([
+      const [suggestionsResult,candidaciesResult]=await Promise.all([
         client.from('suggestions').select('*',{count:'exact',head:true}),
-        client.from('candidacies').select('*',{count:'exact',head:true}),
-        client.from('admin_audit_logs').select('*',{count:'exact',head:true})
+        client.from('candidacies').select('*',{count:'exact',head:true})
       ]);
       setTabCount('proposals', suggestionsResult.count ?? 0);
       setTabCount('candidates', candidaciesResult.count ?? 0);
-      setTabCount('logs', 0);
       setTabCount('vote', 0);
     }catch(error){
       reportError(error);
@@ -351,7 +361,6 @@
   let currentTab='proposals';
   let proposalFilter='pending';
   let proposalQuery='';
-  const openProjectImageEditors=new Set();
   let candidateFilter='pending';
   let currentUser=null;
   const tables={
@@ -359,21 +368,48 @@
     candidates:make('div','admin-portal-list'),
     logs:make('div','admin-portal-logs')
   };
+  const proposalCardCleanup=new WeakMap();
+  const candidateCardCleanup=new WeakMap();
+  const disposeProposalCards=()=>{
+    tables.proposals.querySelectorAll('.site-review-card').forEach(card=>proposalCardCleanup.get(card)?.());
+  };
+  let proposalResultsRequest=0;
+  let candidateResultsRequest=0;
   let periodicRefreshTab=null;
   const hasAdminEditsInProgress=name=>{
     const panel=panels[name];
     if(!panel)return false;
-    if(name==='proposals'&&openProjectImageEditors.size)return true;
     const activeElement=document.activeElement;
-    if(panel.contains(activeElement)&&activeElement.matches('input,textarea,select'))return true;
-    if(panel.querySelector('.admin-portal-edit-form:not([hidden]):not(.admin-vote-settings)'))return true;
+    if(panel.contains(activeElement)&&activeElement.matches('input:not(.admin-search),textarea,select'))return true;
+    if(panel.querySelector('.admin-portal-edit-form:not([hidden])[data-dirty="true"]:not(.admin-vote-settings)'))return true;
+    if(panel.querySelector('.admin-portal-edit-form:not([hidden])[data-interacting="true"]:not(.admin-vote-settings)'))return true;
+    if(panel.querySelector('.site-review-card[data-interacting="true"]'))return true;
+    if(panel.querySelector('.admin-candidate-card[data-interacting="true"]'))return true;
+    if(panel.querySelector('.site-priority-select[data-dirty="true"]'))return true;
     if(panel.querySelector('.admin-project-presentation[data-dirty="true"]'))return true;
+    if(panel.querySelector('.admin-project-presentation[data-interacting="true"]'))return true;
     return Boolean(panel.querySelector('.admin-vote-settings[data-dirty="true"]'));
   };
   const shouldPausePeriodicRender=name=>periodicRefreshTab===name&&hasAdminEditsInProgress(name);
+  const hasProposalEditorInProgress=()=>{
+    const activeElement=document.activeElement;
+    return Boolean(
+      panels.proposals.querySelector('.admin-portal-edit-form:not([hidden])[data-dirty="true"]:not(.admin-vote-settings)')||
+      panels.proposals.querySelector('.admin-portal-edit-form:not([hidden])[data-interacting="true"]:not(.admin-vote-settings)')||
+      panels.proposals.querySelector('.site-review-card[data-interacting="true"]')||
+      panels.proposals.querySelector('.site-priority-select[data-dirty="true"]')||
+      panels.proposals.querySelector('.admin-project-presentation[data-dirty="true"],.admin-project-presentation[data-interacting="true"]')||
+      (activeElement?.closest('.admin-project-presentation')&&activeElement.matches('input,textarea,select,canvas'))||
+      (panels.proposals.contains(activeElement)&&activeElement.matches('input:not(.admin-search),textarea,select,canvas'))
+    );
+  };
 
   const switchTab=name=>{
     if(!panelNames.includes(name))return;
+    if(name!==currentTab){
+      if(currentTab==='proposals')proposalResultsRequest++;
+      if(currentTab==='candidates')candidateResultsRequest++;
+    }
     currentTab=name;
     tabs.querySelectorAll('[data-tab]').forEach(tab=>{
       const selected=tab.dataset.tab===name;
@@ -409,11 +445,13 @@
       context.strokeStyle='rgba(255,255,255,.95)';
       context.lineWidth=3;
       context.strokeRect(2,2,canvas.width-4,canvas.height-4);
-      const handleSize=Math.max(18,canvas.width/42);
+      const bounds=canvas.getBoundingClientRect();
+      const handleSize=Math.max(42,canvas.width/(bounds.width||canvas.width)*44);
+      const handleInset=handleSize/2;
       context.fillStyle='#fff';
       context.strokeStyle='#244f61';
       context.lineWidth=3;
-      [[0,0],[canvas.width,0],[0,canvas.height],[canvas.width,canvas.height]].forEach(([x,y])=>{
+      [[handleInset,handleInset],[canvas.width-handleInset,handleInset],[handleInset,canvas.height-handleInset],[canvas.width-handleInset,canvas.height-handleInset]].forEach(([x,y])=>{
         context.beginPath();
         context.rect(x-handleSize/2,y-handleSize/2,handleSize,handleSize);
         context.fill();
@@ -475,23 +513,27 @@
     canvas.addEventListener('pointerdown',event=>{
       if(!sourceImage)return;
       const rect=canvas.getBoundingClientRect();
-      const x=(event.clientX-rect.left)/rect.width*canvas.width;
-      const y=(event.clientY-rect.top)/rect.height*canvas.height;
-      const edgeDistance=Math.min(
-        Math.hypot(event.clientX-rect.left,event.clientY-rect.top),
-        Math.hypot(event.clientX-rect.right,event.clientY-rect.top),
-        Math.hypot(event.clientX-rect.left,event.clientY-rect.bottom),
-        Math.hypot(event.clientX-rect.right,event.clientY-rect.bottom)
-      );
+      const handleInset=22;
+      const corners=[
+        {x:rect.left+handleInset,y:rect.top+handleInset,anchorX:rect.right-handleInset,anchorY:rect.bottom-handleInset},
+        {x:rect.right-handleInset,y:rect.top+handleInset,anchorX:rect.left+handleInset,anchorY:rect.bottom-handleInset},
+        {x:rect.left+handleInset,y:rect.bottom-handleInset,anchorX:rect.right-handleInset,anchorY:rect.top+handleInset},
+        {x:rect.right-handleInset,y:rect.bottom-handleInset,anchorX:rect.left+handleInset,anchorY:rect.top+handleInset}
+      ];
+      const nearestCorner=corners.reduce((nearest,corner)=>{
+        const distance=Math.hypot(event.clientX-corner.x,event.clientY-corner.y);
+        return distance<nearest.distance?{...corner,distance}:nearest;
+      },{distance:Infinity});
       drag={
-        mode:edgeDistance<=32?'resize':'move',
+        mode:nearestCorner.distance<=44?'resize':'move',
         pointerId:event.pointerId,
+        resizeAnchor:{x:nearestCorner.anchorX,y:nearestCorner.anchorY},
         startX:event.clientX,
         startY:event.clientY,
         startPositionX:positionX,
         startPositionY:positionY,
         startZoom:zoom,
-        startDistance:Math.hypot(x-canvas.width/2,y-canvas.height/2),
+        startDistance:Math.hypot(event.clientX-nearestCorner.anchorX,event.clientY-nearestCorner.anchorY),
         crop:getProjectCropMetrics(sourceImage,canvas,zoom,positionX,positionY)
       };
       canvas.setPointerCapture(event.pointerId);
@@ -507,9 +549,8 @@
         positionY=drag.startPositionY-
           (event.clientY-drag.startY)/rect.height*drag.crop.height/sourceImage.naturalHeight;
       }else{
-        const x=(event.clientX-rect.left)/rect.width*canvas.width;
-        const y=(event.clientY-rect.top)/rect.height*canvas.height;
-        zoom=Math.max(1,Math.min(4,drag.startZoom*Math.hypot(x-canvas.width/2,y-canvas.height/2)/Math.max(1,drag.startDistance)));
+        const distance=Math.hypot(event.clientX-drag.resizeAnchor.x,event.clientY-drag.resizeAnchor.y);
+        zoom=Math.max(1,Math.min(4,drag.startZoom*distance/Math.max(1,drag.startDistance)));
       }
       dirty=true;
       render();
@@ -521,6 +562,7 @@
     };
     canvas.addEventListener('pointerup',stopDrag);
     canvas.addEventListener('pointercancel',stopDrag);
+    canvas.addEventListener('lostpointercapture',stopDrag);
     canvas.addEventListener('keydown',event=>{
       if(!sourceImage)return;
       const crop=getProjectCropMetrics(sourceImage,canvas,zoom,positionX,positionY);
@@ -569,6 +611,19 @@
   const showEmpty=(container,message)=>{
     container.replaceChildren(make('p','site-empty-state',message));
   };
+  const confirmDiscardFilterEdits=name=>{
+    const selector=name==='proposals'
+      ?'.admin-project-presentation[data-dirty="true"],.admin-project-presentation[data-interacting="true"],.site-priority-select[data-dirty="true"],.site-review-card[data-interacting="true"]'
+      :'.admin-portal-edit-form[data-dirty="true"],.admin-portal-edit-form[data-interacting="true"],.admin-candidate-card[data-interacting="true"]';
+    const changed=panels[name].querySelectorAll(selector);
+    if(!changed.length)return true;
+    if(!window.confirm(messages.confirmDiscardAdminEdits))return false;
+    changed.forEach(node=>{
+      delete node.dataset.dirty;
+      delete node.dataset.interacting;
+    });
+    return true;
+  };
   const requireClient=()=>{
     if(!client)throw new Error(messages.configMissing);
     return client;
@@ -594,23 +649,28 @@
       buttonNode.querySelector('.site-filter-count').textContent=String(count);
     });
   };
-  const renderProposalResults=async()=>{
+  const renderProposalResults=async({allowFilterChange=false}={})=>{
+    const request=++proposalResultsRequest;
     const {data,error}=await requireClient().from('suggestions').select('*').order('created_at',{ascending:false});
     if(error)throw error;
-    if(shouldPausePeriodicRender('proposals'))return;
+    if(request!==proposalResultsRequest||!currentUser||
+      (periodicRefreshTab==='proposals'&&currentTab!=='proposals')||
+      (!allowFilterChange&&(shouldPausePeriodicRender('proposals')||hasProposalEditorInProgress())))return;
     const statusCounts=getStatusCounts(data||[]);
     const toolbar=panels.proposals.querySelector('.site-review-toolbar');
     syncFilterButtonCounts(toolbar,statusCounts);
     const records=(data||[]).filter(item=>item.status===proposalFilter&&
-      (!proposalQuery||`${item.title} ${item.details} ${item.category}`.toLocaleLowerCase().includes(proposalQuery)));
-    const visibleIds=new Set(records.map(item=>item.id));
-    openProjectImageEditors.forEach(id=>{
-      if(!visibleIds.has(id))openProjectImageEditors.delete(id);
-    });
+      (!proposalQuery||`${item.title} ${item.details} ${item.category} ${item.grade||''}`.toLocaleLowerCase().includes(proposalQuery)));
+    const currentCards=Array.from(tables.proposals.querySelectorAll(':scope > .site-review-card'));
+    if(records.length>0&&records.length===currentCards.length&&records.every((item,index)=>
+      currentCards[index].dataset.proposalId===String(item.id)&&
+      currentCards[index].dataset.recordSnapshot===JSON.stringify(item)
+    ))return;
+    disposeProposalCards();
     if(!records.length){showEmpty(tables.proposals,messages.noSuggestions);return}
     tables.proposals.replaceChildren(...records.map(renderProposal));
   };
-  const loadProposals=async()=>{
+  const loadProposals=async({allowFilterChange=false}={})=>{
     const panel=panels.proposals;
     let toolbar=panel.querySelector('.site-review-toolbar');
     if(!toolbar){
@@ -636,9 +696,9 @@
       });
       filters.addEventListener('click',event=>{
         const filter=event.target.closest('[data-portal-action^="filter-"]');
-        if(!filter)return;
+        if(!filter||!confirmDiscardFilterEdits('proposals'))return;
         proposalFilter=filter.dataset.portalAction.slice('filter-'.length);
-        loadProposals().catch(reportError);
+        loadProposals({allowFilterChange:true}).catch(error=>{setError(state,error);reportError(error)});
       });
     }
     const searchInput=toolbar.querySelector('.admin-search');
@@ -649,7 +709,7 @@
       buttonNode.setAttribute('aria-pressed',String(matched));
       buttonNode.classList.toggle('active',matched);
     });
-    await renderProposalResults();
+    await renderProposalResults({allowFilterChange});
     await refreshTabCounts();
   };
   const getPriorityClass=value=>{
@@ -664,38 +724,78 @@
   };
   const renderProposal=item=>{
     const card=make('article','card site-review-card');
+    card.dataset.proposalId=String(item.id);
+    card.dataset.recordSnapshot=JSON.stringify(item);
     const meta=make('div','site-review-meta');
-    meta.append(make('span','pill',messages.statuses[item.status]||item.status),make('time','site-date',formatDate(item.created_at)));
+    const statusBadge=make('span','pill site-review-status',messages.statuses[item.status]||item.status);
+    statusBadge.dataset.status=item.status;
+    meta.append(statusBadge,make('time','site-date',formatDate(item.created_at)));
+    const gradeIndex=['1','2','3','4','5'].indexOf(String(item.grade));
+    const gradeText=item.grade==='general'?messages.generalGrade:messages.grades[gradeIndex]||messages.grade;
+    meta.append(make('span','muted',`${messages.grade} : ${gradeText}`));
     const priorityBadge=make('span',`site-priority-badge ${getPriorityClass(item.priority)}`,getPriorityLabel(item.priority));
     meta.append(priorityBadge);
     const prioritySelect=document.createElement('select');
+    prioritySelect.className='site-priority-select';
+    prioritySelect.dataset.priority=item.priority||'normal';
     prioritySelect.setAttribute('aria-label',messages.priority);
     ['normal','yellow','red'].forEach((value,index)=>{
       const option=make('option','',messages.priorityOptions[index]);
       option.value=value;
-      option.selected=item.priority===value;
+      option.selected=(item.priority||'normal')===value;
       prioritySelect.append(option);
     });
-    prioritySelect.addEventListener('change',async()=>{
-      const result=await requireClient().from('suggestions').update({
-        priority:prioritySelect.value,priority_reason:'priorityManual',priority_override:true
-      }).eq('id',item.id);
-      if(result.error){setError(state,result.error);reportError(result.error)}
-      else loadProposals().catch(error=>{setError(state,error);reportError(error)});
+    prioritySelect.addEventListener('change',()=>{
+      prioritySelect.dataset.dirty='true';
+      prioritySelect.dataset.priority=prioritySelect.value;
+      priorityBadge.className=`site-priority-badge ${getPriorityClass(prioritySelect.value)}`;
+      priorityBadge.textContent=getPriorityLabel(prioritySelect.value);
     });
-    const edit=button(messages.edit,'edit-proposal');
+    const priorityControl=make('label','site-priority-control');
+    priorityControl.append(make('span','',messages.priority),prioritySelect);
     const deleteButton=button(messages.delete,'delete-proposal');
     const actions=make('div','site-review-actions');
     if(item.status!=='approved')actions.append(button(messages.approve,'approve-proposal','approve'));
     if(item.status!=='rejected')actions.append(button(messages.reject,'reject-proposal','reject'));
     if(item.status!=='pending')actions.append(button(messages.reopen,'reopen-proposal'));
-    actions.append(edit,deleteButton);
-    card.append(meta,make('h3','',item.title),make('p','',item.details),make('span','muted',item.category||''),make('label','site-priority-control',messages.priority),prioritySelect,actions);
-    if(item.status==='approved'){
-      const presentation=make('form','admin-project-presentation');
+    actions.append(deleteButton);
+    card.append(meta,priorityControl);
+    let presentation=null;
+    let presentationStatus=null;
+    let preparePresentationImage=null;
+    let placement=null;
+    let proposalTitle=null;
+    let proposalDetails=null;
+    let proposalCategory=null;
+    if(item.status==='approved'||item.status==='pending'||item.status==='rejected'){
+      presentation=make('div','admin-project-presentation');
+      presentation.hidden=item.status!=='pending';
+      proposalTitle=document.createElement('input');
+      proposalTitle.type='text';
+      proposalTitle.name='title';
+      proposalTitle.maxLength=160;
+      proposalTitle.required=true;
+      proposalTitle.value=isRepeatedSaveError(item.title)?messages.untitledProject:item.title||'';
+      const proposalTitleLabel=make('label','');
+      proposalTitleLabel.append(make('span','',messages.titleField),proposalTitle);
+      proposalDetails=document.createElement('textarea');
+      proposalDetails.name='details';
+      proposalDetails.maxLength=1200;
+      proposalDetails.required=true;
+      proposalDetails.value=isRepeatedSaveError(item.details)?messages.projectDescriptionUnavailable:item.details||'';
+      const proposalDetailsLabel=make('label','');
+      proposalDetailsLabel.append(make('span','',messages.details),proposalDetails);
+      proposalCategory=document.createElement('input');
+      proposalCategory.type='text';
+      proposalCategory.name='category';
+      proposalCategory.maxLength=40;
+      proposalCategory.required=true;
+      proposalCategory.value=item.category||'';
+      const proposalCategoryLabel=make('label','');
+      proposalCategoryLabel.append(make('span','',messages.category),proposalCategory);
       const placementLabel=make('label','');
       placementLabel.append(make('span','',messages.projectPlacement));
-      const placement=document.createElement('select');
+      placement=document.createElement('select');
       placement.name='home_placement';
       Object.entries(messages.projectPlacements).forEach(([value,label])=>{
         const option=make('option','',label);
@@ -704,21 +804,6 @@
         placement.append(option);
       });
       placementLabel.append(placement);
-      const displayTitleLabel=make('label','');
-      displayTitleLabel.append(make('span','',messages.projectDisplayTitle));
-      const displayTitle=document.createElement('input');
-      displayTitle.name='presentation_title';
-      displayTitle.type='text';
-      displayTitle.maxLength=160;
-      displayTitle.value=item.presentation_title||item.title;
-      displayTitleLabel.append(displayTitle);
-      const displayDescriptionLabel=make('label','');
-      displayDescriptionLabel.append(make('span','',messages.projectDisplayDescription));
-      const displayDescription=document.createElement('textarea');
-      displayDescription.name='presentation_description';
-      displayDescription.maxLength=2000;
-      displayDescription.value=item.presentation_description||item.details;
-      displayDescriptionLabel.append(displayDescription);
       const imageLabel=make('label','');
       imageLabel.append(make('span','',messages.projectImage));
       const imageInput=document.createElement('input');
@@ -726,95 +811,84 @@
       imageInput.name='project_image';
       imageInput.accept='image/jpeg,image/png,image/webp';
       imageLabel.append(imageInput);
-      const imageEditorToggle=button(messages.projectImageEditor,'toggle-project-image-editor','admin-project-image-editor-toggle');
-      const imageEditorContent=make('div','admin-project-image-editor-content');
-      imageEditorContent.id=`project-image-editor-${item.id}`;
-      imageEditorContent.hidden=!openProjectImageEditors.has(item.id);
-      imageEditorToggle.setAttribute('aria-expanded',String(!imageEditorContent.hidden));
-      imageEditorToggle.setAttribute('aria-controls',imageEditorContent.id);
-      imageEditorToggle.addEventListener('click',()=>{
-        imageEditorContent.hidden=!imageEditorContent.hidden;
-        imageEditorToggle.setAttribute('aria-expanded',String(!imageEditorContent.hidden));
-        if(imageEditorContent.hidden){
-          openProjectImageEditors.delete(item.id);
-          cropLoadVersion++;
-        }
-        else{
-          openProjectImageEditors.add(item.id);
-          if(item.image_path&&!cropSourceImage){
-            loadExistingCrop().catch(error=>{
-              reportError(error);
-              setError(displayStatus,error);
-            });
-          }
-        }
-      });
       const cropEditor=make('div','admin-project-crop-editor');
-      cropEditor.hidden=true;
       cropEditor.append(make('p','admin-project-crop-title',messages.projectCropPreview));
       const cropPreview=make('div','admin-project-preview');
       const initialPreviewPlacement=placement.value==='featured'?'featured':'completed';
       cropPreview.dataset.placement=initialPreviewPlacement;
       const cropCanvas=document.createElement('canvas');
-      cropCanvas.className='admin-project-crop-canvas';
+      cropCanvas.className=`admin-project-crop-canvas${item.status==='pending'?'':' is-static'}`;
       cropCanvas.width=960;
       const initialCropDimensions=projectCropDimensions(placement.value);
       cropCanvas.height=Math.round(cropCanvas.width*initialCropDimensions.height/initialCropDimensions.width);
       cropCanvas.setAttribute('role','img');
-      cropCanvas.tabIndex=0;
-      cropCanvas.setAttribute('aria-label',messages.projectCropHelp);
+      cropCanvas.tabIndex=item.status==='pending'?0:-1;
+      cropCanvas.setAttribute('aria-label',item.status==='pending'?messages.projectCropHelp:messages.projectCropPreview);
       const previewCopy=make('div','admin-project-preview-copy');
       const previewLabel=make('span','admin-project-preview-label',initialPreviewPlacement==='featured'?messages.projectPreviewFeatured:messages.projectPreviewCompleted);
       previewCopy.append(previewLabel);
-      const previewTitle=make('strong','admin-project-preview-title',displayTitle.value);
-      const previewDescription=make('span','admin-project-preview-description',displayDescription.value);
+      const previewTitle=make('strong','admin-project-preview-title',proposalTitle.value||messages.untitledProject);
+      const previewDescription=make('span','admin-project-preview-description',proposalDetails.value||messages.projectDescriptionUnavailable);
       previewCopy.append(previewTitle,previewDescription);
       const previewMore=make('span','admin-project-preview-button',messages.projectPreviewMoreInfo);
       previewMore.hidden=initialPreviewPlacement!=='featured';
       previewCopy.append(previewMore);
       cropPreview.append(cropCanvas,previewCopy);
-      cropEditor.append(cropPreview,make('p','admin-project-crop-help',messages.projectCropHelp));
+      const cropHelp=make('p','admin-project-crop-help',messages.projectCropHelp);
+      cropHelp.hidden=item.status!=='pending';
+      cropEditor.append(cropPreview,cropHelp);
       let cropSourceImage=null;
       let cropSourceUrl='';
-      let cropSourceIsExisting=false;
+      let cropModified=false;
       let cropRenderFrame=0;
       let cropLoadVersion=0;
+      let cropLoadingPromise=Promise.resolve();
       let cropZoom=1;
       let cropPositionX=.5;
       let cropPositionY=.5;
       let cropDrag=null;
-      presentation.append(placementLabel);
-      presentation.append(displayTitleLabel,displayDescriptionLabel);
-      imageEditorContent.append(imageLabel,cropEditor);
-      presentation.append(imageEditorToggle,imageEditorContent);
+      presentation.append(placementLabel,proposalTitleLabel,proposalDetailsLabel,proposalCategoryLabel);
+      card.insertBefore(cropEditor,priorityControl);
+      presentation.append(imageLabel);
       const displayStatus=make('p','site-status');
       displayStatus.setAttribute('role','status');
       displayStatus.setAttribute('aria-live','polite');
-      const savePresentation=button(messages.saveProjectDisplay,'save-project-display','primary');
-      savePresentation.type='submit';
-      presentation.append(displayStatus,savePresentation);
+      presentationStatus=displayStatus;
+      presentation.append(displayStatus);
       const markPresentationDirty=()=>{presentation.dataset.dirty='true'};
+      proposalCardCleanup.set(card,()=>{
+        cropLoadVersion++;
+        cancelAnimationFrame(cropRenderFrame);
+        if(cropSourceUrl){
+          URL.revokeObjectURL(cropSourceUrl);
+          cropSourceUrl='';
+        }
+      });
       presentation.addEventListener('input',markPresentationDirty);
       presentation.addEventListener('change',markPresentationDirty);
-      displayTitle.addEventListener('input',()=>{
-        previewTitle.textContent=displayTitle.value.trim()||item.title;
+      proposalTitle.addEventListener('input',()=>{
+        previewTitle.textContent=proposalTitle.value.trim()||messages.untitledProject;
       });
-      displayDescription.addEventListener('input',()=>{
-        previewDescription.textContent=displayDescription.value.trim()||item.details;
+      proposalDetails.addEventListener('input',()=>{
+        previewDescription.textContent=proposalDetails.value.trim()||messages.projectDescriptionUnavailable;
       });
       const renderCropPreview=()=>{
         if(!cropSourceImage)return;
         cancelAnimationFrame(cropRenderFrame);
         cropRenderFrame=requestAnimationFrame(()=>{
           try{
-            drawProjectCrop(cropSourceImage,cropCanvas,cropZoom,cropPositionX,cropPositionY,true);
+            drawProjectCrop(cropSourceImage,cropCanvas,cropZoom,cropPositionX,cropPositionY,item.status==='pending');
           }catch(error){
             reportError(error);
             setError(displayStatus,error);
           }
         });
       };
+      const clearCropPreview=()=>{
+        cropCanvas.getContext('2d')?.clearRect(0,0,cropCanvas.width,cropCanvas.height);
+      };
       const updateCropPreviewPlacement=()=>{
+        if(placement.value!==(item.home_placement||'completed'))cropModified=true;
         const dimensions=projectCropDimensions(placement.value);
         const previewPlacement=placement.value==='featured'?'featured':'completed';
         cropPreview.dataset.placement=previewPlacement;
@@ -829,25 +903,28 @@
         if(cropSourceUrl)URL.revokeObjectURL(cropSourceUrl);
         cropSourceUrl=url;
         cropSourceImage=null;
-        cropSourceIsExisting=isExisting;
-        const sourceImage=new Image();
-        sourceImage.onload=()=>{
-          if(loadVersion!==cropLoadVersion)return;
-          cropSourceImage=sourceImage;
-          cropZoom=1;
-          cropPositionX=.5;
-          cropPositionY=.5;
-          cropEditor.hidden=false;
-          imageEditorContent.hidden=false;
-          imageEditorToggle.setAttribute('aria-expanded','true');
-          openProjectImageEditors.add(item.id);
-          renderCropPreview();
-        };
-        sourceImage.onerror=()=>{
-          if(loadVersion!==cropLoadVersion)return;
-          setError(displayStatus,new Error(messages.projectImageError));
-        };
-        sourceImage.src=url;
+        cropLoadingPromise=new Promise((resolve,reject)=>{
+          const sourceImage=new Image();
+          sourceImage.onload=()=>{
+            if(loadVersion!==cropLoadVersion){resolve(false);return}
+            cropSourceImage=sourceImage;
+            cropZoom=1;
+            cropPositionX=.5;
+            cropPositionY=.5;
+            if(!isExisting)cropModified=true;
+            cropEditor.hidden=false;
+            renderCropPreview();
+            resolve(true);
+          };
+          sourceImage.onerror=()=>{
+            if(loadVersion!==cropLoadVersion){resolve(false);return}
+            const error=new Error(messages.projectImageError);
+            setError(displayStatus,error);
+            reject(error);
+          };
+          sourceImage.src=url;
+        });
+        return cropLoadingPromise;
       };
       const loadExistingCrop=async()=>{
         const requestVersion=++cropLoadVersion;
@@ -857,7 +934,7 @@
         if(!data||data.size>50*1024*1024||!['image/jpeg','image/png','image/webp'].includes(data.type)){
           throw new Error(messages.projectImageError);
         }
-        loadCropSource(URL.createObjectURL(data),true);
+        return loadCropSource(URL.createObjectURL(data),true);
       };
       placement.addEventListener('change',()=>{
         updateCropPreviewPlacement();
@@ -871,34 +948,39 @@
           });
         }
       });
-      if(openProjectImageEditors.has(item.id)&&item.image_path){
-        cropEditor.hidden=false;
+      if(item.image_path){
         loadExistingCrop().catch(error=>{
           reportError(error);
           setError(displayStatus,error);
         });
       }
       cropCanvas.addEventListener('pointerdown',event=>{
-        if(!cropSourceImage)return;
+        if(item.status!=='pending'||!cropSourceImage)return;
+        presentation.dataset.interacting='true';
+        markPresentationDirty();
         const rect=cropCanvas.getBoundingClientRect();
-        const x=(event.clientX-rect.left)/rect.width*cropCanvas.width;
-        const y=(event.clientY-rect.top)/rect.height*cropCanvas.height;
-        const cornerDistance=Math.min(
-          Math.hypot(event.clientX-rect.left,event.clientY-rect.top),
-          Math.hypot(event.clientX-rect.right,event.clientY-rect.top),
-          Math.hypot(event.clientX-rect.left,event.clientY-rect.bottom),
-          Math.hypot(event.clientX-rect.right,event.clientY-rect.bottom)
-        );
+        const handleInset=22;
+        const corners=[
+          {x:rect.left+handleInset,y:rect.top+handleInset,anchorX:rect.right-handleInset,anchorY:rect.bottom-handleInset},
+          {x:rect.right-handleInset,y:rect.top+handleInset,anchorX:rect.left+handleInset,anchorY:rect.bottom-handleInset},
+          {x:rect.left+handleInset,y:rect.bottom-handleInset,anchorX:rect.right-handleInset,anchorY:rect.top+handleInset},
+          {x:rect.right-handleInset,y:rect.bottom-handleInset,anchorX:rect.left+handleInset,anchorY:rect.top+handleInset}
+        ];
+        const nearestCorner=corners.reduce((nearest,corner)=>{
+          const distance=Math.hypot(event.clientX-corner.x,event.clientY-corner.y);
+          return distance<nearest.distance?{...corner,distance}:nearest;
+        },{distance:Infinity});
         const crop=getProjectCropMetrics(cropSourceImage,cropCanvas,cropZoom,cropPositionX,cropPositionY);
         cropDrag={
-          mode:cornerDistance<=30?'resize':'move',
+          mode:nearestCorner.distance<=44?'resize':'move',
           pointerId:event.pointerId,
+          resizeAnchor:{x:nearestCorner.anchorX,y:nearestCorner.anchorY},
           startX:event.clientX,
           startY:event.clientY,
           startPositionX:cropPositionX,
           startPositionY:cropPositionY,
           startZoom:cropZoom,
-          startDistance:Math.hypot(x-cropCanvas.width/2,y-cropCanvas.height/2),
+          startDistance:Math.hypot(event.clientX-nearestCorner.anchorX,event.clientY-nearestCorner.anchorY),
           crop
         };
         cropCanvas.setPointerCapture(event.pointerId);
@@ -906,7 +988,7 @@
         event.preventDefault();
       });
       cropCanvas.addEventListener('pointermove',event=>{
-        if(!cropDrag||cropDrag.pointerId!==event.pointerId||!cropSourceImage)return;
+        if(item.status!=='pending'||!cropDrag||cropDrag.pointerId!==event.pointerId||!cropSourceImage)return;
         const rect=cropCanvas.getBoundingClientRect();
         if(cropDrag.mode==='move'){
           cropPositionX=cropDrag.startPositionX-
@@ -914,22 +996,24 @@
           cropPositionY=cropDrag.startPositionY-
             (event.clientY-cropDrag.startY)/rect.height*cropDrag.crop.height/cropSourceImage.naturalHeight;
         }else{
-          const x=(event.clientX-rect.left)/rect.width*cropCanvas.width;
-          const y=(event.clientY-rect.top)/rect.height*cropCanvas.height;
-          const distance=Math.hypot(x-cropCanvas.width/2,y-cropCanvas.height/2);
+          const distance=Math.hypot(event.clientX-cropDrag.resizeAnchor.x,event.clientY-cropDrag.resizeAnchor.y);
           cropZoom=Math.max(1,Math.min(4,cropDrag.startZoom*distance/Math.max(1,cropDrag.startDistance)));
         }
+        cropModified=true;
         renderCropPreview();
       });
       const stopCropDrag=event=>{
         if(!cropDrag||cropDrag.pointerId!==event.pointerId)return;
         cropDrag=null;
         cropCanvas.style.cursor='grab';
+        delete presentation.dataset.interacting;
       };
       cropCanvas.addEventListener('pointerup',stopCropDrag);
       cropCanvas.addEventListener('pointercancel',stopCropDrag);
+      cropCanvas.addEventListener('lostpointercapture',stopCropDrag);
+      cropCanvas.addEventListener('click',event=>event.stopPropagation());
       cropCanvas.addEventListener('keydown',event=>{
-        if(!cropSourceImage)return;
+        if(item.status!=='pending'||!cropSourceImage)return;
         const crop=getProjectCropMetrics(cropSourceImage,cropCanvas,cropZoom,cropPositionX,cropPositionY);
         const movement=.02;
         if(event.key==='ArrowLeft')cropPositionX+=crop.width/cropSourceImage.naturalWidth*movement;
@@ -939,11 +1023,14 @@
         else if(event.key==='+'||event.key==='=')cropZoom=Math.min(4,cropZoom+.1);
         else if(event.key==='-')cropZoom=Math.max(1,cropZoom-.1);
         else return;
+        cropModified=true;
+        markPresentationDirty();
         event.preventDefault();
         renderCropPreview();
       });
       imageInput.addEventListener('change',()=>{
-        cropSourceIsExisting=false;
+        cropModified=Boolean(imageInput.files?.[0]);
+        markPresentationDirty();
         cropLoadVersion++;
         if(cropSourceUrl)URL.revokeObjectURL(cropSourceUrl);
         cropSourceUrl='';
@@ -951,36 +1038,39 @@
         const file=imageInput.files?.[0];
         if(file){
           if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>50*1024*1024){
-            cropEditor.hidden=true;
+            clearCropPreview();
             setError(displayStatus,new Error(messages.projectImageError));
             imageInput.value='';
             return;
           }
-          loadCropSource(URL.createObjectURL(file));
+          loadCropSource(URL.createObjectURL(file)).catch(error=>{
+            reportError(error);
+            setError(displayStatus,error);
+          });
         }else if(item.image_path){
           loadExistingCrop().catch(error=>{
             reportError(error);
             setError(displayStatus,error);
           });
         }else{
-          cropEditor.hidden=true;
+          clearCropPreview();
         }
       });
-      presentation.addEventListener('submit',async event=>{
-        event.preventDefault();
-        event.stopPropagation();
+      presentation.addEventListener('keydown',event=>{
+        if(event.key==='Enter'&&event.target.matches('input,select'))event.preventDefault();
+      });
+      preparePresentationImage=async()=>{
         const file=imageInput.files?.[0];
         if(file&&(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>50*1024*1024)){
-          setError(displayStatus,new Error(messages.projectImageError));
-          return;
+          throw new Error(messages.projectImageError);
         }
-        savePresentation.disabled=true;
+        const updateImage=Boolean(file||cropModified);
         let uploadedPath='';
         let uploadedOriginalPath='';
-        let presentationSaved=false;
-        let imageCleanupFailed=false;
         try{
-          if(file||cropSourceIsExisting){
+          if(updateImage){
+            if(!cropSourceImage&&item.image_path&&!file)await loadExistingCrop();
+            await cropLoadingPromise;
             if(!cropSourceImage)throw new Error(messages.projectImageError);
             const croppedImage=await encodeProjectCrop(
               cropSourceImage,
@@ -1001,78 +1091,184 @@
               if(originalUpload.error)throw originalUpload.error;
             }
           }
-          const originalPath=uploadedOriginalPath||item.original_image_path||(cropSourceIsExisting?item.image_path:null);
-          const {error}=await requireClient().rpc('update_suggestion_presentation',{
+        }catch(error){
+          const uploaded=[uploadedPath,uploadedOriginalPath].filter(Boolean);
+          if(uploaded.length){
+            const cleanup=await requireClient().storage.from('project-images').remove(uploaded);
+            if(cleanup.error)reportError(cleanup.error);
+          }
+          throw error;
+        }
+        const originalPath=uploadedOriginalPath||item.original_image_path||(updateImage?item.image_path:null);
+        return {
+          updateImage,
+          uploadedPath,
+          uploadedOriginalPath,
+          imagePath:uploadedPath||item.image_path||null,
+          originalPath
+        };
+      };
+    }
+    if(presentation)card.append(presentation);
+    card.append(actions);
+    actions.addEventListener('click',async event=>{
+      const action=event.target.closest('[data-portal-action]');
+      if(!action)return;
+      const portalAction=action.dataset.portalAction;
+      if(portalAction==='delete-proposal'){
+        if(!window.confirm(messages.confirmDelete))return;
+        card.dataset.interacting='true';
+        const result=await requireClient().from('suggestions').delete().eq('id',item.id);
+        if(result.error){
+          delete card.dataset.interacting;
+          setError(state,result.error);
+          reportError(result.error);
+          return;
+        }
+        let imageCleanupError=null;
+        try{await removeProjectImages(item.id)}catch(error){imageCleanupError=error;reportError(error)}
+        delete card.dataset.interacting;
+        await loadProposals();
+        await refreshPublicIdeas();
+        if(imageCleanupError)setError(state,new Error(messages.projectImagesDeletedError));
+        return;
+      }
+      if(!['approve-proposal','reject-proposal','reopen-proposal'].includes(portalAction))return;
+      if(item.status==='pending'&&presentation){
+        const invalidField=Array.from(presentation.querySelectorAll('input[required],textarea[required]'))
+          .find(field=>!field.checkValidity());
+        if(invalidField){invalidField.reportValidity();return}
+      }
+      card.dataset.interacting='true';
+      actions.querySelectorAll('button').forEach(buttonNode=>{buttonNode.disabled=true});
+      let uploadedPaths=[];
+      let approvalStarted=false;
+      let uploadedImageReferenced=false;
+      try{
+        const proposalChanges=item.status==='pending'&&presentation?{
+          title:proposalTitle.value.trim(),
+          details:proposalDetails.value.trim(),
+          category:proposalCategory.value.trim()
+        }:{};
+        const priorityChanged=prioritySelect.value!==(item.priority||'normal');
+        const changes={
+          ...proposalChanges,
+          ...(priorityChanged?{priority:prioritySelect.value,priority_reason:'priorityManual',priority_override:true}:{})
+        };
+        let nextStatus=item.status;
+        let approvedAt=item.approved_at||null;
+        let homePlacement=item.home_placement??null;
+        if(portalAction==='approve-proposal'){
+          nextStatus='approved';
+          approvedAt=new Date().toISOString();
+          homePlacement=placement?.value||homePlacement||'completed';
+        }else if(portalAction==='reject-proposal'){
+          nextStatus='rejected';
+          approvedAt=null;
+          homePlacement='none';
+        }else{
+          nextStatus='pending';
+          approvedAt=null;
+          homePlacement=null;
+        }
+        const imageChanges=presentation?await preparePresentationImage():{
+          updateImage:false,uploadedPath:'',uploadedOriginalPath:'',imagePath:item.image_path||null,originalPath:item.original_image_path||null
+        };
+        uploadedPaths=[imageChanges.uploadedPath,imageChanges.uploadedOriginalPath].filter(Boolean);
+        const presentationChanges=presentation?{
+          presentation_title:item.status==='pending'
+            ?proposalTitle.value.trim()||null
+            :item.presentation_title||item.title||null,
+          presentation_description:item.status==='pending'
+            ?proposalDetails.value.trim()||null
+            :item.presentation_description||item.details||null,
+          image_path:imageChanges.imagePath,
+          original_image_path:imageChanges.originalPath
+        }:{};
+        const db=requireClient();
+        if(portalAction==='approve-proposal'&&presentation){
+          const firstUpdate={
+            ...changes,
+            status:'approved',
+            approved_at:approvedAt,
+            home_placement:'completed'
+          };
+          const result=await db.from('suggestions').update(firstUpdate).eq('id',item.id).select('id').maybeSingle();
+          if(result.error)throw result.error;
+          if(!result.data)throw new Error(messages.saveError);
+          approvalStarted=true;
+          const {error}=await db.rpc('update_suggestion_presentation',{
             p_suggestion_id:item.id,
-            p_home_placement:placement.value,
-            p_image_path:uploadedPath||item.image_path||null,
-            p_original_image_path:originalPath,
-            p_update_image:Boolean(file||cropSourceIsExisting),
-            p_presentation_title:displayTitle.value.trim()||null,
-            p_presentation_description:displayDescription.value.trim()||null
+            p_home_placement:homePlacement,
+            p_image_path:imageChanges.imagePath,
+            p_original_image_path:imageChanges.originalPath,
+            p_update_image:imageChanges.updateImage,
+            p_presentation_title:presentationChanges.presentation_title,
+            p_presentation_description:presentationChanges.presentation_description
           });
-          if(error)throw error;
-          presentationSaved=true;
-          const oldImagePaths=[item.image_path,item.original_image_path]
-            .filter(path=>path&&path!==uploadedPath&&path!==uploadedOriginalPath&&path!==originalPath);
-          if(uploadedPath&&oldImagePaths.length){
-            const cleanup=await requireClient().storage.from('project-images').remove(oldImagePaths);
+          if(error){
+            const rollback=await db.from('suggestions').update({
+              status:item.status,
+              approved_at:item.approved_at||null,
+              home_placement:item.home_placement??null
+            }).eq('id',item.id);
+            if(rollback.error)reportError(rollback.error);
+            throw error;
+          }
+          uploadedImageReferenced=true;
+        }else{
+          const update={
+            ...changes,
+            ...presentationChanges,
+            status:nextStatus,
+            approved_at:approvedAt,
+            completed_at:portalAction==='reject-proposal'||portalAction==='reopen-proposal'?null:item.completed_at||null,
+            home_placement:homePlacement
+          };
+          const result=await db.from('suggestions').update(update).eq('id',item.id).select('id').maybeSingle();
+          if(result.error)throw result.error;
+          if(!result.data)throw new Error(messages.saveError);
+          uploadedImageReferenced=true;
+        }
+        let imageCleanupFailed=false;
+        if(uploadedImageReferenced&&imageChanges.uploadedPath){
+          const oldPaths=[item.image_path,item.original_image_path]
+            .filter(path=>path&&path!==imageChanges.uploadedPath&&path!==imageChanges.uploadedOriginalPath&&path!==imageChanges.originalPath);
+          if(oldPaths.length){
+            const cleanup=await db.storage.from('project-images').remove(oldPaths);
             if(cleanup.error){
               reportError(cleanup.error);
               imageCleanupFailed=true;
             }
           }
-          if(cropSourceUrl)URL.revokeObjectURL(cropSourceUrl);
-          await loadProposals();
-          await loadLogs();
-          await refreshPublicIdeas();
-          delete presentation.dataset.dirty;
-          if(imageCleanupFailed)setError(state,new Error(messages.projectImageCleanupError));
-          else setSuccess(state,messages.projectDisplaySaved);
-        }catch(error){
-          const uploadedPaths=[uploadedPath,uploadedOriginalPath].filter(Boolean);
-          if(uploadedPaths.length&&!presentationSaved){
-            const cleanup=await requireClient().storage.from('project-images').remove(uploadedPaths);
-            if(cleanup.error)reportError(cleanup.error);
-          }
-          reportError(error);
-          const userError=error?.code==='PGRST202'||String(error?.message||'').includes('Could not find the function public.update_suggestion_presentation')
-            ?new Error(messages.projectMigrationRequired)
-            :error;
-          setError(displayStatus,userError);
-          setError(state,userError);
-        }finally{
-          savePresentation.disabled=false;
         }
-      });
-      card.append(presentation);
-    }
-    edit.addEventListener('click',()=>editProposal(card,item));
-    actions.addEventListener('click',async event=>{
-      const action=event.target.closest('[data-portal-action]');
-      if(!action||action===edit)return;
-      const portalAction=action.dataset.portalAction;
-      if(portalAction==='delete-proposal'){
-        if(!window.confirm(messages.confirmDelete))return;
-        const result=await requireClient().from('suggestions').delete().eq('id',item.id);
-        if(result.error){setError(state,result.error);reportError(result.error);return}
-        let imageCleanupError=null;
-        try{await removeProjectImages(item.id)}catch(error){imageCleanupError=error;reportError(error)}
+        delete prioritySelect.dataset.dirty;
+        delete card.dataset.interacting;
+        if(presentation){
+          delete presentation.dataset.dirty;
+          delete presentation.dataset.interacting;
+        }
         await loadProposals();
-        await loadLogs();
         await refreshPublicIdeas();
-        if(imageCleanupError)setError(state,new Error(messages.projectImagesDeletedError));
-        return;
+        if(imageCleanupFailed)setError(state,new Error(messages.projectImageCleanupError));
+        else setSuccess(state,messages.proposalActionSaved);
+      }catch(error){
+        if(uploadedPaths.length&&!uploadedImageReferenced){
+          const cleanup=await requireClient().storage.from('project-images').remove(uploadedPaths);
+          if(cleanup.error)reportError(cleanup.error);
+        }
+        reportError(error);
+        const userError=error?.code==='PGRST202'||String(error?.message||'').includes('Could not find the function public.update_suggestion_presentation')
+          ?new Error(messages.projectMigrationRequired)
+          :error;
+        if(presentationStatus)setError(presentationStatus,userError);
+        if(approvalStarted){
+          setError(state,new Error(`${userError.message} ${messages.projectActionPartialFailure}`));
+        }else setError(state,userError);
+      }finally{
+        if(card.isConnected)delete card.dataset.interacting;
+        if(card.isConnected)actions.querySelectorAll('button').forEach(buttonNode=>{buttonNode.disabled=false});
       }
-      const update={};
-      if(portalAction==='approve-proposal'){update.status='approved';update.approved_at=new Date().toISOString();update.home_placement=item.home_placement||'completed'}
-      else if(portalAction==='reject-proposal'){update.status='rejected';update.approved_at=null;update.completed_at=null;update.home_placement='none'}
-      else if(portalAction==='reopen-proposal'){update.status='pending';update.approved_at=null;update.completed_at=null;update.home_placement=null}
-      const result=await requireClient().from('suggestions').update(update).eq('id',item.id);
-      if(result.error){setError(state,result.error);reportError(result.error);return}
-      await loadProposals();
-      await loadLogs();
-      await refreshPublicIdeas();
     });
     return card;
   };
@@ -1095,72 +1291,41 @@
       if(result.error)throw result.error;
     }
   };
-  const editProposal=(card,item)=>{
-    const form=make('form','admin-portal-edit-form');
-    const fields=[
-      ['title',messages.titleField,'text',item.title,100],
-      ['details',messages.details,'textarea',item.details,1200],
-      ['category',messages.category,'text',item.category,40]
-    ];
-    fields.forEach(([key,label,type,value,max])=>{
-      const wrapper=make('label','');
-      wrapper.append(make('span','',label));
-      const input=type==='textarea'?document.createElement('textarea'):document.createElement('input');
-      if(type!=='textarea')input.type=type;
-      input.name=key;
-      input.value=value||'';
-      input.maxLength=max;
-      input.required=true;
-      wrapper.append(input);
-      form.append(wrapper);
-    });
-    const save=button(messages.save,'save','primary');
-    save.type='submit';
-    form.append(save,button(messages.cancel,'cancel'));
-    card.append(form);
-    form.addEventListener('submit',async event=>{
-      event.preventDefault();
-      event.stopPropagation();
-      const values=Object.fromEntries(new FormData(form));
-      const {error}=await requireClient().from('suggestions').update(values).eq('id',item.id);
-      if(error){setError(state,error);reportError(error);return}
-      await loadProposals();
-      await loadLogs();
-      await refreshPublicIdeas();
-    });
-    form.querySelector('[data-portal-action="cancel"]').addEventListener('click',()=>form.remove());
-  };
-
   const renderCandidate=item=>{
     const card=make('article','card admin-candidate-card');
+    card.dataset.candidacyId=String(item.id);
+    card.dataset.recordSnapshot=JSON.stringify(item);
     const photo=client.storage.from('candidate-photos').getPublicUrl(item.photo_path).data.publicUrl;
     const statusText=item.status==='approved'?messages.acceptedLabel:item.status==='rejected'?messages.rejectedLabel:messages.pendingLabel;
     const statusClass=item.status==='approved'?'is-approved':item.status==='rejected'?'is-rejected':'is-pending';
     card.append(make('span',`pill admin-candidate-status ${statusClass}`,statusText));
     card.append(make('time','site-date',formatDate(item.created_at)));
-    const blob=button('', 'toggle-candidacy-edit','admin-candidate-blob');
-    blob.setAttribute('aria-expanded','false');
-    blob.setAttribute('aria-label',`${messages.edit}: ${item.team_name}`);
+    const blob=make('div','admin-candidate-blob');
     blob.style.backgroundColor=item.background||'#396d59';
     blob.style.color=item.foreground||'#ffffff';
     const blobCopy=make('div','admin-candidate-blob-copy');
-    blobCopy.append(
-      make('span','admin-candidate-blob-hint',item.status==='pending'?messages.editBlobHint:messages.candidatesTab),
-      make('h2','admin-candidate-blob-title',item.team_name),
-      make('p','admin-candidate-blob-ideas',item.ideas)
-    );
+    const blobTitle=make('h2','admin-candidate-blob-title',item.team_name);
+    const rosterSection=make('section','admin-candidate-blob-members');
+    rosterSection.append(make('h3','',messages.members));
     const rosterList=make('ul','admin-candidate-blob-roster');
-    item.roster.split(/\r?\n/).map(member=>member.trim()).filter(Boolean)
-      .forEach(member=>rosterList.append(make('li','',member)));
-    blobCopy.append(rosterList);
+    const rosterMembers=item.roster.split(/\r?\n/).map(member=>member.trim()).filter(Boolean);
+    rosterMembers.forEach(member=>rosterList.append(make('li','',member)));
+    blob.classList.toggle('has-many-members',rosterMembers.length>=6);
+    blob.classList.toggle('has-many-members-dense',rosterMembers.length>=9);
+    rosterSection.append(rosterList);
+    const blobIdeas=make('p','admin-candidate-blob-ideas',item.ideas);
+    blobCopy.append(blobTitle,rosterSection,blobIdeas);
     const image=document.createElement('img');
     image.src=photo;
     image.alt='';
     image.loading='lazy';
     image.className='admin-candidate-photo';
-    blob.append(blobCopy,image);
+    const photoFrame=make('div','admin-candidate-photo-frame');
+    photoFrame.append(image);
+    blob.append(blobCopy,photoFrame);
     const form=make('form','admin-portal-edit-form');
     form.hidden=item.status!=='pending';
+    blob.classList.toggle('is-editing',!form.hidden);
     const fields=[
       ['team_name',messages.teamName,'text',item.team_name,80],
       ['roster',messages.roster,'textarea',item.roster,1200],
@@ -1199,33 +1364,38 @@
     photoInput.type='file';
     photoInput.accept='image/jpeg,image/png,image/webp';
     photoLabel.append(photoInput);
-    form.append(photoLabel);
-    const cropToggle=button(messages.candidateImageCropToggle,'toggle-candidate-image-crop','admin-project-image-editor-toggle');
+    photoLabel.hidden=item.status!=='pending';
+    if(item.status==='pending')form.append(photoLabel);
+    const cropToggle=button(messages.candidateImageCropToggle,'toggle-candidate-image-crop','admin-candidate-photo-edit');
+    cropToggle.hidden=item.status!=='pending';
     cropToggle.setAttribute('aria-expanded','false');
-    const cropEditor=make('div','candidate-image-crop-editor');
-    cropEditor.hidden=true;
-    cropEditor.append(make('p','candidate-image-crop-title',messages.candidateImageCropTitle));
     const cropCanvas=document.createElement('canvas');
-    cropCanvas.className='candidate-image-crop-canvas';
+    cropCanvas.className='candidate-image-crop-canvas admin-candidate-photo';
     cropCanvas.tabIndex=0;
     cropCanvas.setAttribute('role','img');
     cropCanvas.setAttribute('aria-label',messages.projectCropHelp);
-    cropEditor.append(cropCanvas,make('p','candidate-image-crop-help',messages.projectCropHelp));
-    form.append(cropToggle,cropEditor);
+    cropCanvas.hidden=true;
+    const cropHelp=make('span','admin-candidate-photo-help',messages.projectCropHelp);
+    cropHelp.hidden=true;
+    photoFrame.append(image,cropCanvas,cropToggle,cropHelp);
     const photoStatus=make('p','site-status');
     photoStatus.setAttribute('role','status');
     photoStatus.setAttribute('aria-live','polite');
     form.append(photoStatus);
-    const save=button(messages.save,'save-candidacy','primary');
-    save.type='submit';
-    form.append(save);
     const cropEditorState=window.cdeccCreateCandidateImageCropEditor(cropCanvas,canvas=>{
-      cropEditor.hidden=false;
+      cropCanvas.hidden=false;
+      image.hidden=true;
+      cropHelp.hidden=false;
       cropToggle.setAttribute('aria-expanded','true');
       image.src=canvas.toDataURL('image/webp',.8);
     });
     let existingPhotoLoaded=false;
     let imageRequest=0;
+    let photoLoadPromise=Promise.resolve(true);
+    candidateCardCleanup.set(card,()=>{
+      imageRequest++;
+      cropEditorState.dispose();
+    });
     const loadExistingPhoto=async()=>{
       if(existingPhotoLoaded)return;
       const request=++imageRequest;
@@ -1238,22 +1408,30 @@
       await cropEditorState.load(data,false);
       if(request!==imageRequest)return;
       existingPhotoLoaded=true;
-      cropEditor.hidden=false;
+      cropCanvas.hidden=false;
+      image.hidden=true;
+      cropHelp.hidden=false;
       cropToggle.setAttribute('aria-expanded','true');
     };
     const updatePreview=()=>{
       if(item.status!=='pending')return;
       const values=new FormData(form);
       const teamName=String(values.get('team_name')||'').trim();
-      blobCopy.querySelector('.admin-candidate-blob-title').textContent=teamName||messages.teamName;
-      blobCopy.querySelector('.admin-candidate-blob-ideas').textContent=String(values.get('ideas')||'');
+      blobTitle.textContent=teamName||messages.teamName;
+      blobIdeas.textContent=String(values.get('ideas')||'');
       rosterList.replaceChildren();
-      String(values.get('roster')||'').split(/\r?\n/).map(member=>member.trim()).filter(Boolean)
-        .forEach(member=>rosterList.append(make('li','',member)));
+      const members=String(values.get('roster')||'').split(/\r?\n/).map(member=>member.trim()).filter(Boolean);
+      members.forEach(member=>rosterList.append(make('li','',member)));
+      blob.classList.toggle('has-many-members',members.length>=6);
+      blob.classList.toggle('has-many-members-dense',members.length>=9);
       blob.style.backgroundColor=String(values.get('background')||'#396d59');
       blob.style.color=String(values.get('foreground')||'#ffffff');
     };
-    if(item.status==='pending')form.addEventListener('input',updatePreview);
+    if(item.status==='pending')form.addEventListener('input',()=>{
+      form.dataset.dirty='true';
+      updatePreview();
+    });
+    form.addEventListener('change',()=>{form.dataset.dirty='true'});
     photoInput.addEventListener('change',()=>{
       const file=photoInput.files?.[0];
       if(!file)return;
@@ -1262,73 +1440,89 @@
         setError(photoStatus,new Error(messages.photoError));
         return;
       }
+      form.dataset.dirty='true';
       existingPhotoLoaded=true;
       imageRequest++;
-      cropEditorState.load(file).then(()=>{photoStatus.textContent=''}).catch(error=>{
+      cropCanvas.hidden=false;
+      image.hidden=true;
+      cropHelp.hidden=false;
+      photoLoadPromise=cropEditorState.load(file).then(()=>{
+        photoStatus.textContent='';
+        return true;
+      }).catch(error=>{
         existingPhotoLoaded=false;
         reportError(error);
+        cropCanvas.hidden=true;
+        image.hidden=false;
+        cropHelp.hidden=true;
+        if(!form.dataset.dirty)delete form.dataset.interacting;
         setError(photoStatus,error);
+        return false;
       });
     });
     cropToggle.addEventListener('click',()=>{
-      if(!cropEditor.hidden){
-        cropEditor.hidden=true;
+      if(!cropCanvas.hidden){
+        cropCanvas.hidden=true;
+        image.hidden=false;
+        cropHelp.hidden=true;
         cropToggle.setAttribute('aria-expanded','false');
+        if(!form.dataset.dirty)delete form.dataset.interacting;
         return;
       }
       if(cropEditorState.hasImage){
-        cropEditor.hidden=false;
+        cropCanvas.hidden=false;
+        image.hidden=true;
+        cropHelp.hidden=false;
         cropToggle.setAttribute('aria-expanded','true');
+        form.dataset.interacting='true';
         return;
       }
+      cropCanvas.hidden=false;
+      image.hidden=true;
+      cropHelp.hidden=false;
+      form.dataset.interacting='true';
       loadExistingPhoto().catch(error=>{
         reportError(error);
+        cropCanvas.hidden=true;
+        image.hidden=false;
+        cropHelp.hidden=true;
+        cropToggle.setAttribute('aria-expanded','false');
+        if(!form.dataset.dirty)delete form.dataset.interacting;
         setError(photoStatus,error);
       });
     });
-    form.addEventListener('submit',async event=>{
+    form.addEventListener('submit',event=>{
       event.preventDefault();
-      event.stopPropagation();
-      try{
-        const photo=cropEditorState.dirty?await cropEditorState.toBlob():null;
-        await saveCandidacy(card,item,form,photo);
-        if(!card.isConnected)cropEditorState.dispose();
-      }catch(error){
-        reportError(error);
-        setError(photoStatus,error);
-      }
     });
-    blob.addEventListener('click',event=>{
-      event.preventDefault();
-      form.hidden=!form.hidden;
-      blob.setAttribute('aria-expanded',String(!form.hidden));
-      blob.classList.toggle('is-editing',!form.hidden);
-      if(!form.hidden){
-        if(item.status==='pending')form.querySelector('input[name="team_name"]')?.focus({preventScroll:true});
-      }else imageRequest++;
-    });
+    cropCanvas.addEventListener('pointerdown',()=>{form.dataset.dirty='true'});
+    cropCanvas.addEventListener('keydown',()=>{form.dataset.dirty='true'});
     const actions=make('div','site-review-actions');
     if(item.status!=='approved')actions.append(button(messages.approve,'approve-candidacy','approve'));
     if(item.status!=='rejected')actions.append(button(messages.reject,'reject-candidacy','reject'));
     if(item.status!=='pending')actions.append(button(messages.reopen,'reopen-candidacy'));
     actions.append(button(messages.deleteCandidacy,'delete-candidacy','delete'));
-    card.append(blob,actions);
-    card.append(form);
+    card.append(blob,form,actions);
     actions.addEventListener('click',async event=>{
       const action=event.target.closest('[data-portal-action]');
       if(!action)return;
       if(action.dataset.portalAction==='delete-candidacy'){
         const confirmMessage=messages.confirmDeleteCandidacy.replace('{team}',item.team_name);
         if(!window.confirm(confirmMessage))return;
+        card.dataset.interacting='true';
+        form.dataset.interacting='true';
         actions.querySelectorAll('button').forEach(button=>{button.disabled=true});
         const deleteResult=await requireClient().from('candidacies').delete().eq('id',item.id).select('id').maybeSingle();
         if(deleteResult.error){
+          delete card.dataset.interacting;
+          delete form.dataset.interacting;
           actions.querySelectorAll('button').forEach(button=>{button.disabled=false});
           setError(state,deleteResult.error);
           reportError(deleteResult.error);
           return;
         }
         if(!deleteResult.data){
+          delete card.dataset.interacting;
+          delete form.dataset.interacting;
           actions.querySelectorAll('button').forEach(button=>{button.disabled=false});
           const error=new Error(messages.saveError);
           setError(state,error);
@@ -1337,10 +1531,11 @@
         }
         let photoCleanupError=null;
         try{await removeCandidatePhotos(item.id)}catch(error){photoCleanupError=error;reportError(error)}
+        delete card.dataset.interacting;
+        delete form.dataset.interacting;
         let refreshError=null;
         try{
           await loadCandidates();
-          await loadLogs();
           await refreshPublicCandidates();
         }catch(error){refreshError=error;reportError(error)}
         if(photoCleanupError)setError(state,new Error(messages.candidacyDeletedPhotoError));
@@ -1352,13 +1547,33 @@
         action.dataset.portalAction==='reject-candidacy'?'rejected':
         action.dataset.portalAction==='reopen-candidacy'?'pending':'';
       if(!status)return;
-      const {error}=await requireClient().from('candidacies').update({
-        status,approved_at:status==='approved'?new Date().toISOString():null,updated_at:new Date().toISOString()
-      }).eq('id',item.id);
-      if(error){setError(state,error);reportError(error);return}
-      await loadCandidates();
-      await loadLogs();
-      await refreshPublicCandidates();
+      card.dataset.interacting='true';
+      form.dataset.interacting='true';
+      actions.querySelectorAll('button').forEach(button=>{button.disabled=true});
+      try{
+        if(photoInput.files?.[0]&&!(await photoLoadPromise))return;
+        const newPhoto=(photoInput.files?.[0]||cropEditorState.dirty)?await cropEditorState.toBlob():null;
+        const saved=await saveCandidacy(card,item,form,newPhoto,{refresh:false});
+        if(!saved)return;
+        const result=await requireClient().from('candidacies').update({
+          status,approved_at:status==='approved'?new Date().toISOString():null,updated_at:new Date().toISOString()
+        }).eq('id',item.id).select('id').maybeSingle();
+        if(result.error)throw result.error;
+        if(!result.data)throw new Error(messages.saveError);
+        delete form.dataset.dirty;
+        delete form.dataset.interacting;
+        delete card.dataset.interacting;
+        await loadCandidates();
+        await refreshPublicCandidates();
+      }catch(error){
+        setError(photoStatus,error);
+        setError(state,error);
+        reportError(error);
+      }finally{
+        if(card.isConnected)delete card.dataset.interacting;
+        if(card.isConnected)delete form.dataset.interacting;
+        if(card.isConnected)actions.querySelectorAll('button').forEach(button=>{button.disabled=false});
+      }
     });
     return card;
   };
@@ -1381,7 +1596,7 @@
       if(result.error)throw result.error;
     }
   };
-  const saveCandidacy=async(card,item,form,newPhoto)=>{
+  const saveCandidacy=async(card,item,form,newPhoto,{refresh=true}={})=>{
     const values=Object.fromEntries(new FormData(form));
     const patch={updated_at:new Date().toISOString()};
     if(item.status==='pending'){
@@ -1392,46 +1607,58 @@
         background:values.background,
         foreground:values.foreground
       });
-      if(!patch.team_name||!patch.roster||!patch.ideas){setError(state,new Error(messages.saveError));return}
+      if(!patch.team_name||!patch.roster||!patch.ideas){setError(state,new Error(messages.saveError));return false}
     }
     let uploadedPath='';
     if(newPhoto){
       if(newPhoto.size>50*1024*1024||!['image/jpeg','image/png','image/webp'].includes(newPhoto.type)){
-        setError(state,new Error(messages.photoError));return;
+        setError(state,new Error(messages.photoError));return false;
       }
       const ext={ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp' }[newPhoto.type];
       uploadedPath=`candidacies/${item.id}/${crypto.randomUUID()}.${ext}`;
       const upload=await client.storage.from('candidate-photos').upload(uploadedPath,newPhoto,{contentType:newPhoto.type,upsert:false});
-      if(upload.error){setError(state,upload.error);reportError(upload.error);return}
+      if(upload.error){setError(state,upload.error);reportError(upload.error);return false}
       patch.photo_path=uploadedPath;
     }
-    const {error}=await client.from('candidacies').update(patch).eq('id',item.id);
-    if(error){
+    const result=await requireClient().from('candidacies').update(patch).eq('id',item.id).select('id').maybeSingle();
+    if(result.error||!result.data){
+      const error=result.error||new Error(messages.saveError);
       setError(state,error);
       reportError(error);
       if(uploadedPath)await client.storage.from('candidate-photos').remove([uploadedPath]);
-      return;
+      return false;
     }
     if(uploadedPath&&item.photo_path){
       const cleanup=await client.storage.from('candidate-photos').remove([item.photo_path]);
       if(cleanup.error){reportError(cleanup.error);setError(state,new Error(messages.candidacyPhotoCleanupError))}
     }
-    await loadCandidates();
-    await loadLogs();
-    await refreshPublicCandidates();
+    if(refresh){
+      await loadCandidates();
+      await refreshPublicCandidates();
+    }
+    return true;
   };
-  const renderCandidateResults=async()=>{
+  const renderCandidateResults=async({allowFilterChange=false}={})=>{
+    const request=++candidateResultsRequest;
     const {data,error}=await requireClient().from('candidacies').select('*').order('created_at',{ascending:false});
     if(error)throw error;
-    if(shouldPausePeriodicRender('candidates'))return;
+    if(request!==candidateResultsRequest||!currentUser||
+      (periodicRefreshTab==='candidates'&&currentTab!=='candidates')||
+      (!allowFilterChange&&(shouldPausePeriodicRender('candidates')||hasAdminEditsInProgress('candidates'))))return;
     const statusCounts=getStatusCounts(data||[]);
     const toolbar=panels.candidates.querySelector('.site-review-toolbar');
     syncFilterButtonCounts(toolbar,statusCounts);
     const records=(data||[]).filter(item=>item.status===candidateFilter);
+    const currentCards=Array.from(tables.candidates.querySelectorAll(':scope > .admin-candidate-card'));
+    if(records.length>0&&records.length===currentCards.length&&records.every((item,index)=>
+      currentCards[index].dataset.candidacyId===String(item.id)&&
+      currentCards[index].dataset.recordSnapshot===JSON.stringify(item)
+    ))return;
+    tables.candidates.querySelectorAll('.admin-candidate-card').forEach(card=>candidateCardCleanup.get(card)?.());
     if(!records.length){showEmpty(tables.candidates,messages.noCandidates);return}
     tables.candidates.replaceChildren(...records.map(renderCandidate));
   };
-  const loadCandidates=async()=>{
+  const loadCandidates=async({allowFilterChange=false}={})=>{
     const panel=panels.candidates;
     let toolbar=panel.querySelector('.site-review-toolbar');
     if(!toolbar){
@@ -1446,9 +1673,9 @@
       panel.append(toolbar,tables.candidates);
       filters.addEventListener('click',event=>{
         const filter=event.target.closest('[data-portal-action^="filter-"]');
-        if(!filter)return;
+        if(!filter||!confirmDiscardFilterEdits('candidates'))return;
         candidateFilter=filter.dataset.portalAction.slice('filter-'.length);
-        loadCandidates().catch(reportError);
+        loadCandidates({allowFilterChange:true}).catch(error=>{setError(state,error);reportError(error)});
       });
     }
     const filterButtons=toolbar.querySelectorAll('[data-portal-action^="filter-"]');
@@ -1457,7 +1684,7 @@
       buttonNode.setAttribute('aria-pressed',String(matched));
       buttonNode.classList.toggle('active',matched);
     });
-    await renderCandidateResults();
+    await renderCandidateResults({allowFilterChange});
     await refreshTabCounts();
   };
   const localDateTime=value=>{
@@ -1517,20 +1744,22 @@
       window.cdeccApplyRemoteVoteSettings?.({formUrl:url,startsAt:start||'',endsAt:end||''});
       setTabCount('vote', url || start || end ? 1 : 0);
       setSuccess(feedback,messages.voteSaved);
-      await loadLogs();
       await refreshTabCounts();
     });
     panel.replaceChildren(form);
   };
   const loadLogs=async()=>{
     if(!client||!currentUser)return;
-    const {data,error}=await client.from('admin_audit_logs').select('*').order('occurred_at',{ascending:false}).limit(300);
+    const {data,error}=await client.from('admin_audit_logs_display')
+      .select('id,actor_email,action,entity,entity_id,details,occurred_at')
+      .order('occurred_at',{ascending:false})
+      .limit(300);
     if(error)throw error;
-    setTabCount('logs', 0);
     const table=make('table','admin-audit-table');
     const head=document.createElement('thead');
     const headerRow=document.createElement('tr');
-    [messages.logTime,messages.logUser,messages.logAction,messages.logEntity,messages.logDetails].forEach(label=>headerRow.append(make('th','',label)));
+    [messages.logTime,messages.logUser,messages.logAction,messages.logEntity,messages.logDetails]
+      .forEach(label=>headerRow.append(make('th','',label)));
     head.append(headerRow);
     const body=document.createElement('tbody');
     (data||[]).forEach(entry=>{
@@ -1554,11 +1783,12 @@
         suggestions:messages.proposalsTab,
         candidacies:messages.candidatesTab,
         vote_settings:messages.voteTitle,
-        authentication:french?'Authentification':'Authentication'
+        authentication:french?'Authentification':'Authentication',
+        'storage.objects':french?'Images':'Images'
       }[entry.entity]||entry.entity;
       [
         formatDate(entry.occurred_at),
-        entry.actor_email=== 'Public submission'?messages.publicSubmission:entry.actor_email,
+        entry.actor_email==='Public submission'?messages.publicSubmission:entry.actor_email,
         actionLabel,
         entityLabel,
         details
@@ -1572,7 +1802,6 @@
       tables.logs.replaceChildren(wrapper);
     }else tables.logs.replaceChildren(make('p','site-empty-state',messages.noLogs));
     panels.logs.replaceChildren(tables.logs);
-    await refreshTabCounts();
   };
   const loadPanel=async name=>{
     try{
@@ -1583,11 +1812,29 @@
       else if(name==='logs')await loadLogs();
     }catch(error){setError(state,error);reportError(error)}
   };
+  let publicIdeasRefreshInProgress=false;
+  let publicIdeasRefreshRequested=false;
   const refreshPublicIdeas=async()=>{
     if(!client)return;
-    const {data,error}=await client.from('suggestions').select('*').eq('status','approved').order('created_at',{ascending:false});
-    if(error){reportError(error);return}
-    window.cdeccApplyRemoteSuggestions?.(data||[]);
+    if(publicIdeasRefreshInProgress){
+      publicIdeasRefreshRequested=true;
+      return;
+    }
+    publicIdeasRefreshInProgress=true;
+    try{
+      do{
+        publicIdeasRefreshRequested=false;
+        try{
+          const {data,error}=await client.from('suggestions').select('*').eq('status','approved').order('created_at',{ascending:false});
+          if(error)reportError(error);
+          else window.cdeccApplyRemoteSuggestions?.(data||[]);
+        }catch(error){
+          reportError(error);
+        }
+      }while(publicIdeasRefreshRequested);
+    }finally{
+      publicIdeasRefreshInProgress=false;
+    }
   };
   const applyApprovedCandidates=records=>{
     const grid=document.querySelector('#page-vote .vote-team-grid');
@@ -1633,16 +1880,22 @@
       return;
     }
   };
+  let publicCandidatesRefreshRequest=0;
   const refreshPublicCandidates=async()=>{
     if(!client)return;
+    const request=++publicCandidatesRefreshRequest;
     const {data,error}=await client.from('candidacies').select('*').eq('status','approved').order('created_at',{ascending:false});
     if(error){reportError(error);return}
+    if(request!==publicCandidatesRefreshRequest)return;
     applyApprovedCandidates(data);
   };
+  let publicVoteSettingsRefreshRequest=0;
   const refreshPublicVoteSettings=async()=>{
     if(!client)return;
+    const request=++publicVoteSettingsRefreshRequest;
     const {data,error}=await client.from('vote_settings').select('*').eq('singleton',true).maybeSingle();
     if(error){reportError(error);return}
+    if(request!==publicVoteSettingsRefreshRequest)return;
     if(data)window.cdeccApplyRemoteVoteSettings?.({
       formUrl:data.form_url,
       startsAt:data.starts_at||'',
@@ -1657,10 +1910,11 @@
     const title=form.querySelector('#title')?.value.trim();
     const details=form.querySelector('#details')?.value.trim();
     const category=form.querySelector('#suggestion-category')?.value;
+    const grade=form.querySelector('#suggestion-grade')?.value;
     const status=form.querySelector('.site-status');
     try{
-      if(!title||!details||!category)throw new Error(messages.saveError);
-      const {error}=await client.from('suggestions').insert({title,details,category});
+      if(!title||!details||!category||!['1','2','3','4','5','general'].includes(grade||''))throw new Error(messages.saveError);
+      const {error}=await client.from('suggestions').insert({title,details,category,grade});
       if(error)throw error;
       form.reset();
       if(status)setSuccess(status,french?'Proposition envoyée pour examen.':'Proposal submitted for review.');
@@ -1704,6 +1958,7 @@
       form.reset();
       cropEditor?.reset();
       form.querySelector('.candidate-image-crop-editor').hidden=true;
+      form.querySelector('.candidate-image-crop-canvas').hidden=true;
       const previewImage=form.querySelector('.candidate-preview-media img');
       previewImage.removeAttribute('src');
       previewImage.hidden=true;
@@ -1797,6 +2052,11 @@
     loginDescription.textContent=messages.configDescription;
   }else{
     loginRequired.hidden=false;
+    void refreshPublicIdeas();
+    const publicIdeasRefreshInterval=window.setInterval(()=>{
+      if(!document.hidden)void refreshPublicIdeas();
+    },30000);
+    window.addEventListener('beforeunload',()=>window.clearInterval(publicIdeasRefreshInterval));
     client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>updateSignedIn(session,event==='SIGNED_IN'),0)});
     client.auth.getSession().then(({data,error})=>{
       if(error){
@@ -1816,7 +2076,7 @@
     if(currentUser && !document.hidden){
       refreshAdminView();
     }
-  },3000);
+  },15000);
   window.addEventListener('beforeunload',()=>window.clearInterval(adminRefreshInterval));
   document.addEventListener('click',event=>{
     const pageButton=event.target.closest('[data-page]');
