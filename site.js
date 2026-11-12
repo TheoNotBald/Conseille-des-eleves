@@ -1796,11 +1796,12 @@
       classRepresentativeSlots.append(group);
     }
     const classRepresentativePanel=make('section','member-class-panel');
-    classRepresentativePanel.append(
+    const classIntro=make('div','member-class-intro');
+    classIntro.append(
       make('h3','member-class-title',text('classreps')),
-      make('p','member-class-description',text('levelResponsibilities')),
-      classRepresentativeSlots
+      make('p','member-class-description',text('levelResponsibilities'))
     );
+    classRepresentativePanel.append(classRepresentativeSlots,classIntro);
     const memberStructure=make('div','member-structure-chart');
     memberStructure.append(assemblyStructure,classRepresentativePanel);
     const memberProfiles=make('section','member-profile-section');

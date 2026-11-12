@@ -307,9 +307,10 @@
 .member-assembly-representative>span:last-child{min-width:0;overflow-wrap:anywhere}
 .member-class-panel{display:grid;gap:12px}
 .member-class-title{margin:0;color:var(--forest);font-size:17px}
-.member-class-description{max-width:950px;margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.member-class-description{max-width:950px;margin:0;color:var(--muted);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
 .member-class-representative-slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .member-class-group{display:grid;justify-items:center;gap:8px}
+.member-class-intro{display:grid;justify-items:start;gap:8px;width:100%;margin-top:8px;text-align:left}
 .member-structure-arrow{height:34px;color:var(--forest);font-size:30px;font-weight:800;line-height:1}
 .member-class-card{display:grid;width:100%;min-height:210px;align-content:start;gap:12px;padding:12px;border-radius:14px;background:#68a98e;color:#f4eadc}
 .member-class-card-heading{display:flex;min-height:52px;align-items:center;gap:7px;padding:7px;border-radius:9px;background:#315f4d;color:#f4eadc;font-size:12px;font-weight:850;line-height:1.2}
