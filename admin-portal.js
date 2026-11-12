@@ -5,19 +5,37 @@
   const french=document.documentElement.lang!=='en';
   const messages=french?{
     title:'Administration du site',
-    intro:'Gérez les propositions, le vote et les candidatures.',
-    notice:'Tout compte Google utilisant une adresse Gmail peut accéder à l’administration. Ne publiez pas de renseignements confidentiels.',
+    intro:'Gérez les propositions, le vote, les candidatures et les membres.',
+    notice:'Connexion Google réservée aux comptes autorisés. Les rôles et les journaux sont vérifiés par Supabase.',
     configMissing:'L’administration est verrouillée : configurez Supabase avant de vous connecter.',
     signIn:'Continuer avec Google',
     signOut:'Se déconnecter',
     authError:'La connexion n’a pas pu être vérifiée.',
     loginEyebrow:'Espace d’administration',
-    loginDescription:'Connectez-vous avec un compte Google utilisant une adresse Gmail pour gérer les propositions, le vote et les candidatures.',
+    loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer les propositions, le vote, les candidatures et les membres.',
     loginHelp:'Le portail est réservé à l’administration. Ne partagez pas votre session.',
     configDescription:'Le portail sera disponible après la configuration de la connexion Supabase.',
     signupDisabled:'Supabase bloque les nouvelles inscriptions. Dans Supabase, ouvrez Authentication → Sign In / Providers (ou Settings), activez « Allow new users to sign up », puis réessayez.',
-    loginDenied:'La connexion Google a été refusée. Vérifiez le fournisseur Google dans Supabase et réessayez.',
-    tabs:['Proposition','Vote','Candidature','Journaux'],
+    loginDenied:'Ce compte Google n’est pas autorisé. Demandez à une personne responsable technique de l’ajouter.',
+    tabs:['Proposition','Vote','Candidature','Membres','Journaux','Panneau technique'],
+    memberTab:'Membres',
+    memberIntro:'Ajoutez les personnes choisies, leur photo et leur groupe. Les photos et les fiches sont visibles publiquement sur la page Membres.',
+    memberAssemblyTitle:'Membres de l’Assemblée citoyenne',
+    memberSecondaryTitle:'Représentants du secondaire',
+    memberClassTitle:'Représentants de classe',
+    memberNameField:'Nom affiché',
+    memberGroupField:'Groupe ou poste affiché',
+    memberPhotoField:'Photo individuelle (JPG, PNG ou WebP, 50 Mo maximum)',
+    memberSave:'Enregistrer la fiche',
+    memberRemove:'Retirer de la page Membres',
+    memberSaveSuccess:'La fiche a été publiée sur la page Membres.',
+    memberRemoveSuccess:'La fiche a été retirée de la page Membres.',
+    memberConfirmRemove:'Retirer cette personne de la page Membres ?',
+    memberPhotoCleanupError:'La fiche est mise à jour, mais l’ancienne photo n’a pas pu être supprimée.',
+    memberUploadCleanupError:'L’enregistrement a échoué et la nouvelle photo temporaire n’a pas pu être supprimée.',
+    memberPhotoRemoveError:'La fiche a été retirée, mais la photo n’a pas pu être supprimée du stockage Supabase.',
+    memberMigrationMissing:'La table des membres n’existe pas encore. Exécutez 20261113000000_member_profiles.sql dans Supabase SQL Editor.',
+    memberLoadError:'Les membres n’ont pas pu être chargés. Vérifiez la migration Supabase.',
     search:'Rechercher une proposition',
     statuses:{pending:'À examiner',approved:'Approuvée',rejected:'Refusée'},
     approve:'Accepter et publier',
@@ -92,22 +110,91 @@
     rejectedLabel:'Candidature refusée',
     pendingLabel:'À examiner',
     proposalsTab:'Propositions',
-    candidatesTab:'Candidatures'
+    candidatesTab:'Candidatures',
+    technicalIntro:'Les réglages techniques sont vérifiés par Supabase et accessibles uniquement aux responsables techniques autorisés.',
+    technicalSettingsTitle:'Réglages du site',
+    technicalIdeasOpen:'Accepter les propositions',
+    technicalCandidaciesOpen:'Accepter les candidatures',
+    technicalColors:'Couleurs principales',
+    technicalLogo:'URL HTTPS du logo',
+    technicalHero:'URL HTTPS de l’image d’accueil',
+    technicalSlogan:'Slogan du site',
+    technicalBackupsTitle:'Sauvegardes automatiques',
+    technicalBackupsEnable:'Activer les sauvegardes planifiées',
+    technicalFrequency:'Fréquence',
+    technicalFrequencies:['Chaque jour','Chaque semaine (dimanche)','Chaque mois (1er jour)'],
+    technicalTime:'Heure (fuseau America/Toronto)',
+    technicalRetention:'Nombre maximal de sauvegardes (10 à 100)',
+    technicalSave:'Enregistrer les réglages',
+    technicalSaved:'Réglages techniques enregistrés.',
+    technicalAccessTitle:'Accès Google autorisés',
+    technicalAccessIntro:'Les comptes techniques ont accès aux deux portails. Les comptes administrateurs accèdent au portail habituel seulement.',
+    technicalEmail:'Adresse du compte Google',
+    technicalRole:'Rôle',
+    technicalRoles:['Administration','Administration technique'],
+    technicalAddAccess:'Ajouter ou modifier l’accès',
+    technicalRemoveAccess:'Retirer l’accès',
+    technicalConfirmRemoveAccess:'Retirer cet accès ? Cette action peut bloquer le compte concerné.',
+    technicalNoAccess:'Aucun compte autorisé.',
+    technicalLogsTitle:'Journaux techniques — 90 jours',
+    technicalLogIp:'Adresse IP',
+    technicalNoLogs:'Aucun événement technique enregistré.',
+    technicalBackupsList:'Historique des sauvegardes',
+    technicalRunBackup:'Créer une sauvegarde maintenant',
+    technicalDeleteBackup:'Supprimer',
+    technicalRestoreBackup:'Restaurer',
+    technicalConfirmDeleteBackup:'Supprimer définitivement cette sauvegarde et ses fichiers ?',
+    technicalConfirmRestoreBackup:'Cette restauration remplace les données actuelles des propositions, candidatures, vote, membres et réglages par ceux de la sauvegarde. Continuer ?',
+    technicalBackupUnavailable:'Pour activer les sauvegardes : appliquez la migration technique, déployez la fonction sécurisée et ajoutez les secrets Supabase Vault décrits dans le guide de configuration.',
+    technicalBackupCreated:'Sauvegarde créée.',
+    technicalBackupDeleted:'Sauvegarde supprimée.',
+    technicalBackupRestored:'Sauvegarde restaurée. La page va être rechargée.',
+    technicalSetupStatus:'État technique et configuration',
+    technicalStatusReady:'Connexion Google et autorisations de rôle sont actives.',
+    technicalStatusDatabase:'Base de données et accès par rôle',
+    technicalStatusFunction:'Fonction de sauvegarde sécurisée',
+    technicalStatusScheduler:'Secrets de planification dans Vault',
+    technicalStatusEnabled:'Configuré',
+    technicalStatusDisabled:'À configurer',
+    technicalSettingsError:'Les réglages techniques n’ont pas pu être chargés ou enregistrés.',
+    technicalLogTime:'Date',
+    technicalLogUser:'Compte',
+    technicalLogAction:'Action',
+    technicalLogEntity:'Élément',
+    technicalLogDetails:'Détails'
   }:{
     title:'Site administration',
-    intro:'Manage suggestions, voting, and candidacies.',
-    notice:'Any Google account using a Gmail address can access administration. Do not publish confidential information.',
+    intro:'Manage suggestions, voting, candidacies, and members.',
+    notice:'Google sign-in is limited to authorized accounts. Roles and logs are verified by Supabase.',
     configMissing:'Administration is locked. Configure Supabase before signing in.',
     signIn:'Continue with Google',
     signOut:'Sign out',
     authError:'Could not verify the sign-in.',
     loginEyebrow:'Administration portal',
-    loginDescription:'Sign in with a Google account using a Gmail address to manage proposals, voting, and candidacies.',
+    loginDescription:'Sign in with an authorized Google account to manage proposals, voting, candidacies, and members.',
     loginHelp:'This portal is for administrators. Do not share your signed-in session.',
     configDescription:'The portal will be available after Supabase sign-in is configured.',
     signupDisabled:'Supabase is blocking new sign-ups. In Supabase, open Authentication → Sign In / Providers (or Settings), enable “Allow new users to sign up,” then try again.',
-    loginDenied:'Google sign-in was denied. Check the Google provider settings in Supabase and try again.',
-    tabs:['Proposals','Vote','Candidacies','Logs'],
+    loginDenied:'This Google account is not authorized. Ask a technical administrator to add it.',
+    tabs:['Proposals','Vote','Candidacies','Members','Logs','Technical Panel'],
+    memberTab:'Members',
+    memberIntro:'Add selected people, their photos, and their group. Photos and profiles are publicly visible on the Members page.',
+    memberAssemblyTitle:'Student Assembly members',
+    memberSecondaryTitle:'Secondary representatives',
+    memberClassTitle:'Class representatives',
+    memberNameField:'Display name',
+    memberGroupField:'Displayed group or position',
+    memberPhotoField:'Individual photo (JPG, PNG, or WebP, up to 50 MB)',
+    memberSave:'Save member profile',
+    memberRemove:'Remove from Members page',
+    memberSaveSuccess:'The profile is now published on the Members page.',
+    memberRemoveSuccess:'The profile was removed from the Members page.',
+    memberConfirmRemove:'Remove this person from the Members page?',
+    memberPhotoCleanupError:'The profile was saved, but its previous photo could not be removed.',
+    memberUploadCleanupError:'The profile could not be saved, and its temporary photo could not be removed.',
+    memberPhotoRemoveError:'The profile was removed, but its photo could not be deleted from Supabase Storage.',
+    memberMigrationMissing:'The members table is not set up yet. Run 20261113000000_member_profiles.sql in the Supabase SQL Editor.',
+    memberLoadError:'Members could not be loaded. Check the Supabase migration.',
     search:'Search proposals',
     statuses:{pending:'Needs review',approved:'Approved',rejected:'Declined'},
     approve:'Accept and publish',
@@ -182,7 +269,58 @@
     rejectedLabel:'Candidacy declined',
     pendingLabel:'Needs review',
     proposalsTab:'Proposals',
-    candidatesTab:'Candidacies'
+    candidatesTab:'Candidacies',
+    technicalIntro:'Technical controls are enforced by Supabase and available only to authorized technical administrators.',
+    technicalSettingsTitle:'Site settings',
+    technicalIdeasOpen:'Accept suggestions',
+    technicalCandidaciesOpen:'Accept candidacies',
+    technicalColors:'Core colors',
+    technicalLogo:'HTTPS logo URL',
+    technicalHero:'HTTPS home-page image URL',
+    technicalSlogan:'Site slogan',
+    technicalBackupsTitle:'Scheduled backups',
+    technicalBackupsEnable:'Enable scheduled backups',
+    technicalFrequency:'Frequency',
+    technicalFrequencies:['Daily','Weekly (Sunday)','Monthly (first day)'],
+    technicalTime:'Time (America/Toronto)',
+    technicalRetention:'Maximum number of backups (10 to 100)',
+    technicalSave:'Save technical settings',
+    technicalSaved:'Technical settings saved.',
+    technicalAccessTitle:'Authorized Google accounts',
+    technicalAccessIntro:'Technical accounts can use both portals. Administrator accounts can use the regular portal only.',
+    technicalEmail:'Google account email',
+    technicalRole:'Role',
+    technicalRoles:['Administrator','Technical administrator'],
+    technicalAddAccess:'Add or update access',
+    technicalRemoveAccess:'Remove access',
+    technicalConfirmRemoveAccess:'Remove this access? This may lock out that account.',
+    technicalNoAccess:'No authorized accounts.',
+    technicalLogsTitle:'Technical logs — 90 days',
+    technicalLogIp:'IP address',
+    technicalNoLogs:'No technical events recorded.',
+    technicalBackupsList:'Backup history',
+    technicalRunBackup:'Run backup now',
+    technicalDeleteBackup:'Delete',
+    technicalRestoreBackup:'Restore',
+    technicalConfirmDeleteBackup:'Permanently delete this backup and its files?',
+    technicalConfirmRestoreBackup:'This restore replaces current suggestions, candidacies, voting, members, and site settings with the selected backup. Continue?',
+    technicalBackupUnavailable:'To enable backups, apply the technical migration, deploy the secure function, and add the Supabase Vault secrets listed in the setup guide.',
+    technicalBackupCreated:'Backup created.',
+    technicalBackupDeleted:'Backup deleted.',
+    technicalBackupRestored:'Backup restored. The page will reload.',
+    technicalSetupStatus:'Technical status and configuration',
+    technicalStatusReady:'Google sign-in and role-based access are active.',
+    technicalStatusDatabase:'Database and role access',
+    technicalStatusFunction:'Secure backup function',
+    technicalStatusScheduler:'Scheduler secrets in Vault',
+    technicalStatusEnabled:'Configured',
+    technicalStatusDisabled:'Needs setup',
+    technicalSettingsError:'Technical settings could not be loaded or saved.',
+    technicalLogTime:'Date',
+    technicalLogUser:'Account',
+    technicalLogAction:'Action',
+    technicalLogEntity:'Entity',
+    technicalLogDetails:'Details'
   };
   const make=(tag,className='',content='')=>{
     const node=document.createElement(tag);
@@ -247,7 +385,7 @@
   const tabs=make('div','admin-portal-tabs');
   tabs.setAttribute('role','tablist');
   tabs.setAttribute('aria-label',messages.title);
-  const panelNames=['proposals','vote','candidates','logs'];
+  const panelNames=['proposals','vote','candidates','members','logs','technical'];
   const tabCounts=Object.fromEntries(panelNames.map(name=>[name,0]));
   const panels=Object.fromEntries(panelNames.map(name=>[name,make('section','admin-portal-panel')]));
   const panelNodes=make('div','admin-portal-panels');
@@ -369,13 +507,16 @@
   let proposalQuery='';
   let candidateFilter='pending';
   let currentUser=null;
+  let currentAccess={is_admin:false,is_technical:false};
   const tables={
     proposals:make('div','admin-portal-list'),
     candidates:make('div','admin-portal-list'),
+    members:make('div','admin-portal-list'),
     logs:make('div','admin-portal-logs')
   };
   const proposalCardCleanup=new WeakMap();
   const candidateCardCleanup=new WeakMap();
+  const memberEditorCleanup=new WeakMap();
   const disposeProposalCards=()=>{
     tables.proposals.querySelectorAll('.site-review-card').forEach(card=>proposalCardCleanup.get(card)?.());
   };
@@ -394,6 +535,7 @@
     if(panel.querySelector('.site-priority-select[data-dirty="true"]'))return true;
     if(panel.querySelector('.admin-project-presentation[data-dirty="true"]'))return true;
     if(panel.querySelector('.admin-project-presentation[data-interacting="true"]'))return true;
+    if(panel.querySelector('.technical-access-row[data-dirty="true"]'))return true;
     return Boolean(panel.querySelector('.admin-vote-settings[data-dirty="true"]'));
   };
   const shouldPausePeriodicRender=name=>periodicRefreshTab===name&&hasAdminEditsInProgress(name);
@@ -1754,6 +1896,235 @@
     });
     panel.replaceChildren(form);
   };
+  const memberGroupTitle=category=>({
+    assembly:messages.memberAssemblyTitle,
+    secondary:messages.memberSecondaryTitle,
+    class:messages.memberClassTitle
+  })[category];
+  const removeMemberPhoto=async(path,feedback,message)=>{
+    try{
+      const {error}=await requireClient().storage.from('member-photos').remove([path]);
+      if(error)throw error;
+      return true;
+    }catch(error){
+      setError(feedback,new Error(message));
+      reportError(error);
+      return false;
+    }
+  };
+  const renderMemberEditorCard=(slot,record)=>{
+    const card=make('article','admin-member-editor-card');
+    let currentPhotoPath=record?.photo_path||null;
+    let hasProfile=Boolean(record);
+    let previewObjectUrl='';
+    const preview=make('article',`member-profile-card member-admin-preview${slot.category==='secondary'?' member-secondary-rep-card':''}${slot.category==='class'?' member-class-rep-card':''}`);
+    const placeholder=make('div','member-profile-photo-placeholder',french?'Photo à venir':'Photo coming soon');
+    const image=document.createElement('img');
+    image.className='member-profile-photo';
+    image.alt='';
+    image.hidden=true;
+    image.addEventListener('error',()=>{
+      image.hidden=true;
+      image.removeAttribute('src');
+      placeholder.hidden=false;
+    });
+    if(currentPhotoPath){
+      image.src=requireClient().storage.from('member-photos').getPublicUrl(currentPhotoPath).data.publicUrl;
+      image.hidden=false;
+      placeholder.hidden=true;
+    }
+    const previewName=make('h3','member-profile-name',record?.display_name|| (french?'Nom à confirmer':'Name to be confirmed'));
+    const previewGroup=make('p','member-profile-role',record?.group_label||slot.groupLabel);
+    preview.append(placeholder,image,previewName,previewGroup);
+    const form=make('form','admin-portal-edit-form admin-member-edit-form');
+    form.dataset.slotKey=slot.slotKey;
+    form.dataset.photoPath=currentPhotoPath||'';
+    const addField=(labelText,name,value,type='text')=>{
+      const wrapper=make('label','');
+      wrapper.append(make('span','',labelText));
+      const input=document.createElement('input');
+      input.type=type;
+      input.name=name;
+      input.value=value||'';
+      if(type==='text')input.maxLength=name==='display_name'?100:80;
+      input.required=type==='text';
+      wrapper.append(input);
+      form.append(wrapper);
+      return input;
+    };
+    const nameInput=addField(messages.memberNameField,'display_name',record?.display_name||'');
+    const groupInput=addField(messages.memberGroupField,'group_label',record?.group_label||slot.groupLabel);
+    const photoLabel=make('label','');
+    photoLabel.append(make('span','',messages.memberPhotoField));
+    const photoInput=document.createElement('input');
+    photoInput.type='file';
+    photoInput.accept='image/jpeg,image/png,image/webp';
+    photoLabel.append(photoInput);
+    form.append(photoLabel);
+    const feedback=make('p','site-status');
+    feedback.hidden=true;
+    feedback.setAttribute('role','status');
+    feedback.setAttribute('aria-live','polite');
+    const actions=make('div','admin-member-editor-actions');
+    const saveButton=button(messages.memberSave,'save-member','primary');
+    saveButton.type='submit';
+    const removeButton=button(messages.memberRemove,'remove-member','secondary');
+    removeButton.hidden=!hasProfile;
+    actions.append(saveButton,removeButton);
+    form.append(feedback,actions);
+    const updatePreview=()=>{
+      previewName.textContent=nameInput.value.trim()||(french?'Nom à confirmer':'Name to be confirmed');
+      previewGroup.textContent=groupInput.value.trim()||slot.groupLabel;
+    };
+    form.addEventListener('input',()=>{
+      form.dataset.dirty='true';
+      updatePreview();
+    });
+    form.addEventListener('change',()=>{form.dataset.dirty='true'});
+    photoInput.addEventListener('change',()=>{
+      const file=photoInput.files?.[0];
+      if(!file)return;
+      if(file.size>50*1024*1024||!['image/jpeg','image/png','image/webp'].includes(file.type)){
+        photoInput.value='';
+        setError(feedback,new Error(messages.photoError));
+        return;
+      }
+      if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);
+      previewObjectUrl=URL.createObjectURL(file);
+      image.src=previewObjectUrl;
+      image.hidden=false;
+      placeholder.hidden=true;
+      form.dataset.dirty='true';
+    });
+    form.addEventListener('submit',async event=>{
+      event.preventDefault();
+      event.stopPropagation();
+      const displayName=nameInput.value.trim();
+      const groupLabel=groupInput.value.trim();
+      if(!displayName||!groupLabel){
+        setError(feedback,new Error(messages.saveError));
+        return;
+      }
+      const file=photoInput.files?.[0];
+      let uploadedPath='';
+      let photoUploaded=false;
+      let profileSaved=false;
+      const oldPhotoPath=currentPhotoPath;
+      saveButton.disabled=true;
+      try{
+        if(file){
+          const extension={ 'image/jpeg':'jpg','image/png':'png','image/webp':'webp' }[file.type];
+          uploadedPath=`members/${slot.slotKey}/${crypto.randomUUID()}.${extension}`;
+          const upload=await requireClient().storage.from('member-photos').upload(uploadedPath,file,{contentType:file.type,upsert:false});
+          if(upload.error)throw upload.error;
+          photoUploaded=true;
+        }
+        const result=await requireClient().from('member_profiles').upsert({
+          slot_key:slot.slotKey,
+          display_name:displayName,
+          group_label:groupLabel,
+          photo_path:uploadedPath||currentPhotoPath
+        },{onConflict:'slot_key'}).select('slot_key').single();
+        if(result.error)throw result.error;
+        profileSaved=true;
+        currentPhotoPath=uploadedPath||currentPhotoPath;
+        hasProfile=true;
+        form.dataset.photoPath=currentPhotoPath||'';
+        if(uploadedPath){
+          image.src=requireClient().storage.from('member-photos').getPublicUrl(uploadedPath).data.publicUrl;
+          image.hidden=false;
+          placeholder.hidden=true;
+        }
+        delete form.dataset.dirty;
+        photoInput.value='';
+        removeButton.hidden=false;
+        setSuccess(feedback,messages.memberSaveSuccess);
+        if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
+        await refreshPublicMembers();
+        if(uploadedPath&&oldPhotoPath){
+          await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoCleanupError);
+        }
+      }catch(error){
+        if(photoUploaded&&!profileSaved){
+          const cleaned=await removeMemberPhoto(uploadedPath,feedback,messages.memberUploadCleanupError);
+          if(cleaned)setError(feedback,error);
+        }else{
+          setError(feedback,error);
+        }
+        reportError(error);
+      }finally{saveButton.disabled=false}
+    });
+    removeButton.addEventListener('click',async()=>{
+      if(!hasProfile)return;
+      if(!window.confirm(messages.memberConfirmRemove))return;
+      removeButton.disabled=true;
+      try{
+        const result=await requireClient().from('member_profiles').delete().eq('slot_key',slot.slotKey).select('slot_key').maybeSingle();
+        if(result.error)throw result.error;
+        const oldPhotoPath=currentPhotoPath;
+        currentPhotoPath=null;
+        hasProfile=false;
+        if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
+        form.dataset.photoPath='';
+        nameInput.value='';
+        groupInput.value=slot.groupLabel;
+        photoInput.value='';
+        removeButton.hidden=true;
+        delete form.dataset.dirty;
+        updatePreview();
+        image.hidden=true;
+        image.removeAttribute('src');
+        placeholder.hidden=false;
+        setSuccess(feedback,messages.memberRemoveSuccess);
+        await refreshPublicMembers();
+        if(oldPhotoPath){
+          await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoRemoveError);
+        }
+      }catch(error){setError(feedback,error);reportError(error)}
+      finally{removeButton.disabled=false}
+    });
+    card.append(preview,form);
+    memberEditorCleanup.set(card,()=>{
+      if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);
+    });
+    return card;
+  };
+  const loadMembers=async()=>{
+    const slots=window.cdeccMemberSlotDefinitions;
+    if(!Array.isArray(slots))throw new Error(messages.memberMigrationMissing);
+    const {data,error}=await requireClient().from('member_profiles').select('*');
+    if(error){
+      if(error.code==='42P01'||error.code==='PGRST205')throw new Error(messages.memberMigrationMissing);
+      throw error;
+    }
+    if(shouldPausePeriodicRender('members'))return;
+    const records=new Map((data||[]).map(record=>[record.slot_key,record]));
+    const panel=panels.members;
+    panel.querySelectorAll('.admin-member-editor-card').forEach(card=>memberEditorCleanup.get(card)?.());
+    panel.replaceChildren(make('p','site-admin-note',messages.memberIntro));
+    ['assembly','secondary','class'].forEach(category=>{
+      const section=make('section','admin-members-section');
+      section.append(make('h2','member-profile-title',memberGroupTitle(category)));
+      const categorySlots=slots.filter(slot=>slot.category===category);
+      if(category==='class'){
+        for(let level=1;level<=5;level++){
+          const levelSection=make('div','member-class-reps-level admin-members-level');
+          levelSection.append(make('h3','member-class-reps-level-title',messages.grades[level-1]));
+          const grid=make('div','member-class-reps-grid');
+          categorySlots.filter(slot=>slot.level===level).forEach(slot=>
+            grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey)))
+          );
+          levelSection.append(grid);
+          section.append(levelSection);
+        }
+      }else{
+        const grid=make('div',category==='assembly'?'member-profile-grid':'member-secondary-reps-grid');
+        categorySlots.forEach(slot=>grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey))));
+        section.append(grid);
+      }
+      panel.append(section);
+    });
+  };
   const loadLogs=async()=>{
     if(!client||!currentUser)return;
     const {data,error}=await client.from('admin_audit_logs_display')
@@ -1788,6 +2159,7 @@
       const entityLabel={
         suggestions:messages.proposalsTab,
         candidacies:messages.candidatesTab,
+        member_profiles:messages.memberTab,
         vote_settings:messages.voteTitle,
         authentication:french?'Authentification':'Authentication',
         'storage.objects':french?'Images':'Images'
@@ -1809,13 +2181,361 @@
     }else tables.logs.replaceChildren(make('p','site-empty-state',messages.noLogs));
     panels.logs.replaceChildren(tables.logs);
   };
+  const loadTechnicalPanel=async()=>{
+    if(!currentAccess.is_technical)throw new Error(messages.authError);
+    const panel=panels.technical;
+    const [{data:settings,error:settingsError},{data:accessList,error:accessError},{data:health,error:healthError}] = await Promise.all([
+      client.rpc('get_technical_settings'),
+      client.rpc('get_cdecc_access_list'),
+      client.functions.invoke('technical-backup',{body:{action:'health'}})
+        .catch(error=>({data:null,error}))
+    ]);
+    if(settingsError)throw settingsError;
+    if(accessError)throw accessError;
+    panel.replaceChildren(make('p','site-admin-note',messages.technicalIntro));
+    const statusSection=make('section','card technical-panel-section technical-status-section');
+    statusSection.append(make('h2','',messages.technicalSetupStatus));
+    const addStatus=(label,ok,detail='')=>{
+      const row=make('div','technical-status-row');
+      const indicator=make('span',ok?'technical-status-ok':'technical-status-pending',
+        `${ok?messages.technicalStatusEnabled:messages.technicalStatusDisabled}${detail?` · ${detail}`:''}`);
+      row.append(make('strong','',label),indicator);
+      statusSection.append(row);
+      return indicator;
+    };
+    addStatus(messages.technicalStatusDatabase,true);
+    addStatus(messages.technicalStatusFunction,!healthError&&health?.ready===true);
+    addStatus(messages.technicalStatusScheduler,settings.scheduler_secrets_configured===true);
+    const backupStatus=addStatus(
+      messages.technicalBackupsTitle,
+      settings.backup_enabled===true,
+      settings.backup_enabled===true
+        ?`${settings.backup_frequency} · ${String(settings.backup_time||'02:00').slice(0,5)}`
+        :french?'Désactivées':'Disabled'
+    );
+    panel.append(statusSection);
+
+    const settingsSection=make('section','card technical-panel-section');
+    settingsSection.append(make('h2','',messages.technicalSettingsTitle));
+    const settingsForm=make('form','admin-portal-edit-form technical-settings-form');
+    const addCheckbox=(labelText,checked)=>{
+      const label=make('label','technical-checkbox');
+      const input=document.createElement('input');
+      input.type='checkbox';
+      input.checked=checked;
+      label.append(input,make('span','',labelText));
+      settingsForm.append(label);
+      return input;
+    };
+    const addField=(labelText,type,value,options={})=>{
+      const label=make('label','technical-field');
+      label.append(make('span','',labelText));
+      const input=document.createElement('input');
+      input.type=type;
+      input.value=value??'';
+      if(options.min!==undefined)input.min=String(options.min);
+      if(options.max!==undefined)input.max=String(options.max);
+      if(options.maxLength!==undefined)input.maxLength=options.maxLength;
+      label.append(input);
+      settingsForm.append(label);
+      return input;
+    };
+    const addSelect=(labelText,values,selected)=>{
+      const label=make('label','technical-field');
+      label.append(make('span','',labelText));
+      const select=document.createElement('select');
+      values.forEach((value,index)=>{
+        const option=make('option','',messages.technicalFrequencies[index]);
+        option.value=value;
+        option.selected=value===selected;
+        select.append(option);
+      });
+      label.append(select);
+      settingsForm.append(label);
+      return select;
+    };
+    const ideasOpen=addCheckbox(messages.technicalIdeasOpen,settings.ideas_open!==false);
+    const candidaciesOpen=addCheckbox(messages.technicalCandidaciesOpen,settings.candidacies_open!==false);
+    const visuals=settings.site_visuals||{};
+    const colorKeys=['forest','deep','green','lime','paper','ink','muted','line','soft','gold'];
+    const colorLabels={
+      forest:french?'Vert forêt':'Forest',
+      deep:french?'Vert profond':'Deep green',
+      green:french?'Vert principal':'Primary green',
+      lime:french?'Vert clair':'Light green',
+      paper:french?'Fond':'Page background',
+      ink:french?'Texte principal':'Main text',
+      muted:french?'Texte secondaire':'Secondary text',
+      line:french?'Bordures':'Borders',
+      soft:french?'Fond doux':'Soft background',
+      gold:french?'Accent doré':'Gold accent'
+    };
+    settingsForm.append(make('h3','technical-subheading',messages.technicalColors));
+    const colorGrid=make('div','technical-color-grid');
+    const colorInputs={};
+    colorKeys.forEach(key=>{
+      const label=make('label','technical-color-field');
+      label.append(make('span','',colorLabels[key]));
+      const input=document.createElement('input');
+      input.type='color';
+      input.value=/^#[0-9a-f]{6}$/i.test(visuals[key]||'')?visuals[key]:'#233d33';
+      colorInputs[key]=input;
+      label.append(input);
+      colorGrid.append(label);
+    });
+    settingsForm.append(colorGrid);
+    const logoUrl=addField(messages.technicalLogo,'url',visuals.logo_url||'',{maxLength:1000});
+    const heroUrl=addField(messages.technicalHero,'url',visuals.hero_url||'',{maxLength:1000});
+    const slogan=addField(messages.technicalSlogan,'text',visuals.slogan||'Être · Faire · Agir',{maxLength:120});
+    settingsForm.append(make('h3','technical-subheading',messages.technicalBackupsTitle));
+    const backupsEnabled=addCheckbox(messages.technicalBackupsEnable,settings.backup_enabled===true);
+    const frequency=addSelect(messages.technicalFrequency,['daily','weekly','monthly'],settings.backup_frequency||'daily');
+    const backupTime=addField(messages.technicalTime,'time',settings.backup_time||'02:00');
+    const retention=addField(messages.technicalRetention,'number',settings.backup_retention||10,{min:10,max:100});
+    settingsForm.append(make('p','site-admin-note',messages.technicalBackupUnavailable));
+    const settingsFeedback=make('p','site-status');
+    settingsFeedback.hidden=true;
+    const settingsSave=make('button','primary','');
+    settingsSave.type='submit';
+    settingsSave.textContent=messages.technicalSave;
+    settingsForm.append(settingsFeedback,settingsSave);
+    settingsForm.addEventListener('input',()=>{settingsForm.dataset.dirty='true'});
+    settingsForm.addEventListener('change',()=>{settingsForm.dataset.dirty='true'});
+    settingsForm.addEventListener('submit',async event=>{
+      event.preventDefault();
+      settingsSave.disabled=true;
+      const next={
+        ideas_open:ideasOpen.checked,
+        candidacies_open:candidaciesOpen.checked,
+        site_visuals:{
+          ...visuals,
+          ...Object.fromEntries(colorKeys.map(key=>[key,colorInputs[key].value])),
+          logo_url:logoUrl.value.trim(),
+          hero_url:heroUrl.value.trim(),
+          slogan:slogan.value.trim()
+        },
+        backup_enabled:backupsEnabled.checked,
+        backup_frequency:frequency.value,
+        backup_time:backupTime.value,
+        backup_retention:Number(retention.value)
+      };
+      try{
+        const {error}=await client.rpc('update_technical_settings',{p_settings:next});
+        if(error)throw error;
+        delete settingsForm.dataset.dirty;
+        setSuccess(settingsFeedback,messages.technicalSaved);
+        const backupsActive=backupsEnabled.checked;
+        backupStatus.className=backupsActive?'technical-status-ok':'technical-status-pending';
+        backupStatus.textContent=backupsActive
+          ?`${messages.technicalStatusEnabled} · ${frequency.value} · ${backupTime.value}`
+          :`${messages.technicalStatusDisabled} · ${french?'Désactivées':'Disabled'}`;
+        await refreshPublicSiteSettings();
+      }catch(error){
+        reportError(error);
+        setError(settingsFeedback,error);
+      }finally{settingsSave.disabled=false}
+    });
+    settingsSection.append(settingsForm);
+    panel.append(settingsSection);
+
+    const accessSection=make('section','card technical-panel-section');
+    accessSection.append(
+      make('h2','',messages.technicalAccessTitle),
+      make('p','site-admin-note',messages.technicalAccessIntro)
+    );
+    const accessForm=make('form','admin-portal-edit-form technical-access-form');
+    const accessEmail=make('label','technical-field');
+    accessEmail.append(make('span','',messages.technicalEmail));
+    const emailInput=document.createElement('input');
+    emailInput.type='email';
+    emailInput.required=true;
+    emailInput.autocomplete='email';
+    emailInput.maxLength=254;
+    accessEmail.append(emailInput);
+    const accessRole=make('label','technical-field');
+    accessRole.append(make('span','',messages.technicalRole));
+    const roleSelect=document.createElement('select');
+    ['admin','technical'].forEach((value,index)=>{
+      const option=make('option','',messages.technicalRoles[index]);
+      option.value=value;
+      roleSelect.append(option);
+    });
+    accessRole.append(roleSelect);
+    const accessFeedback=make('p','site-status');
+    accessFeedback.hidden=true;
+    const accessSubmit=make('button','primary',messages.technicalAddAccess);
+    accessSubmit.type='submit';
+    accessForm.append(accessEmail,accessRole,accessFeedback,accessSubmit);
+    accessForm.addEventListener('input',()=>{accessForm.dataset.dirty='true'});
+    accessForm.addEventListener('change',()=>{accessForm.dataset.dirty='true'});
+    accessForm.addEventListener('submit',async event=>{
+      event.preventDefault();
+      accessSubmit.disabled=true;
+      try{
+        const {error}=await client.rpc('manage_cdecc_access',{
+          p_email:emailInput.value.trim(),
+          p_role:roleSelect.value
+        });
+        if(error)throw error;
+        emailInput.value='';
+        delete accessForm.dataset.dirty;
+        setSuccess(accessFeedback,messages.technicalSaved);
+        await loadTechnicalPanel();
+      }catch(error){
+        reportError(error);
+        setError(accessFeedback,error);
+      }finally{accessSubmit.disabled=false}
+    });
+    const accessTable=make('div','technical-access-list');
+    (accessList||[]).forEach(entry=>{
+      const row=make('div','technical-access-row');
+      const identity=make('div','');
+      identity.append(make('strong','',entry.email),make('span','',messages.technicalRoles[entry.role==='technical'?1:0]));
+      const controls=make('div','technical-access-actions');
+      const rowRole=document.createElement('select');
+      ['admin','technical'].forEach((value,index)=>{
+        const option=make('option','',messages.technicalRoles[index]);
+        option.value=value;
+        option.selected=value===entry.role;
+        rowRole.append(option);
+      });
+      row.addEventListener('change',()=>{row.dataset.dirty='true'});
+      const updateRole=button(messages.save,'technical-access-update');
+      updateRole.addEventListener('click',async()=>{
+        updateRole.disabled=true;
+        try{
+          const {error}=await client.rpc('manage_cdecc_access',{p_email:entry.email,p_role:rowRole.value});
+          if(error)throw error;
+          await loadTechnicalPanel();
+        }catch(error){reportError(error);setError(accessFeedback,error)}
+        finally{updateRole.disabled=false}
+      });
+      const removeAccess=button(messages.technicalRemoveAccess,'technical-access-remove');
+      removeAccess.addEventListener('click',async()=>{
+        if(!window.confirm(messages.technicalConfirmRemoveAccess))return;
+        removeAccess.disabled=true;
+        try{
+          const {error}=await client.rpc('manage_cdecc_access',{p_email:entry.email,p_role:null});
+          if(error)throw error;
+          await loadTechnicalPanel();
+        }catch(error){reportError(error);setError(accessFeedback,error)}
+        finally{removeAccess.disabled=false}
+      });
+      controls.append(rowRole,updateRole,removeAccess);
+      row.append(identity,controls);
+      accessTable.append(row);
+    });
+    if(!accessList?.length)accessTable.append(make('p','site-empty-state',messages.technicalNoAccess));
+    accessSection.append(accessForm,accessTable);
+    panel.append(accessSection);
+
+    const logsSection=make('section','card technical-panel-section');
+    logsSection.append(make('h2','',messages.technicalLogsTitle));
+    const {data:logs,error:logsError}=await client.rpc('get_technical_logs',{p_limit:300});
+    if(logsError)throw logsError;
+    if(logs?.length){
+      const table=make('table','admin-audit-table');
+      const head=document.createElement('thead');
+      const headerRow=document.createElement('tr');
+      [messages.technicalLogTime,messages.technicalLogUser,messages.technicalLogIp,
+        messages.technicalLogAction,messages.technicalLogEntity,messages.technicalLogDetails]
+        .forEach(label=>headerRow.append(make('th','',label)));
+      head.append(headerRow);
+      const body=document.createElement('tbody');
+      logs.forEach(entry=>{
+        const row=document.createElement('tr');
+        [
+          formatDate(entry.occurred_at),
+          entry.actor_email,
+          entry.actor_ip||'—',
+          entry.action,
+          entry.entity,
+          JSON.stringify(entry.details||{})
+        ].forEach(value=>row.append(make('td','',String(value||''))));
+        body.append(row);
+      });
+      table.append(head,body);
+      const wrapper=make('div','admin-audit-table-wrap');
+      wrapper.append(table);
+      logsSection.append(wrapper);
+    }else logsSection.append(make('p','site-empty-state',messages.technicalNoLogs));
+    panel.append(logsSection);
+
+    const backupsSection=make('section','card technical-panel-section');
+    backupsSection.append(make('h2','',messages.technicalBackupsList));
+    const backupFeedback=make('p','site-status');
+    backupFeedback.hidden=true;
+    const runBackup=button(messages.technicalRunBackup,'technical-backup-create','primary');
+    runBackup.addEventListener('click',async()=>{
+      runBackup.disabled=true;
+      try{
+        const {error}=await client.functions.invoke('technical-backup',{body:{action:'create'}});
+        if(error)throw error;
+        setSuccess(backupFeedback,messages.technicalBackupCreated);
+        await loadTechnicalPanel();
+      }catch(error){reportError(error);setError(backupFeedback,error)}
+      finally{runBackup.disabled=false}
+    });
+    backupsSection.append(backupFeedback,runBackup);
+    const {data:backups,error:backupsError}=await client.from('technical_backups')
+      .select('id,created_at,created_by,status,manifest,error_message')
+      .order('created_at',{ascending:false}).limit(100);
+    if(backupsError)throw backupsError;
+    const backupsList=make('div','technical-backup-list');
+    (backups||[]).forEach(backup=>{
+      const row=make('article','technical-backup-row');
+      const info=make('div','');
+      const fileCount=Array.isArray(backup.manifest)?backup.manifest.length:0;
+      info.append(
+        make('strong','',formatDate(backup.created_at)),
+        make('span','',`${backup.created_by} · ${backup.status} · ${fileCount} ${french?'fichiers':'files'}`)
+      );
+      if(backup.error_message)info.append(make('p','site-status',backup.error_message));
+      const controls=make('div','technical-backup-actions');
+      if(backup.status==='complete'){
+        const restore=button(messages.technicalRestoreBackup,'technical-backup-restore');
+        restore.addEventListener('click',async()=>{
+          if(!window.confirm(messages.technicalConfirmRestoreBackup))return;
+          restore.disabled=true;
+          try{
+            const {error}=await client.functions.invoke('technical-backup',{body:{action:'restore',id:backup.id}});
+            if(error)throw error;
+            setSuccess(backupFeedback,messages.technicalBackupRestored);
+            window.setTimeout(()=>window.location.reload(),1200);
+          }catch(error){reportError(error);setError(backupFeedback,error)}
+          finally{restore.disabled=false}
+        });
+        controls.append(restore);
+      }
+      const remove=button(messages.technicalDeleteBackup,'technical-backup-delete');
+      remove.addEventListener('click',async()=>{
+        if(!window.confirm(messages.technicalConfirmDeleteBackup))return;
+        remove.disabled=true;
+        try{
+          const {error}=await client.functions.invoke('technical-backup',{body:{action:'delete',id:backup.id}});
+          if(error)throw error;
+          setSuccess(backupFeedback,messages.technicalBackupDeleted);
+          await loadTechnicalPanel();
+        }catch(error){reportError(error);setError(backupFeedback,error)}
+        finally{remove.disabled=false}
+      });
+      controls.append(remove);
+      row.append(info,controls);
+      backupsList.append(row);
+    });
+    if(!backups?.length)backupsList.append(make('p','site-empty-state',messages.technicalNoLogs));
+    backupsSection.append(backupsList);
+    panel.append(backupsSection);
+  };
   const loadPanel=async name=>{
     try{
       state.hidden=true;
       if(name==='proposals')await loadProposals();
       else if(name==='vote')await loadVoteSettings();
       else if(name==='candidates')await loadCandidates();
+      else if(name==='members')await loadMembers();
       else if(name==='logs')await loadLogs();
+      else if(name==='technical')await loadTechnicalPanel();
     }catch(error){setError(state,error);reportError(error)}
   };
   let publicIdeasRefreshInProgress=false;
@@ -1885,6 +2605,33 @@
       grid.append(empty);
       return;
     }
+  };
+  const refreshPublicMembers=async()=>{
+    if(!client)return;
+    try{
+      const {data,error}=await client.from('member_profiles')
+        .select('slot_key,display_name,group_label,photo_path');
+      if(error)throw error;
+      const profiles=(data||[]).map(profile=>({
+        ...profile,
+        photo_url:profile.photo_path
+          ?client.storage.from('member-photos').getPublicUrl(profile.photo_path).data.publicUrl
+          :''
+      }));
+      window.cdeccApplyRemoteMembers?.(profiles);
+    }catch(error){
+      reportError(error);
+      window.cdeccSetMemberLoadError?.(messages.memberLoadError);
+    }
+  };
+  const refreshPublicSiteSettings=async()=>{
+    if(!client)return;
+    try{
+      const {data,error}=await client.from('site_public_settings')
+        .select('ideas_open,candidacies_open,site_visuals').single();
+      if(error)throw error;
+      window.cdeccApplyRemoteSiteSettings?.(data);
+    }catch(error){reportError(error)}
   };
   let publicCandidatesRefreshRequest=0;
   const refreshPublicCandidates=async()=>{
@@ -1995,7 +2742,8 @@
   });
   tabs.addEventListener('keydown',event=>{
     if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-    const items=Array.from(tabs.querySelectorAll('[role=tab]'));
+    const items=Array.from(tabs.querySelectorAll('[role=tab]')).filter(item=>!item.hidden);
+    if(!items.length)return;
     const index=items.indexOf(document.activeElement);
     const next=event.key==='Home'?0:event.key==='End'?items.length-1:
       (index+(event.key==='ArrowRight'?1:-1)+items.length)%items.length;
@@ -2008,18 +2756,56 @@
     if(!panels[currentTab]||hasAdminEditsInProgress(currentTab))return;
     adminRefreshInFlight=true;
     periodicRefreshTab=currentTab;
-    try{await loadPanel(currentTab)}
+    try{
+      const {data,error}=await client.rpc('get_cdecc_access');
+      if(error)throw error;
+      if(data?.is_admin!==true){
+        await client.auth.signOut();
+        return;
+      }
+      currentAccess={is_admin:true,is_technical:data.is_technical===true};
+      const technicalTab=tabs.querySelector('[data-tab="technical"]');
+      if(technicalTab)technicalTab.hidden=!currentAccess.is_technical;
+      if(!currentAccess.is_technical&&currentTab==='technical'){
+        switchTab('proposals');
+        return;
+      }
+      await loadPanel(currentTab);
+    }
     catch(error){setError(authError,error);reportError(error)}
     finally{periodicRefreshTab=null;adminRefreshInFlight=false}
   };
   const updateSignedIn=async(session,recordSignIn=false)=>{
     const user=session?.user;
-    const isGmail=user&&/^[^@\s]+@gmail[.]com$/i.test(user.email||'')&&user.app_metadata?.provider==='google';
-    if(user&&!isGmail){
+    if(user&&user.app_metadata?.provider!=='google'){
       await client.auth.signOut();
       setError(authError,new Error(messages.authError));
       currentUser=null;
-    }else currentUser=user||null;
+      currentAccess={is_admin:false,is_technical:false};
+    }else if(user){
+      try{
+        const {data,error}=await client.rpc('get_cdecc_access');
+        if(error)throw error;
+        if(data?.is_admin!==true){
+          await client.auth.signOut();
+          setError(authError,new Error(messages.authError));
+          currentUser=null;
+          currentAccess={is_admin:false,is_technical:false};
+        }else{
+          currentUser=user;
+          currentAccess={is_admin:true,is_technical:data.is_technical===true};
+        }
+      }catch(error){
+        reportError(error);
+        setError(authError,new Error(messages.authError));
+        currentUser=null;
+        currentAccess={is_admin:false,is_technical:false};
+        await client.auth.signOut();
+      }
+    }else{
+      currentUser=null;
+      currentAccess={is_admin:false,is_technical:false};
+    }
     authIdentity.textContent=currentUser?.email||'';
     signIn.hidden=!ready||Boolean(currentUser);
     signOut.hidden=!currentUser;
@@ -2027,6 +2813,8 @@
     loginRequired.hidden=ready&&Boolean(currentUser);
     tabs.hidden=!currentUser;
     panelNodes.hidden=!currentUser;
+    const technicalTab=tabs.querySelector('[data-tab="technical"]');
+    if(technicalTab)technicalTab.hidden=!currentAccess.is_technical;
     securityNotice.hidden=!ready;
     if(!ready){
       loginTitle.textContent=messages.configMissing;
@@ -2043,7 +2831,9 @@
         }
         await loadPanel(currentTab);
         await refreshPublicIdeas();
+        await refreshPublicMembers();
         await refreshPublicCandidates();
+        await refreshPublicSiteSettings();
       }catch(error){setError(authError,error);reportError(error)}
     }
   };
@@ -2059,8 +2849,13 @@
   }else{
     loginRequired.hidden=false;
     void refreshPublicIdeas();
+    void refreshPublicSiteSettings();
     const publicIdeasRefreshInterval=window.setInterval(()=>{
-      if(!document.hidden)void refreshPublicIdeas();
+      if(!document.hidden){
+        void refreshPublicIdeas();
+        void refreshPublicMembers();
+        void refreshPublicSiteSettings();
+      }
     },30000);
     window.addEventListener('beforeunload',()=>window.clearInterval(publicIdeasRefreshInterval));
     client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>updateSignedIn(session,event==='SIGNED_IN'),0)});
@@ -2073,7 +2868,9 @@
       }
       if(authCallbackError){showAuthCallbackError();cleanAuthCallbackUrl()}
       updateSignedIn(data.session);
+      refreshPublicSiteSettings();
       refreshPublicIdeas();
+      refreshPublicMembers();
       refreshPublicCandidates();
       refreshPublicVoteSettings();
     }).catch(error=>{setError(authError,error);reportError(error)});
@@ -2089,6 +2886,7 @@
     if(!pageButton)return;
     const page=pageButton.dataset.page;
     if(page==='projects')window.setTimeout(refreshPublicIdeas,0);
+    if(page==='people')window.setTimeout(refreshPublicMembers,0);
     if(page==='vote')window.setTimeout(refreshPublicCandidates,0);
   });
   window.addEventListener('cdecc:language-change',()=>{

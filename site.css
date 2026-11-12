@@ -329,12 +329,15 @@
 .member-profile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .member-profile-card{display:grid;justify-items:center;align-content:start;gap:10px;min-width:0;padding:16px;border:1px solid var(--line);border-radius:24px;background:var(--paper);text-align:center}
 .member-profile-photo-placeholder{display:grid;width:min(100%,240px);aspect-ratio:1/1;place-items:center;padding:14px;border:1px dashed var(--line);border-radius:20px;background:var(--soft);color:var(--muted);font-size:13px;font-weight:700}
+.member-profile-photo{display:block;width:min(100%,240px);aspect-ratio:1/1;border-radius:20px;object-fit:cover}
+.member-profile-photo[hidden],.member-profile-photo-placeholder[hidden]{display:none}
 .member-profile-name{margin:2px 0 0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,2vw,24px);font-weight:600;line-height:1.2;overflow-wrap:anywhere}
 .member-profile-role{margin:0;color:var(--forest);font-size:12px;font-weight:850;letter-spacing:.08em;line-height:1.4;overflow-wrap:anywhere}
 .member-secondary-reps{display:grid;gap:18px;margin:0 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
 .member-secondary-reps-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .member-secondary-rep-card{padding:12px;border-radius:20px}
 .member-secondary-rep-card .member-profile-photo-placeholder{width:100%;border-radius:16px;font-size:12px}
+.member-secondary-rep-card .member-profile-photo{width:100%;border-radius:16px}
 .member-secondary-rep-card .member-profile-name{font-size:clamp(15px,1.5vw,19px)}
 .member-secondary-rep-card .member-profile-role{font-size:11px}
 .member-class-reps-section{display:grid;gap:18px;margin:0 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
@@ -343,6 +346,16 @@
 .member-class-reps-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .member-class-rep-card{padding:12px;border-radius:20px}
 .member-class-rep-card .member-profile-photo-placeholder{width:100%;border-radius:16px;font-size:12px}
+.member-class-rep-card .member-profile-photo{width:100%;border-radius:16px}
+.admin-members-section{display:grid;gap:16px}
+.admin-members-section>.member-profile-title{margin:8px 0 0}
+.admin-members-level{margin-top:4px}
+.admin-member-editor-card{display:grid;align-content:start;gap:2px;min-width:0}
+.member-admin-preview{width:100%;height:100%}
+.admin-member-edit-form{margin:0;padding:12px}
+.admin-member-edit-form input[type="file"]{width:100%;max-width:100%;font-size:11px}
+.admin-member-edit-form .admin-member-editor-actions{display:flex;flex-wrap:wrap;gap:8px}
+.admin-member-edit-form .admin-member-editor-actions button{min-height:40px;padding:8px 11px;font-size:11px}
 .member-class-rep-card .member-profile-name{font-size:clamp(15px,1.5vw,19px)}
 .member-class-rep-card .member-profile-role{font-size:11px}
 .member-group-section{padding:17px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.55)}
@@ -719,3 +732,35 @@ body[data-theme="dark"] .custom-palette-editor{border-color:var(--line);backgrou
 }
 @media(max-width:1200px){.site-header{position:relative!important;top:auto!important}}
 @media(max-width:900px){.charter-search-active .charter-search-anchor{top:calc(164px + env(safe-area-inset-top));right:12px}}
+
+.technical-panel-section{display:grid;gap:14px;margin:0 0 16px;padding:clamp(16px,2.4vw,24px)}
+.technical-panel-section>h2,.technical-subheading{margin:0;color:var(--forest)}
+.technical-panel-section>p{margin:0}
+.technical-status-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:12px}
+.technical-status-ok,.technical-status-pending{font-weight:800;text-align:right}
+.technical-status-ok{color:var(--forest)}
+.technical-status-pending{color:#8a4c24}
+.technical-subheading{margin-top:8px;font-size:15px}
+.technical-settings-form,.technical-access-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.technical-checkbox{display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:13px;font-weight:750}
+.technical-checkbox input{width:18px;height:18px;accent-color:var(--forest)}
+.technical-field{display:grid;gap:6px;color:var(--ink);font-size:12px;font-weight:800}
+.technical-field input,.technical-field select,.technical-access-row select{width:100%;min-width:0;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.technical-color-grid{display:grid;grid-column:1/-1;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px}
+.technical-color-field{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:11px;font-weight:750}
+.technical-color-field input{width:38px;height:32px;padding:2px;border:1px solid var(--line);border-radius:7px;background:#fff}
+.technical-settings-form>h3,.technical-settings-form>.site-admin-note,.technical-settings-form>.site-status,.technical-settings-form>button{grid-column:1/-1}
+.technical-access-list,.technical-backup-list{display:grid;gap:9px}
+.technical-access-row,.technical-backup-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.technical-access-row>div:first-child,.technical-backup-row>div:first-child{display:grid;gap:4px;min-width:0;overflow-wrap:anywhere}
+.technical-access-row>div:first-child span,.technical-backup-row>div:first-child span{color:var(--muted);font-size:11px}
+.technical-access-actions,.technical-backup-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+.technical-access-actions button,.technical-backup-actions button{padding:8px 10px;font-size:11px}
+.technical-access-actions select{width:auto;min-width:145px}
+.technical-backup-row .site-status{margin:0}
+.admin-portal-tab[hidden]{display:none}
+@media(max-width:650px){
+  .technical-settings-form,.technical-access-form{grid-template-columns:1fr}
+  .technical-access-row,.technical-backup-row{align-items:flex-start;flex-direction:column}
+  .technical-access-actions,.technical-backup-actions{width:100%;justify-content:flex-start}
+}

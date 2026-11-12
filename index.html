@@ -25,7 +25,7 @@
 .primary,.secondary,.outline,.team,.lang-flag{transition:transform .18s ease,background-color .18s ease,color .18s ease,border-color .18s ease}
 .primary:hover,.secondary:hover,.outline:hover,.team:hover,.lang-flag:hover{transform:translateY(-2px)}
 .primary:active,.secondary:active,.outline:active,.team:active,.lang-flag:active{transform:translateY(0)}
-</style><link rel="stylesheet" href="site.css?v=20261111-class-rep-colors"></head>
+</style><link rel="stylesheet" href="site.css?v=20261113-technical-panel"></head>
 <body>
 <header class="site-header">
   <div class="top">
@@ -172,7 +172,7 @@ updateSuggestionBody();
 (()=>{
   const track=document.querySelector('.slogan-marquee');
   if(!track)return;
-  const phrase=Array.from(track.textContent);
+  let phrase=Array.from(track.textContent);
   let glyphs=[],positions=[],cycleWidth=0,offset=0,lastTime=null;
   const measure=()=>{
     const previous=cycleWidth;
@@ -203,6 +203,12 @@ updateSuggestionBody();
       cycleWidth+=glyph.getBoundingClientRect().width;
     });
     if(previous)offset=offset/previous*cycleWidth;
+  };
+  window.cdeccSetSiteSlogan=value=>{
+    const text=`${String(value||'').trim()} · `;
+    phrase=Array.from(text);
+    track.parentElement.setAttribute('aria-label',text.replace(/ · $/,''));
+    measure();
   };
   const move=time=>{
     if(lastTime!==null&&cycleWidth)offset=(offset+(time-lastTime)*48/1000)%cycleWidth;
@@ -342,4 +348,4 @@ updateSuggestionBody();
     }
   });
 })();
-</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="site.js?v=20261111-restored-class-rep-diagram"></script><script src="admin-portal.js?v=20261111-candidate-roles"></script></body></html>
+</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="site.js?v=20261113-technical-panel"></script><script src="admin-portal.js?v=20261113-technical-panel"></script></body></html>

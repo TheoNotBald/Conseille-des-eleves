@@ -712,13 +712,39 @@
   const priorities=['normal','yellow','red'];
   const priorityOrder={normal:0,yellow:1,red:2};
   const priorityReasons=new Set(['priorityManual','priorityReasonSchool','priorityReasonUnclear','priorityReasonOffTopic','priorityReasonLanguage']);
-  const profanityTerms=new Set((
+  const normalizeModerationText=value=>String(value||'')
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase()
+    .replace(/[аесорхуіјкмтвнαβϲεηικμνορτυχω]/g,character=>({
+      'а':'a','е':'e','с':'c','о':'o','р':'p','х':'x','у':'u','і':'i','ј':'j','к':'k','м':'m','т':'t','в':'b','н':'h',
+      'α':'a','β':'b','ϲ':'c','ε':'e','η':'h','ι':'i','κ':'k','μ':'m','ν':'n','ο':'o','ρ':'p','τ':'t','υ':'u','χ':'x','ω':'o'
+    })[character])
+    .replace(/[0123456789]/g,character=>({'0':'o','1':'i','2':'z','3':'e','4':'a','5':'s','6':'g','7':'t','8':'b','9':'g'})[character]);
+  const canonicalModerationWord=value=>value.replace(/(.)\1+/g,'$1');
+  const baseProfanityTerms=(
     'fuck fucking fucked shit bullshit bitch bastard asshole assholes damn dick dumbass piss crap motherfucker '+
-    'merde putain pute con connard connasse salope salaud enculer encule foutre bordel chiant chier'
-  ).split(/\s+/));
-  const normalizedWords=value=>String(value||'')
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase()
-    .match(/[a-z0-9]+/g)||[];
+    'cunt twat wanker prick cock pussy whore slut douche arse arsehole bollocks '+
+    'merde putain pute con connard connasse salope salaud enculer encule foutre bordel chiant chier '+
+    'nigger nigga faggot fag dyke kike spic chink gook wetback raghead retard tranny coon bougnoule tapette pede '+
+    'natehiggers'
+  ).split(/\s+/).map(canonicalModerationWord);
+  const profanityTerms=new Set(baseProfanityTerms);
+  baseProfanityTerms.filter(term=>term.length>=4).forEach(term=>{
+    for(let index=0;index<term.length;index++){
+      profanityTerms.add(canonicalModerationWord(term.slice(0,index)+term.slice(index+1)));
+    }
+  });
+  const normalizedWords=value=>{
+    const words=normalizeModerationText(value).match(/[a-z0-9]+/g)||[];
+    const candidates=[];
+    for(let start=0;start<words.length;start++){
+      for(let length=1;length<=16&&start+length<=words.length;length++){
+        candidates.push(canonicalModerationWord(words.slice(start,start+length).join('')));
+      }
+    }
+    return candidates;
+  };
   const classifySuggestion=suggestion=>{
     const words=normalizedWords(`${suggestion.title} ${suggestion.details}`);
     if(words.some(word=>profanityTerms.has(word)))return {priority:'red',reason:'priorityReasonLanguage'};
@@ -1388,6 +1414,88 @@
   };
   const renderGovernancePages=()=>{
     renderCharter();
+    const memberSlotDefinitions=[
+      {slotKey:'assembly-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('rolePresident')},
+      {slotKey:'assembly-vice-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleVicePresident')},
+      {slotKey:'assembly-secretary',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleSecretary')},
+      {slotKey:'assembly-treasurer',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleTreasurer')},
+      {slotKey:'assembly-administrative-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleHighSpokesperson')},
+      {slotKey:'assembly-student-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleLowSpokesperson')},
+      ...Array.from({length:5},(_,index)=>({
+        slotKey:`secondary-${index+1}`,
+        category:'secondary',
+        level:index+1,
+        sectionLabel:text('memberSecondaryRepsTitle'),
+        groupLabel:text(`level${['One','Two','Three','Four','Five'][index]}`)
+      })),
+      ...Array.from({length:5},(_,levelIndex)=>Array.from({length:5},(_,representativeIndex)=>({
+        slotKey:`class-${levelIndex+1}-${representativeIndex+1}`,
+        category:'class',
+        level:levelIndex+1,
+        representativeIndex:representativeIndex+1,
+        sectionLabel:text('classreps'),
+        levelLabel:text(`level${['One','Two','Three','Four','Five'][levelIndex]}`),
+        groupLabel:text('classRepresentative')
+      }))).flat()
+    ];
+    window.cdeccMemberSlotDefinitions=memberSlotDefinitions;
+    const makeMemberProfileCard=(slot,extraClass='')=>{
+      const card=make('article',`member-profile-card${extraClass?` ${extraClass}`:''}`);
+      card.dataset.memberSlot=slot.slotKey;
+      card.dataset.memberDefaultGroup=slot.groupLabel;
+      const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
+      photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
+      const image=document.createElement('img');
+      image.className='member-profile-photo';
+      image.alt='';
+      image.hidden=true;
+      image.addEventListener('error',()=>{
+        image.hidden=true;
+        image.removeAttribute('src');
+        photoPlaceholder.hidden=false;
+      });
+      card.append(
+        photoPlaceholder,
+        image,
+        make('h3','member-profile-name',text('memberNamePlaceholder')),
+        make('p','member-profile-role',slot.groupLabel)
+      );
+      return card;
+    };
+    const applyMemberProfiles=records=>{
+      const profiles=new Map((records||[]).map(record=>[record.slot_key,record]));
+      document.querySelectorAll('[data-member-slot]').forEach(card=>{
+        const profile=profiles.get(card.dataset.memberSlot);
+        const name=card.querySelector('.member-profile-name');
+        const group=card.querySelector('.member-profile-role');
+        const image=card.querySelector('.member-profile-photo');
+        const placeholder=card.querySelector('.member-profile-photo-placeholder');
+        name.textContent=profile?.display_name||text('memberNamePlaceholder');
+        group.textContent=profile?.group_label||card.dataset.memberDefaultGroup||'';
+        if(profile?.photo_url){
+          image.src=profile.photo_url;
+          image.hidden=false;
+          placeholder.hidden=true;
+        }else{
+          image.removeAttribute('src');
+          image.hidden=true;
+          placeholder.hidden=false;
+        }
+      });
+      const loadStatus=document.querySelector('.member-load-status');
+      if(loadStatus){
+        loadStatus.hidden=true;
+        loadStatus.textContent='';
+      }
+    };
+    window.cdeccApplyRemoteMembers=applyMemberProfiles;
+    window.cdeccSetMemberLoadError=message=>{
+      const loadStatus=document.querySelector('.member-load-status');
+      if(!loadStatus)return;
+      loadStatus.textContent=message;
+      loadStatus.hidden=false;
+      loadStatus.dataset.kind='error';
+    };
 
     const candidateIntro=make('article','candidate-intro-blob');
     candidateIntro.append(
@@ -1677,61 +1785,36 @@
     memberStructure.append(assemblyStructure,classRepresentativePanel);
     const memberProfiles=make('section','member-profile-section');
     memberProfiles.append(make('h2','member-profile-title',text('memberProfilesTitle')));
+    const memberLoadStatus=make('p','site-status member-load-status');
+    memberLoadStatus.hidden=true;
+    memberLoadStatus.setAttribute('role','status');
+    memberLoadStatus.setAttribute('aria-live','polite');
+    memberProfiles.append(memberLoadStatus);
     const memberProfileGrid=make('div','member-profile-grid');
-    [
-      'rolePresident',
-      'roleVicePresident',
-      'roleSecretary',
-      'roleTreasurer',
-      'roleHighSpokesperson',
-      'roleLowSpokesperson'
-    ].forEach(roleKey=>{
-      const card=make('article','member-profile-card');
-      const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
-      photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
-      const name=make('h3','member-profile-name',text('memberNamePlaceholder'));
-      const role=make('p','member-profile-role',text(roleKey));
-      card.append(photoPlaceholder,name,role);
-      memberProfileGrid.append(card);
-    });
+    memberSlotDefinitions.filter(slot=>slot.category==='assembly')
+      .forEach(slot=>memberProfileGrid.append(makeMemberProfileCard(slot)));
     memberProfiles.append(memberProfileGrid);
     const secondaryRepsSection=make('section','member-secondary-reps');
     secondaryRepsSection.append(make('h3','member-profile-title',text('memberSecondaryRepsTitle')));
     const secondaryRepsGrid=make('div','member-secondary-reps-grid');
-    ['levelOne','levelTwo','levelThree','levelFour','levelFive'].forEach(levelKey=>{
-      const card=make('article','member-profile-card member-secondary-rep-card');
-      const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
-      photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
-      card.append(
-        photoPlaceholder,
-        make('h4','member-profile-name',text('memberNamePlaceholder')),
-        make('p','member-profile-role',text(levelKey))
-      );
-      secondaryRepsGrid.append(card);
-    });
+    memberSlotDefinitions.filter(slot=>slot.category==='secondary')
+      .forEach(slot=>secondaryRepsGrid.append(makeMemberProfileCard(slot,'member-secondary-rep-card')));
     secondaryRepsSection.append(secondaryRepsGrid);
     const classRepresentativeSection=make('section','member-class-reps-section');
     classRepresentativeSection.append(
       make('h3','member-profile-title',text('classreps'))
     );
-    ['levelOne','levelTwo','levelThree','levelFour','levelFive'].forEach(levelKey=>{
+    for(let level=1;level<=5;level++){
+      const levelKey=`level${['One','Two','Three','Four','Five'][level-1]}`;
       const levelGroup=make('div','member-class-reps-level');
       levelGroup.append(make('h4','member-class-reps-level-title',text(levelKey)));
       const representatives=make('div','member-class-reps-grid');
-      for(let representativeIndex=0;representativeIndex<5;representativeIndex++){
-        const card=make('article','member-profile-card member-class-rep-card');
-        const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
-        photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
-        card.append(
-          photoPlaceholder,
-          make('h5','member-profile-name',text('memberNamePlaceholder')),
-          make('p','member-profile-role',text('classRepresentative'))
-        );
-        representatives.append(card);
-      }
+      memberSlotDefinitions
+        .filter(slot=>slot.category==='class'&&slot.level===level)
+        .forEach(slot=>representatives.append(makeMemberProfileCard(slot,'member-class-rep-card')));
       levelGroup.append(representatives);
       classRepresentativeSection.append(levelGroup);
-    });
+    }
     people.replaceChildren(
       makePageHeading(text('navMembers'),text('peopleTitle'),text('peopleText')),
       memberStructure,
@@ -2725,6 +2808,72 @@
     document.body.classList.toggle('charter-search-active',charterActive);
     if(charterActive)closeGlobalSearch(false);
   };
+  window.cdeccApplyRemoteSiteSettings=settings=>{
+    if(!settings||typeof settings!=='object')return;
+    const visuals=settings.site_visuals&&typeof settings.site_visuals==='object'?settings.site_visuals:{};
+    const colorVariables={
+      forest:'forest',deep:'deep',green:'green',lime:'lime',paper:'paper',
+      ink:'ink',muted:'muted',line:'line',soft:'soft',gold:'gold'
+    };
+    Object.entries(colorVariables).forEach(([key,variable])=>{
+      if(/^#[0-9a-f]{6}$/i.test(visuals[key]||'')){
+        document.documentElement.style.setProperty(`--${variable}`,visuals[key]);
+      }
+    });
+    const logo=document.querySelector('.branding-logo img');
+    if(logo){
+      const logoUrl=validPublicImageUrl(visuals.logo_url);
+      logo.src=logoUrl||'school-logo.jpg';
+    }
+    const hero=document.querySelector('.home-hero');
+    const heroUrl=validPublicImageUrl(visuals.hero_url);
+    if(hero){
+      hero.style.backgroundImage=heroUrl
+        ?`linear-gradient(90deg,rgba(14,35,29,.24),rgba(14,35,29,.02)),url("${heroUrl.replace(/["\\\n\r]/g,'')}")`
+        :'';
+      hero.classList.toggle('has-technical-image',Boolean(heroUrl));
+    }
+    if(typeof visuals.slogan==='string'&&visuals.slogan.trim()){
+      window.cdeccSetSiteSlogan?.(visuals.slogan.trim());
+    }
+    const setFormOpen=(form,isOpen,closedMessage)=>{
+      if(!form)return;
+      form.querySelectorAll('input,textarea,select,button[type="submit"]').forEach(control=>{
+        control.disabled=!isOpen;
+      });
+      let note=form.querySelector('.site-remote-closed-note');
+      if(!isOpen){
+        if(!note){
+          note=document.createElement('p');
+          note.className='site-admin-note site-remote-closed-note';
+          note.setAttribute('role','status');
+          form.append(note);
+        }
+        note.textContent=closedMessage;
+        note.hidden=false;
+      }else if(note){
+        note.hidden=true;
+      }
+    };
+    setFormOpen(
+      participationForm,
+      settings.ideas_open!==false,
+      document.documentElement.lang==='en'?'Suggestion submissions are temporarily closed.':'Les propositions sont temporairement fermées.'
+    );
+    setFormOpen(
+      document.querySelector('.candidate-form'),
+      settings.candidacies_open!==false,
+      document.documentElement.lang==='en'?'Candidacy submissions are temporarily closed.':'Les candidatures sont temporairement fermées.'
+    );
+  };
+  const validPublicImageUrl=value=>{
+    if(typeof value!=='string'||!value.trim())return '';
+    try{
+      const url=new URL(value);
+      return url.protocol==='https:'?url.href:'';
+    }catch{return ''}
+  };
+
   updateGlobalSearchAvailability();
   new MutationObserver(updateGlobalSearchAvailability).observe(document.querySelector('main'),{
     subtree:true,attributes:true,attributeFilter:['class']
