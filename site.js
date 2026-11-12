@@ -600,6 +600,9 @@
     adminAccessTitle:'Administration',
     adminAccessText:'Ouvre les outils de gestion du site.',
     adminAccessButton:'Ouvrir la version admin',
+    technicalAccessTitle:'Espace technique',
+    technicalAccessText:'Gère les réglages techniques dans un portail distinct, avec un accès Google réservé.',
+    technicalAccessButton:'Ouvrir le panneau technique',
     legalTitle:'Légal',
     legalText:'Les renseignements juridiques doivent être complétés et approuvés par l’école avant publication.',
     legalPrivacy:'Confidentialité et renseignements personnels',
@@ -685,6 +688,9 @@
     adminAccessTitle:'Administration',
     adminAccessText:'Open the site management tools.',
     adminAccessButton:'Open admin version',
+    technicalAccessTitle:'Technical access',
+    technicalAccessText:'Manage technical settings in a separate portal with restricted Google access.',
+    technicalAccessButton:'Open Technical Panel',
     legalTitle:'Legal',
     legalText:'Legal information must be completed and approved by the school before publication.',
     legalPrivacy:'Privacy and personal information',
@@ -1171,12 +1177,15 @@
   voteTeamDetail.id='page-vote-team-detail';
   const settings=make('section','page settings-page');
   settings.id='page-settings';
-  main.append(elections,resources,vote,voteTeamDetail,settings);
+  const technicalPage=make('section','page technical-page');
+  technicalPage.id='page-technical';
+  main.append(elections,resources,vote,voteTeamDetail,settings,technicalPage);
   ['elections','resources','vote'].forEach(page=>{
     if(!pageNames.includes(page))pageNames.push(page);
   });
   if(!pageNames.includes('vote-team-detail'))pageNames.push('vote-team-detail');
   if(!pageNames.includes('settings'))pageNames.push('settings');
+  if(!pageNames.includes('technical'))pageNames.push('technical');
   let selectedVoteTeam='';
 
   const makeInfoCard=(titleKey,descriptionKey,icon='•')=>{
@@ -2237,6 +2246,8 @@
   settingsStatus.setAttribute('role','status');
   settingsStatus.setAttribute('aria-live','polite');
   const languageButton=document.getElementById('lang');
+  const technicalEntry=button(text('technicalAccessButton'),'admin-entry technical-entry');
+  technicalEntry.dataset.page='technical';
   const renderSettings=()=>{
     const paletteCard=make('section','card settings-card');
     paletteCard.append(make('h2','',text('paletteTitle')));
@@ -2306,17 +2317,29 @@
       make('p','',text('adminAccessText')),
       adminEntry
     );
+    const technicalAccessCard=make('section','card settings-card');
+    technicalAccessCard.append(
+      make('h2','',text('technicalAccessTitle')),
+      make('p','',text('technicalAccessText')),
+      technicalEntry
+    );
     settings.replaceChildren(
       makePageHeading(text('navSettings'),text('settingsTitle'),text('settingsIntro')),
       paletteCard,
       appearanceCard,
       languageCard,
       adminCard,
+      technicalAccessCard,
       settingsStatus
     );
     if(preferencesLoadError)setStatus(settingsStatus,preferencesLoadError,'error');
   };
   renderSettings();
+  if(new URLSearchParams(window.location.search).get('portal')==='technical'){
+    const hero=document.querySelector('.home-hero');
+    if(hero)hero.hidden=true;
+    window.showPage('technical');
+  }
   const savePreferences=()=>{
     preferences.updatedAt=Date.now();
     applyPreferences();

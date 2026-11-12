@@ -12,13 +12,14 @@
     signOut:'Se déconnecter',
     authError:'La connexion n’a pas pu être vérifiée.',
     loginEyebrow:'Espace d’administration',
-    loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer le site. Le Panneau technique se trouve dans les onglets de cette page, après connexion.',
+    loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer les propositions, le vote, les candidatures et les membres.',
     loginHelp:'Le portail est réservé à l’administration. Ne partagez pas votre session.',
     configDescription:'Le portail sera disponible après la configuration de la connexion Supabase.',
     signupDisabled:'Supabase bloque les nouvelles inscriptions. Dans Supabase, ouvrez Authentication → Sign In / Providers (ou Settings), activez « Allow new users to sign up », puis réessayez.',
     loginDenied:'Ce compte Google n’a pas le rôle technique. Dans Supabase SQL Editor, exécutez la requête de configuration du premier responsable technique indiquée dans SUPABASE_SETUP.md, avec cette adresse Google exacte, puis actualisez.',
+    adminLoginDenied:'Ce compte Google n’a pas accès au portail administratif. Demandez à une personne responsable technique de vous attribuer le rôle Administration.',
     accessCheckFailed:'Google a confirmé votre connexion, mais Supabase n’a pas pu vérifier votre rôle. Vérifiez que la migration 20261113010000_technical_control_panel.sql a été exécutée dans le bon projet, puis réessayez.',
-    tabs:['Proposition','Vote','Candidature','Membres','Journaux','Panneau technique'],
+    tabs:['Proposition','Vote','Candidature','Membres','Journaux'],
     memberTab:'Membres',
     memberIntro:'Ajoutez les personnes choisies, leur photo et leur groupe. Les photos et les fiches sont visibles publiquement sur la page Membres.',
     memberAssemblyTitle:'Membres de l’Assemblée citoyenne',
@@ -129,7 +130,7 @@
     technicalSave:'Enregistrer les réglages',
     technicalSaved:'Réglages techniques enregistrés.',
     technicalAccessTitle:'Accès Google autorisés',
-    technicalAccessIntro:'Les comptes techniques ont accès aux deux portails. Les comptes administrateurs accèdent au portail habituel seulement.',
+    technicalAccessIntro:'Les rôles techniques et administratifs sont distincts. Ce portail technique ne donne pas accès au portail administratif.',
     technicalEmail:'Adresse du compte Google',
     technicalRole:'Rôle',
     technicalRoles:['Administration','Administration technique'],
@@ -172,13 +173,14 @@
     signOut:'Sign out',
     authError:'Could not verify the sign-in.',
     loginEyebrow:'Administration portal',
-    loginDescription:'Sign in with an authorized Google account to manage the site. The Technical Panel appears as a tab on this page after sign-in.',
+    loginDescription:'Sign in with an authorized Google account to manage proposals, voting, candidacies, and members.',
     loginHelp:'This portal is for administrators. Do not share your signed-in session.',
     configDescription:'The portal will be available after Supabase sign-in is configured.',
     signupDisabled:'Supabase is blocking new sign-ups. In Supabase, open Authentication → Sign In / Providers (or Settings), enable “Allow new users to sign up,” then try again.',
     loginDenied:'This Google account does not have the technical role. In Supabase SQL Editor, run the first technical administrator setup query from SUPABASE_SETUP.md with this exact Google email, then refresh.',
+    adminLoginDenied:'This Google account cannot access the administration portal. Ask a technical administrator to assign the Administrator role.',
     accessCheckFailed:'Google confirmed your sign-in, but Supabase could not check your role. Confirm that migration 20261113010000_technical_control_panel.sql ran in the correct project, then try again.',
-    tabs:['Proposals','Vote','Candidacies','Members','Logs','Technical Panel'],
+    tabs:['Proposals','Vote','Candidacies','Members','Logs'],
     memberTab:'Members',
     memberIntro:'Add selected people, their photos, and their group. Photos and profiles are publicly visible on the Members page.',
     memberAssemblyTitle:'Student Assembly members',
@@ -289,7 +291,7 @@
     technicalSave:'Save technical settings',
     technicalSaved:'Technical settings saved.',
     technicalAccessTitle:'Authorized Google accounts',
-    technicalAccessIntro:'Technical accounts can use both portals. Administrator accounts can use the regular portal only.',
+    technicalAccessIntro:'Technical and administrator roles are separate. This technical portal does not grant access to the regular administration portal.',
     technicalEmail:'Google account email',
     technicalRole:'Role',
     technicalRoles:['Administrator','Technical administrator'],
@@ -387,7 +389,7 @@
   const tabs=make('div','admin-portal-tabs');
   tabs.setAttribute('role','tablist');
   tabs.setAttribute('aria-label',messages.title);
-  const panelNames=['proposals','vote','candidates','members','logs','technical'];
+  const panelNames=['proposals','vote','candidates','members','logs'];
   const tabCounts=Object.fromEntries(panelNames.map(name=>[name,0]));
   const panels=Object.fromEntries(panelNames.map(name=>[name,make('section','admin-portal-panel')]));
   const panelNodes=make('div','admin-portal-panels');
@@ -466,8 +468,59 @@
   loginRequired.append(loginIntro,loginActions);
   shell.append(tabs,heading,securityNotice,authBar,state,loginRequired,panelNodes);
   admin.replaceChildren(shell);
-  const client=ready?window.supabase.createClient(config.url,config.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}):null;
+  const technicalPortalRequested=new URLSearchParams(window.location.search).get('portal')==='technical';
+  const client=ready?window.supabase.createClient(config.url,config.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:!technicalPortalRequested}}):null;
+  const technicalClient=ready?window.supabase.createClient(config.url,config.anonKey,{
+    auth:{
+      persistSession:true,
+      autoRefreshToken:true,
+      detectSessionInUrl:technicalPortalRequested,
+      storageKey:'cdecc-technical-auth'
+    }
+  }):null;
   window.cdeccSupabase=client;
+  const technicalPage=document.getElementById('page-technical');
+  const technicalShell=make('div','admin-portal technical-portal');
+  const technicalHeading=make('header','admin-portal-heading');
+  technicalHeading.append(
+    make('div','eyebrow','CDECC'),
+    make('h1','',french?'Panneau technique':'Technical Panel'),
+    make('p','',french?'Portail technique distinct de l’administration du site.':'Technical portal, separate from site administration.')
+  );
+  const technicalBack=make('button','outline',french?'Retour aux paramètres':'Back to Settings');
+  technicalBack.type='button';
+  technicalBack.dataset.page='settings';
+  const technicalAuthBar=make('div','admin-portal-auth');
+  technicalAuthBar.hidden=true;
+  const technicalIdentity=make('span','admin-portal-identity');
+  const technicalSignOut=button(french?'Se déconnecter':'Sign out','technical-sign-out');
+  technicalAuthBar.append(technicalIdentity,technicalSignOut);
+  const technicalLogin=make('div','admin-portal-login');
+  const technicalLoginIntro=make('div','admin-portal-login-intro');
+  const technicalLoginIcon=make('span','admin-portal-login-icon','T');
+  technicalLoginIcon.setAttribute('aria-hidden','true');
+  const technicalLoginCopy=make('div','admin-portal-login-copy');
+  technicalLoginCopy.append(
+    make('div','eyebrow',french?'Accès technique':'Technical access'),
+    make('h2','',french?'Connexion requise':'Sign-in required'),
+    make('p','',french?'Connectez-vous avec un compte Google autorisé pour ouvrir le panneau technique.':'Sign in with an authorized Google account to open the Technical Panel.')
+  );
+  technicalLoginIntro.append(technicalLoginIcon,technicalLoginCopy);
+  const technicalLoginError=make('p','site-status admin-portal-auth-error');
+  technicalLoginError.hidden=true;
+  technicalLoginError.setAttribute('role','status');
+  technicalLoginError.setAttribute('aria-live','polite');
+  const technicalSignIn=button(french?'Continuer avec Google':'Continue with Google','technical-sign-in','primary');
+  technicalSignOut.hidden=true;
+  const technicalLoginHelp=make('p','admin-portal-login-help',
+    french?'Utilisez le compte Google ajouté au rôle technique dans Supabase.':'Use the Google account assigned the technical role in Supabase.');
+  const technicalLoginActions=make('div','admin-portal-login-actions');
+  technicalLoginActions.append(technicalLoginError,technicalSignIn,technicalLoginHelp);
+  technicalLogin.append(technicalLoginIntro,technicalLoginActions);
+  const technicalPanelContent=make('div','technical-portal-content');
+  technicalPanelContent.hidden=true;
+  technicalShell.append(technicalHeading,technicalBack,technicalAuthBar,technicalLogin,technicalPanelContent);
+  technicalPage.replaceChildren(technicalShell);
   const authCallbackParams=new URLSearchParams(window.location.search);
   const authCallbackHashParams=new URLSearchParams(window.location.hash.replace(/^#/,''));
   const authCallbackError=authCallbackParams.get('error_code')||
@@ -476,13 +529,13 @@
     authCallbackHashParams.get('error');
   const showAuthCallbackError=()=>{
     const message=authCallbackError==='signup_disabled'?messages.signupDisabled:
-      authCallbackError==='access_denied'?messages.loginDenied:messages.authError;
+      authCallbackError==='access_denied'?messages.adminLoginDenied:messages.authError;
     setError(authError,new Error(message));
   };
   const cleanAuthCallbackUrl=()=>{
     const url=new URL(window.location.href);
     let changed=false;
-    ['error','error_code','error_description','sb'].forEach(key=>{
+    ['error','error_code','error_description','sb','portal'].forEach(key=>{
       if(url.searchParams.has(key)){url.searchParams.delete(key);changed=true}
     });
     if(url.hash.includes('error=')||url.hash.includes('error_code=')){
@@ -509,7 +562,7 @@
   let proposalQuery='';
   let candidateFilter='pending';
   let currentUser=null;
-  let currentAccess={is_admin:false,is_technical:false};
+  let technicalUser=null;
   const tables={
     proposals:make('div','admin-portal-list'),
     candidates:make('div','admin-portal-list'),
@@ -2183,13 +2236,12 @@
     }else tables.logs.replaceChildren(make('p','site-empty-state',messages.noLogs));
     panels.logs.replaceChildren(tables.logs);
   };
-  const loadTechnicalPanel=async()=>{
-    if(!currentAccess.is_technical)throw new Error(messages.authError);
-    const panel=panels.technical;
+  const loadTechnicalPanel=async(panelClient=technicalClient,panel=technicalPanelContent)=>{
+    if(!panelClient)throw new Error(messages.accessCheckFailed);
     const [{data:settings,error:settingsError},{data:accessList,error:accessError},{data:health,error:healthError}] = await Promise.all([
-      client.rpc('get_technical_settings'),
-      client.rpc('get_cdecc_access_list'),
-      client.functions.invoke('technical-backup',{body:{action:'health'}})
+      panelClient.rpc('get_technical_settings'),
+      panelClient.rpc('get_cdecc_access_list'),
+      panelClient.functions.invoke('technical-backup',{body:{action:'health'}})
         .catch(error=>({data:null,error}))
     ]);
     if(settingsError)throw settingsError;
@@ -2322,7 +2374,7 @@
         backup_retention:Number(retention.value)
       };
       try{
-        const {error}=await client.rpc('update_technical_settings',{p_settings:next});
+        const {error}=await panelClient.rpc('update_technical_settings',{p_settings:next});
         if(error)throw error;
         delete settingsForm.dataset.dirty;
         setSuccess(settingsFeedback,messages.technicalSaved);
@@ -2374,7 +2426,7 @@
       event.preventDefault();
       accessSubmit.disabled=true;
       try{
-        const {error}=await client.rpc('manage_cdecc_access',{
+        const {error}=await panelClient.rpc('manage_cdecc_access',{
           p_email:emailInput.value.trim(),
           p_role:roleSelect.value
         });
@@ -2382,7 +2434,7 @@
         emailInput.value='';
         delete accessForm.dataset.dirty;
         setSuccess(accessFeedback,messages.technicalSaved);
-        await loadTechnicalPanel();
+        await loadTechnicalPanel(panelClient,panel);
       }catch(error){
         reportError(error);
         setError(accessFeedback,error);
@@ -2406,9 +2458,9 @@
       updateRole.addEventListener('click',async()=>{
         updateRole.disabled=true;
         try{
-          const {error}=await client.rpc('manage_cdecc_access',{p_email:entry.email,p_role:rowRole.value});
+          const {error}=await panelClient.rpc('manage_cdecc_access',{p_email:entry.email,p_role:rowRole.value});
           if(error)throw error;
-          await loadTechnicalPanel();
+          await loadTechnicalPanel(panelClient,panel);
         }catch(error){reportError(error);setError(accessFeedback,error)}
         finally{updateRole.disabled=false}
       });
@@ -2417,9 +2469,9 @@
         if(!window.confirm(messages.technicalConfirmRemoveAccess))return;
         removeAccess.disabled=true;
         try{
-          const {error}=await client.rpc('manage_cdecc_access',{p_email:entry.email,p_role:null});
+          const {error}=await panelClient.rpc('manage_cdecc_access',{p_email:entry.email,p_role:null});
           if(error)throw error;
-          await loadTechnicalPanel();
+          await loadTechnicalPanel(panelClient,panel);
         }catch(error){reportError(error);setError(accessFeedback,error)}
         finally{removeAccess.disabled=false}
       });
@@ -2433,7 +2485,7 @@
 
     const logsSection=make('section','card technical-panel-section');
     logsSection.append(make('h2','',messages.technicalLogsTitle));
-    const {data:logs,error:logsError}=await client.rpc('get_technical_logs',{p_limit:300});
+    const {data:logs,error:logsError}=await panelClient.rpc('get_technical_logs',{p_limit:300});
     if(logsError)throw logsError;
     if(logs?.length){
       const table=make('table','admin-audit-table');
@@ -2471,15 +2523,15 @@
     runBackup.addEventListener('click',async()=>{
       runBackup.disabled=true;
       try{
-        const {error}=await client.functions.invoke('technical-backup',{body:{action:'create'}});
+        const {error}=await panelClient.functions.invoke('technical-backup',{body:{action:'create'}});
         if(error)throw error;
         setSuccess(backupFeedback,messages.technicalBackupCreated);
-        await loadTechnicalPanel();
+        await loadTechnicalPanel(panelClient,panel);
       }catch(error){reportError(error);setError(backupFeedback,error)}
       finally{runBackup.disabled=false}
     });
     backupsSection.append(backupFeedback,runBackup);
-    const {data:backups,error:backupsError}=await client.from('technical_backups')
+    const {data:backups,error:backupsError}=await panelClient.from('technical_backups')
       .select('id,created_at,created_by,status,manifest,error_message')
       .order('created_at',{ascending:false}).limit(100);
     if(backupsError)throw backupsError;
@@ -2500,7 +2552,7 @@
           if(!window.confirm(messages.technicalConfirmRestoreBackup))return;
           restore.disabled=true;
           try{
-            const {error}=await client.functions.invoke('technical-backup',{body:{action:'restore',id:backup.id}});
+            const {error}=await panelClient.functions.invoke('technical-backup',{body:{action:'restore',id:backup.id}});
             if(error)throw error;
             setSuccess(backupFeedback,messages.technicalBackupRestored);
             window.setTimeout(()=>window.location.reload(),1200);
@@ -2514,10 +2566,10 @@
         if(!window.confirm(messages.technicalConfirmDeleteBackup))return;
         remove.disabled=true;
         try{
-          const {error}=await client.functions.invoke('technical-backup',{body:{action:'delete',id:backup.id}});
+          const {error}=await panelClient.functions.invoke('technical-backup',{body:{action:'delete',id:backup.id}});
           if(error)throw error;
           setSuccess(backupFeedback,messages.technicalBackupDeleted);
-          await loadTechnicalPanel();
+          await loadTechnicalPanel(panelClient,panel);
         }catch(error){reportError(error);setError(backupFeedback,error)}
         finally{remove.disabled=false}
       });
@@ -2537,7 +2589,6 @@
       else if(name==='candidates')await loadCandidates();
       else if(name==='members')await loadMembers();
       else if(name==='logs')await loadLogs();
-      else if(name==='technical')await loadTechnicalPanel();
     }catch(error){setError(state,error);reportError(error)}
   };
   let publicIdeasRefreshInProgress=false;
@@ -2731,6 +2782,21 @@
       });
       return;
     }
+    const technicalLoginButton=event.target.closest('[data-portal-action="technical-sign-in"]');
+    if(technicalLoginButton&&technicalClient){
+      technicalLoginButton.disabled=true;
+      startTechnicalSignIn().catch(error=>{
+        setError(technicalLoginError,error);
+        reportError(error);
+      }).finally(()=>{technicalLoginButton.disabled=false});
+      return;
+    }
+    const technicalLogoutButton=event.target.closest('[data-portal-action="technical-sign-out"]');
+    if(technicalLogoutButton&&technicalClient){
+      technicalLogoutButton.disabled=true;
+      signOutTechnicalUser().finally(()=>{technicalLogoutButton.disabled=false});
+      return;
+    }
     const logout=event.target.closest('[data-portal-action="sign-out"]');
     if(logout&&client){
       (async()=>{
@@ -2765,13 +2831,6 @@
         await client.auth.signOut();
         return;
       }
-      currentAccess={is_admin:true,is_technical:data.is_technical===true};
-      const technicalTab=tabs.querySelector('[data-tab="technical"]');
-      if(technicalTab)technicalTab.hidden=!currentAccess.is_technical;
-      if(!currentAccess.is_technical&&currentTab==='technical'){
-        switchTab('proposals');
-        return;
-      }
       await loadPanel(currentTab);
     }
     catch(error){setError(authError,error);reportError(error)}
@@ -2781,32 +2840,27 @@
     const user=session?.user;
     if(user&&user.app_metadata?.provider!=='google'){
       await client.auth.signOut();
-      setError(authError,new Error(messages.loginDenied));
+      setError(authError,new Error(messages.adminLoginDenied));
       currentUser=null;
-      currentAccess={is_admin:false,is_technical:false};
     }else if(user){
       try{
         const {data,error}=await client.rpc('get_cdecc_access');
         if(error)throw error;
         if(data?.is_admin!==true){
           await client.auth.signOut();
-          setError(authError,new Error(messages.loginDenied));
+          setError(authError,new Error(messages.adminLoginDenied));
           currentUser=null;
-          currentAccess={is_admin:false,is_technical:false};
         }else{
           currentUser=user;
-          currentAccess={is_admin:true,is_technical:data.is_technical===true};
         }
       }catch(error){
         reportError(error);
         setError(authError,new Error(messages.accessCheckFailed));
         currentUser=null;
-        currentAccess={is_admin:false,is_technical:false};
         await client.auth.signOut();
       }
     }else{
       currentUser=null;
-      currentAccess={is_admin:false,is_technical:false};
     }
     authIdentity.textContent=currentUser?.email||'';
     signIn.hidden=!ready||Boolean(currentUser);
@@ -2815,8 +2869,6 @@
     loginRequired.hidden=ready&&Boolean(currentUser);
     tabs.hidden=!currentUser;
     panelNodes.hidden=!currentUser;
-    const technicalTab=tabs.querySelector('[data-tab="technical"]');
-    if(technicalTab)technicalTab.hidden=!currentAccess.is_technical;
     securityNotice.hidden=!ready;
     if(!ready){
       loginTitle.textContent=messages.configMissing;
@@ -2839,6 +2891,92 @@
       }catch(error){setError(authError,error);reportError(error)}
     }
   };
+  const updateTechnicalSignedIn=async(session,recordSignIn=false)=>{
+    const user=session?.user;
+    if(!user){
+      technicalUser=null;
+      technicalIdentity.textContent='';
+      technicalAuthBar.hidden=true;
+      technicalSignOut.hidden=true;
+      technicalLogin.hidden=false;
+      technicalPanelContent.hidden=true;
+      return;
+    }
+    try{
+      if(user.app_metadata?.provider!=='google'){
+        await technicalClient.auth.signOut();
+        throw new Error(messages.loginDenied);
+      }
+      const {data:allowed,error}=await technicalClient.rpc('is_cdecc_technical_admin');
+      if(error)throw error;
+      if(allowed!==true){
+        await technicalClient.auth.signOut();
+        throw new Error(messages.loginDenied);
+      }
+      technicalUser=user;
+      technicalIdentity.textContent=user.email||'';
+      technicalAuthBar.hidden=false;
+      technicalSignOut.hidden=false;
+      technicalLogin.hidden=true;
+      technicalPanelContent.hidden=false;
+      technicalLoginError.hidden=true;
+      if(recordSignIn){
+        const {error:logError}=await technicalClient.rpc('record_technical_event',{
+          p_action:'sign_in',
+          p_entity:'authentication',
+          p_details:{},
+          p_actor_email:user.email||null
+        });
+        if(logError)throw logError;
+      }
+      await loadTechnicalPanel(technicalClient,technicalPanelContent);
+    }catch(error){
+      technicalUser=null;
+      technicalIdentity.textContent='';
+      technicalAuthBar.hidden=true;
+      technicalSignOut.hidden=true;
+      technicalLogin.hidden=false;
+      technicalPanelContent.hidden=true;
+      const message=error?.message===messages.loginDenied
+        ?messages.loginDenied
+        :error?.message||messages.accessCheckFailed;
+      setError(technicalLoginError,new Error(message));
+      reportError(error);
+      if(session?.user)await technicalClient.auth.signOut();
+    }
+  };
+  const startTechnicalSignIn=async()=>{
+    const redirect=new URL(window.location.href);
+    redirect.searchParams.set('portal','technical');
+    redirect.hash='';
+    const {error}=await technicalClient.auth.signInWithOAuth({
+      provider:'google',
+      options:{redirectTo:redirect.toString()}
+    });
+    if(error)throw error;
+  };
+  const signOutTechnicalUser=async()=>{
+    try{
+      if(technicalUser){
+        const {error}=await technicalClient.rpc('record_technical_event',{
+          p_action:'sign_out',
+          p_entity:'authentication',
+          p_details:{},
+          p_actor_email:technicalUser.email||null
+        });
+        if(error)throw error;
+      }
+    }catch(error){
+      reportError(error);
+      setError(technicalLoginError,error);
+    }
+    const {error}=await technicalClient.auth.signOut();
+    if(error){
+      reportError(error);
+      setError(technicalLoginError,error);
+    }
+    await updateTechnicalSignedIn(null);
+  };
   if(!ready){
     signIn.hidden=true;
     signOut.hidden=true;
@@ -2848,6 +2986,8 @@
     loginRequired.hidden=false;
     loginTitle.textContent=messages.configMissing;
     loginDescription.textContent=messages.configDescription;
+    technicalSignIn.hidden=true;
+    setError(technicalLoginError,new Error(messages.accessCheckFailed));
   }else{
     loginRequired.hidden=false;
     void refreshPublicIdeas();
@@ -2861,14 +3001,17 @@
     },30000);
     window.addEventListener('beforeunload',()=>window.clearInterval(publicIdeasRefreshInterval));
     client.auth.onAuthStateChange((event,session)=>{window.setTimeout(()=>updateSignedIn(session,event==='SIGNED_IN'),0)});
+    technicalClient.auth.onAuthStateChange((event,session)=>{
+      window.setTimeout(()=>updateTechnicalSignedIn(session,event==='SIGNED_IN'),0);
+    });
     client.auth.getSession().then(({data,error})=>{
       if(error){
         setError(authError,error);
         reportError(error);
-        if(authCallbackError){showAuthCallbackError();cleanAuthCallbackUrl()}
+        if(authCallbackError&&!technicalPortalRequested){showAuthCallbackError();cleanAuthCallbackUrl()}
         return;
       }
-      if(authCallbackError){showAuthCallbackError();cleanAuthCallbackUrl()}
+      if(authCallbackError&&!technicalPortalRequested){showAuthCallbackError();cleanAuthCallbackUrl()}
       updateSignedIn(data.session);
       refreshPublicSiteSettings();
       refreshPublicIdeas();
@@ -2876,6 +3019,25 @@
       refreshPublicCandidates();
       refreshPublicVoteSettings();
     }).catch(error=>{setError(authError,error);reportError(error)});
+    technicalClient.auth.getSession().then(({data,error})=>{
+      if(error){
+        setError(technicalLoginError,error);
+        reportError(error);
+      }else if(authCallbackError&&technicalPortalRequested){
+        const message=authCallbackError==='signup_disabled'?messages.signupDisabled:
+          authCallbackError==='access_denied'?messages.loginDenied:messages.authError;
+        setError(technicalLoginError,new Error(message));
+        cleanAuthCallbackUrl();
+        void updateTechnicalSignedIn(data.session);
+      }else{
+        void updateTechnicalSignedIn(data.session).then(()=>{
+          if(technicalPortalRequested)cleanAuthCallbackUrl();
+        });
+      }
+    }).catch(error=>{
+      setError(technicalLoginError,error);
+      reportError(error);
+    });
   }
   const adminRefreshInterval=window.setInterval(()=>{
     if(currentUser && !document.hidden){
@@ -2883,6 +3045,22 @@
     }
   },15000);
   window.addEventListener('beforeunload',()=>window.clearInterval(adminRefreshInterval));
+  const technicalRefreshInterval=window.setInterval(async()=>{
+    if(!technicalUser||document.hidden||!technicalPage.classList.contains('active'))return;
+    try{
+      const {data,error}=await technicalClient.rpc('is_cdecc_technical_admin');
+      if(error)throw error;
+      if(data!==true){
+        setError(technicalLoginError,new Error(messages.loginDenied));
+        await technicalClient.auth.signOut();
+      }
+    }catch(error){
+      reportError(error);
+      setError(technicalLoginError,error);
+      await technicalClient.auth.signOut();
+    }
+  },15000);
+  window.addEventListener('beforeunload',()=>window.clearInterval(technicalRefreshInterval));
   document.addEventListener('click',event=>{
     const pageButton=event.target.closest('[data-page]');
     if(!pageButton)return;

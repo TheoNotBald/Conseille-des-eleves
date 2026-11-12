@@ -384,7 +384,9 @@
 .settings-switch input{width:20px;height:20px;accent-color:var(--forest)}
 .settings-card #lang{width:max-content;min-width:72px;height:42px;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--forest);color:#fff}
 .settings-card #lang:before{display:none}
-.settings-card .admin-entry{position:static!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;z-index:auto!important;display:inline-flex!important;width:max-content;transform:none!important}
+.settings-card .admin-entry{position:static!important;top:auto!important;right:auto!important;bottom:auto!important;left:auto!important;z-index:auto!important;display:inline-flex!important;width:max-content;transform:none!important;font-size:12px!important}
+.settings-card .admin-entry:before{display:none}
+.technical-portal>.outline{margin:0 0 14px}
 .admin-vote-settings{margin-top:28px}
 .admin-vote-settings h2{margin:0;color:var(--forest);font-size:20px}
 .admin-vote-settings .site-form{max-width:none}
