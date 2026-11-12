@@ -12,11 +12,12 @@
     signOut:'Se déconnecter',
     authError:'La connexion n’a pas pu être vérifiée.',
     loginEyebrow:'Espace d’administration',
-    loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer les propositions, le vote, les candidatures et les membres.',
+    loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer le site. Le Panneau technique se trouve dans les onglets de cette page, après connexion.',
     loginHelp:'Le portail est réservé à l’administration. Ne partagez pas votre session.',
     configDescription:'Le portail sera disponible après la configuration de la connexion Supabase.',
     signupDisabled:'Supabase bloque les nouvelles inscriptions. Dans Supabase, ouvrez Authentication → Sign In / Providers (ou Settings), activez « Allow new users to sign up », puis réessayez.',
-    loginDenied:'Ce compte Google n’est pas autorisé. Demandez à une personne responsable technique de l’ajouter.',
+    loginDenied:'Ce compte Google n’a pas le rôle technique. Dans Supabase SQL Editor, exécutez la requête de configuration du premier responsable technique indiquée dans SUPABASE_SETUP.md, avec cette adresse Google exacte, puis actualisez.',
+    accessCheckFailed:'Google a confirmé votre connexion, mais Supabase n’a pas pu vérifier votre rôle. Vérifiez que la migration 20261113010000_technical_control_panel.sql a été exécutée dans le bon projet, puis réessayez.',
     tabs:['Proposition','Vote','Candidature','Membres','Journaux','Panneau technique'],
     memberTab:'Membres',
     memberIntro:'Ajoutez les personnes choisies, leur photo et leur groupe. Les photos et les fiches sont visibles publiquement sur la page Membres.',
@@ -171,11 +172,12 @@
     signOut:'Sign out',
     authError:'Could not verify the sign-in.',
     loginEyebrow:'Administration portal',
-    loginDescription:'Sign in with an authorized Google account to manage proposals, voting, candidacies, and members.',
+    loginDescription:'Sign in with an authorized Google account to manage the site. The Technical Panel appears as a tab on this page after sign-in.',
     loginHelp:'This portal is for administrators. Do not share your signed-in session.',
     configDescription:'The portal will be available after Supabase sign-in is configured.',
     signupDisabled:'Supabase is blocking new sign-ups. In Supabase, open Authentication → Sign In / Providers (or Settings), enable “Allow new users to sign up,” then try again.',
-    loginDenied:'This Google account is not authorized. Ask a technical administrator to add it.',
+    loginDenied:'This Google account does not have the technical role. In Supabase SQL Editor, run the first technical administrator setup query from SUPABASE_SETUP.md with this exact Google email, then refresh.',
+    accessCheckFailed:'Google confirmed your sign-in, but Supabase could not check your role. Confirm that migration 20261113010000_technical_control_panel.sql ran in the correct project, then try again.',
     tabs:['Proposals','Vote','Candidacies','Members','Logs','Technical Panel'],
     memberTab:'Members',
     memberIntro:'Add selected people, their photos, and their group. Photos and profiles are publicly visible on the Members page.',
@@ -2779,7 +2781,7 @@
     const user=session?.user;
     if(user&&user.app_metadata?.provider!=='google'){
       await client.auth.signOut();
-      setError(authError,new Error(messages.authError));
+      setError(authError,new Error(messages.loginDenied));
       currentUser=null;
       currentAccess={is_admin:false,is_technical:false};
     }else if(user){
@@ -2788,7 +2790,7 @@
         if(error)throw error;
         if(data?.is_admin!==true){
           await client.auth.signOut();
-          setError(authError,new Error(messages.authError));
+          setError(authError,new Error(messages.loginDenied));
           currentUser=null;
           currentAccess={is_admin:false,is_technical:false};
         }else{
@@ -2797,7 +2799,7 @@
         }
       }catch(error){
         reportError(error);
-        setError(authError,new Error(messages.authError));
+        setError(authError,new Error(messages.accessCheckFailed));
         currentUser=null;
         currentAccess={is_admin:false,is_technical:false};
         await client.auth.signOut();
