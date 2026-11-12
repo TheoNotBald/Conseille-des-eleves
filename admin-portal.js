@@ -23,10 +23,13 @@
     memberTab:'Membres',
     memberIntro:'Ajoutez les personnes choisies, leur photo et leur groupe. Les photos et les fiches sont visibles publiquement sur la page Membres.',
     memberAssemblyTitle:'Membres de l’Assemblée citoyenne',
-    memberSecondaryTitle:'Représentants du secondaire',
+    memberSecondaryTitle:'Représentants de niveau',
     memberClassTitle:'Représentants de classe',
     memberNameField:'Nom affiché',
-    memberGroupField:'Groupe ou poste affiché',
+    memberGroupField:'Groupe',
+    memberGroupHelp:'Ce groupe s’affichera dans sa propre ligne sous le nom dans l’onglet Membres.',
+    memberPositionField:'Poste ou rôle',
+    memberPermissionDenied:'Supabase refuse l’enregistrement des fiches Membres. Exécutez 20261113040000_member_profiles_permissions.sql dans SQL Editor et vérifiez que votre compte a le rôle admin.',
     memberPhotoField:'Photo individuelle (JPG, PNG ou WebP, 50 Mo maximum)',
     memberSave:'Enregistrer la fiche',
     memberRemove:'Retirer de la page Membres',
@@ -36,8 +39,8 @@
     memberPhotoCleanupError:'La fiche est mise à jour, mais l’ancienne photo n’a pas pu être supprimée.',
     memberUploadCleanupError:'L’enregistrement a échoué et la nouvelle photo temporaire n’a pas pu être supprimée.',
     memberPhotoRemoveError:'La fiche a été retirée, mais la photo n’a pas pu être supprimée du stockage Supabase.',
-    memberMigrationMissing:'La table des membres n’existe pas encore. Exécutez 20261113000000_member_profiles.sql dans Supabase SQL Editor.',
-    memberLoadError:'Les membres n’ont pas pu être chargés. Vérifiez la migration Supabase.',
+    memberMigrationMissing:'La table des membres ou ses nouveaux champs ne sont pas configurés. Exécutez 20261113000000_member_profiles.sql et 20261113050000_member_profile_groups.sql dans Supabase SQL Editor.',
+    memberLoadError:'Les membres n’ont pas pu être chargés. Vérifiez Supabase et exécutez 20261113050000_member_profile_groups.sql si ce n’est pas déjà fait.',
     search:'Rechercher une proposition',
     statuses:{pending:'À examiner',approved:'Approuvée',rejected:'Refusée'},
     approve:'Accepter et publier',
@@ -191,10 +194,13 @@
     memberTab:'Members',
     memberIntro:'Add selected people, their photos, and their group. Photos and profiles are publicly visible on the Members page.',
     memberAssemblyTitle:'Student Assembly members',
-    memberSecondaryTitle:'Secondary representatives',
+    memberSecondaryTitle:'Level representatives',
     memberClassTitle:'Class representatives',
     memberNameField:'Display name',
-    memberGroupField:'Displayed group or position',
+    memberGroupField:'Group',
+    memberGroupHelp:'This group will appear on its own line below the name on the Members tab.',
+    memberPositionField:'Position or role',
+    memberPermissionDenied:'Supabase denied access to member profiles. Run 20261113040000_member_profiles_permissions.sql in SQL Editor and confirm your account has the admin role.',
     memberPhotoField:'Individual photo (JPG, PNG, or WebP, up to 50 MB)',
     memberSave:'Save member profile',
     memberRemove:'Remove from Members page',
@@ -204,8 +210,8 @@
     memberPhotoCleanupError:'The profile was saved, but its previous photo could not be removed.',
     memberUploadCleanupError:'The profile could not be saved, and its temporary photo could not be removed.',
     memberPhotoRemoveError:'The profile was removed, but its photo could not be deleted from Supabase Storage.',
-    memberMigrationMissing:'The members table is not set up yet. Run 20261113000000_member_profiles.sql in the Supabase SQL Editor.',
-    memberLoadError:'Members could not be loaded. Check the Supabase migration.',
+    memberMigrationMissing:'The members table or its new fields are not set up yet. Run 20261113000000_member_profiles.sql and 20261113050000_member_profile_groups.sql in the Supabase SQL Editor.',
+    memberLoadError:'Members could not be loaded. Check Supabase and run 20261113050000_member_profile_groups.sql if you have not already.',
     search:'Search proposals',
     statuses:{pending:'Needs review',approved:'Approved',rejected:'Declined'},
     approve:'Accept and publish',
@@ -2000,12 +2006,14 @@
       placeholder.hidden=true;
     }
     const previewName=make('h3','member-profile-name',record?.display_name|| (french?'Nom à confirmer':'Name to be confirmed'));
-    const previewGroup=make('p','member-profile-role',record?.group_label||slot.groupLabel);
-    preview.append(placeholder,image,previewName,previewGroup);
+    const previewGroup=make('p','member-profile-group',record?.group_name||slot.groupLabel);
+    previewGroup.hidden=!previewGroup.textContent;
+    const previewPosition=make('p','member-profile-role',record?.role_label||slot.roleLabel);
+    preview.append(placeholder,image,previewName,previewGroup,previewPosition);
     const form=make('form','admin-portal-edit-form admin-member-edit-form');
     form.dataset.slotKey=slot.slotKey;
     form.dataset.photoPath=currentPhotoPath||'';
-    const addField=(labelText,name,value,type='text')=>{
+    const addField=(labelText,name,value,type='text',required=true)=>{
       const wrapper=make('label','');
       wrapper.append(make('span','',labelText));
       const input=document.createElement('input');
@@ -2013,13 +2021,16 @@
       input.name=name;
       input.value=value||'';
       if(type==='text')input.maxLength=name==='display_name'?100:80;
-      input.required=type==='text';
+      input.required=type==='text'&&required;
       wrapper.append(input);
       form.append(wrapper);
       return input;
     };
     const nameInput=addField(messages.memberNameField,'display_name',record?.display_name||'');
-    const groupInput=addField(messages.memberGroupField,'group_label',record?.group_label||slot.groupLabel);
+    const groupInput=addField(messages.memberGroupField,'group_name',record?.group_name||slot.groupLabel,'text',false);
+    const groupHelp=make('span','member-group-help',messages.memberGroupHelp);
+    groupInput.parentElement.append(groupHelp);
+    const positionInput=addField(messages.memberPositionField,'role_label',record?.role_label||slot.roleLabel);
     const photoLabel=make('label','');
     photoLabel.append(make('span','',messages.memberPhotoField));
     const photoInput=document.createElement('input');
@@ -2040,7 +2051,9 @@
     form.append(feedback,actions);
     const updatePreview=()=>{
       previewName.textContent=nameInput.value.trim()||(french?'Nom à confirmer':'Name to be confirmed');
-      previewGroup.textContent=groupInput.value.trim()||slot.groupLabel;
+      previewGroup.textContent=groupInput.value.trim();
+      previewGroup.hidden=!previewGroup.textContent;
+      previewPosition.textContent=positionInput.value.trim()||slot.roleLabel;
     };
     form.addEventListener('input',()=>{
       form.dataset.dirty='true';
@@ -2067,7 +2080,8 @@
       event.stopPropagation();
       const displayName=nameInput.value.trim();
       const groupLabel=groupInput.value.trim();
-      if(!displayName||!groupLabel){
+      const positionLabel=positionInput.value.trim();
+      if(!displayName||!positionLabel){
         setError(feedback,new Error(messages.saveError));
         return;
       }
@@ -2088,7 +2102,9 @@
         const result=await requireClient().from('member_profiles').upsert({
           slot_key:slot.slotKey,
           display_name:displayName,
-          group_label:groupLabel,
+          group_name:groupLabel,
+          role_label:positionLabel,
+          group_label:positionLabel,
           photo_path:uploadedPath||currentPhotoPath
         },{onConflict:'slot_key'}).select('slot_key').single();
         if(result.error)throw result.error;
@@ -2111,11 +2127,16 @@
           await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoCleanupError);
         }
       }catch(error){
+        const displayedError=error?.code==='42501'
+          ?new Error(messages.memberPermissionDenied)
+          :['42703','PGRST204'].includes(error?.code)
+            ?new Error(messages.memberMigrationMissing)
+            :error;
         if(photoUploaded&&!profileSaved){
           const cleaned=await removeMemberPhoto(uploadedPath,feedback,messages.memberUploadCleanupError);
-          if(cleaned)setError(feedback,error);
+          if(cleaned)setError(feedback,displayedError);
         }else{
-          setError(feedback,error);
+          setError(feedback,displayedError);
         }
         reportError(error);
       }finally{saveButton.disabled=false}
@@ -2133,7 +2154,8 @@
         if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
         form.dataset.photoPath='';
         nameInput.value='';
-        groupInput.value=slot.groupLabel;
+        groupInput.value=slot.groupLabel||'';
+        positionInput.value=slot.roleLabel;
         photoInput.value='';
         removeButton.hidden=true;
         delete form.dataset.dirty;
@@ -2764,7 +2786,7 @@
     if(!client)return;
     try{
       const {data,error}=await client.from('member_profiles')
-        .select('slot_key,display_name,group_label,photo_path');
+        .select('slot_key,display_name,group_name,role_label,photo_path');
       if(error)throw error;
       const profiles=(data||[]).map(profile=>({
         ...profile,

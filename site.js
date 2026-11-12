@@ -120,7 +120,8 @@
       roleLowSpokespersonText:'Recueille les idées et préoccupations des élèves et les transmet à l’Assemblée.',
       roleHighSpokespersonText:'Partage avec les élèves les nouvelles et les suivis de l’Assemblée.',
       memberProfilesTitle:'Membres de l’Assemblée Citoyenne',
-      memberSecondaryRepsTitle:'Représentants du secondaire',
+      memberSecondaryRepsTitle:'Représentants de niveau',
+      memberLevelRepresentativeRole:'Représentant de niveau',
       memberPhotoPlaceholder:'Photo à venir',
       memberNamePlaceholder:'Nom à confirmer',
       provisionalRole:'Responsabilités à préciser avec les organisateurs.',
@@ -369,7 +370,8 @@
       roleLowSpokespersonText:'Gathers students’ ideas and concerns and brings them to the Assembly.',
       roleHighSpokespersonText:'Shares Assembly news and follow-up with students.',
       memberProfilesTitle:'Student Assembly members',
-      memberSecondaryRepsTitle:'Secondary representatives',
+      memberSecondaryRepsTitle:'Level representatives',
+      memberLevelRepresentativeRole:'Level representative',
       memberPhotoPlaceholder:'Photo coming soon',
       memberNamePlaceholder:'Name to be confirmed',
       provisionalRole:'Responsibilities to be clarified with the organizers.',
@@ -1424,18 +1426,19 @@
   const renderGovernancePages=()=>{
     renderCharter();
     const memberSlotDefinitions=[
-      {slotKey:'assembly-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('rolePresident')},
-      {slotKey:'assembly-vice-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleVicePresident')},
-      {slotKey:'assembly-secretary',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleSecretary')},
-      {slotKey:'assembly-treasurer',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleTreasurer')},
-      {slotKey:'assembly-administrative-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleHighSpokesperson')},
-      {slotKey:'assembly-student-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:text('roleLowSpokesperson')},
+      {slotKey:'assembly-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('rolePresident')},
+      {slotKey:'assembly-vice-president',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleVicePresident')},
+      {slotKey:'assembly-secretary',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleSecretary')},
+      {slotKey:'assembly-treasurer',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleTreasurer')},
+      {slotKey:'assembly-administrative-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleHighSpokesperson')},
+      {slotKey:'assembly-student-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleLowSpokesperson')},
       ...Array.from({length:5},(_,index)=>({
         slotKey:`secondary-${index+1}`,
         category:'secondary',
         level:index+1,
         sectionLabel:text('memberSecondaryRepsTitle'),
-        groupLabel:text(`level${['One','Two','Three','Four','Five'][index]}`)
+        groupLabel:text(`level${['One','Two','Three','Four','Five'][index]}`),
+        roleLabel:text('memberLevelRepresentativeRole')
       })),
       ...Array.from({length:5},(_,levelIndex)=>Array.from({length:5},(_,representativeIndex)=>({
         slotKey:`class-${levelIndex+1}-${representativeIndex+1}`,
@@ -1444,7 +1447,8 @@
         representativeIndex:representativeIndex+1,
         sectionLabel:text('classreps'),
         levelLabel:text(`level${['One','Two','Three','Four','Five'][levelIndex]}`),
-        groupLabel:text('classRepresentative')
+        groupLabel:'',
+        roleLabel:text('classRepresentative')
       }))).flat()
     ];
     window.cdeccMemberSlotDefinitions=memberSlotDefinitions;
@@ -1452,6 +1456,8 @@
       const card=make('article',`member-profile-card${extraClass?` ${extraClass}`:''}`);
       card.dataset.memberSlot=slot.slotKey;
       card.dataset.memberDefaultGroup=slot.groupLabel;
+      const group=make('p','member-profile-group',slot.groupLabel);
+      group.hidden=!slot.groupLabel;
       const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
       photoPlaceholder.setAttribute('aria-label',text('memberPhotoPlaceholder'));
       const image=document.createElement('img');
@@ -1467,7 +1473,8 @@
         photoPlaceholder,
         image,
         make('h3','member-profile-name',text('memberNamePlaceholder')),
-        make('p','member-profile-role',slot.groupLabel)
+        group,
+        make('p','member-profile-role',slot.roleLabel)
       );
       return card;
     };
@@ -1476,11 +1483,15 @@
       document.querySelectorAll('[data-member-slot]').forEach(card=>{
         const profile=profiles.get(card.dataset.memberSlot);
         const name=card.querySelector('.member-profile-name');
-        const group=card.querySelector('.member-profile-role');
+        const group=card.querySelector('.member-profile-group');
+        const role=card.querySelector('.member-profile-role');
         const image=card.querySelector('.member-profile-photo');
         const placeholder=card.querySelector('.member-profile-photo-placeholder');
         name.textContent=profile?.display_name||text('memberNamePlaceholder');
-        group.textContent=profile?.group_label||card.dataset.memberDefaultGroup||'';
+        group.textContent=profile?.group_name||card.dataset.memberDefaultGroup||'';
+        group.hidden=!group.textContent;
+        role.textContent=profile?.role_label||
+          memberSlotDefinitions.find(slot=>slot.slotKey===card.dataset.memberSlot)?.roleLabel||'';
         if(profile?.photo_url){
           image.src=profile.photo_url;
           image.hidden=false;

@@ -332,7 +332,9 @@
 .member-profile-photo{display:block;width:min(100%,240px);aspect-ratio:1/1;border-radius:20px;object-fit:cover}
 .member-profile-photo[hidden],.member-profile-photo-placeholder[hidden]{display:none}
 .member-profile-name{margin:2px 0 0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,2vw,24px);font-weight:600;line-height:1.2;overflow-wrap:anywhere}
+.member-profile-group{margin:0;color:var(--muted);font-size:12px;font-weight:650;line-height:1.4;overflow-wrap:anywhere}
 .member-profile-role{margin:0;color:var(--forest);font-size:12px;font-weight:850;letter-spacing:.08em;line-height:1.4;overflow-wrap:anywhere}
+.member-group-help{color:var(--muted);font-size:11px;font-weight:500;line-height:1.4}
 .member-secondary-reps{display:grid;gap:18px;margin:0 0 40px;padding:clamp(18px,3vw,30px);border:1px solid var(--line);border-radius:22px;background:var(--soft)}
 .member-secondary-reps-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .member-secondary-rep-card{padding:12px;border-radius:20px}

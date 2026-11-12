@@ -4,6 +4,8 @@ create table if not exists public.member_profiles (
   ),
   display_name text not null check (char_length(display_name) between 1 and 100),
   group_label text not null check (char_length(group_label) between 1 and 80),
+  group_name text default '' check (char_length(group_name) <= 80),
+  role_label text check (role_label is null or char_length(role_label) between 1 and 80),
   photo_path text,
   created_at timestamptz not null default now(),
   check (
@@ -16,8 +18,7 @@ create table if not exists public.member_profiles (
 alter table public.member_profiles enable row level security;
 revoke all on public.member_profiles from anon, authenticated;
 grant select on public.member_profiles to anon, authenticated;
-grant insert (slot_key, display_name, group_label, photo_path) on public.member_profiles to authenticated;
-grant update (display_name, group_label, photo_path) on public.member_profiles to authenticated;
+grant insert, update on public.member_profiles to authenticated;
 grant delete on public.member_profiles to authenticated;
 
 drop policy if exists "Anyone can read member profiles" on public.member_profiles;
