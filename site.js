@@ -1626,7 +1626,7 @@
       return candidateImageEditor;
     };
     const backgroundColor=appendCandidateField('candidate-background','candidateBackground','input','color');
-    backgroundColor.defaultValue='#396d59';
+    backgroundColor.defaultValue='#000000';
     const foregroundColor=appendCandidateField('candidate-foreground','candidateForeground','input','color');
     foregroundColor.defaultValue='#ffffff';
     const candidatePreview=make('article','candidate-preview-card');
@@ -1870,7 +1870,7 @@
         card.type='button';
         card.dataset.voteTeam=`candidate-${candidate.id}`;
         card.setAttribute('aria-label',document.documentElement.lang==='fr' ? `${voteMoreLabel} sur ${candidate.team_name || 'Candidate'}` : `${voteMoreLabel} about ${candidate.team_name || 'Candidate'}`);
-        card.style.backgroundColor=candidate.background||'#396d59';
+        card.style.backgroundColor=candidate.background||'#000000';
         card.style.color=candidate.foreground||'#ffffff';
         const image=document.createElement('img');
         const photoUrl=candidate.photo_url||candidate.photo_path;
@@ -1912,7 +1912,7 @@
       const candidate=publicVoteCandidates.find(item=>`candidate-${item.id}`===selectedVoteTeam);
       if(candidate){
         const detailCard=make('article','vote-team-detail-card');
-        detailCard.style.backgroundColor=candidate.background||'#396d59';
+        detailCard.style.backgroundColor=candidate.background||'#000000';
         detailCard.style.color=candidate.foreground||'#ffffff';
         const detailImage=document.createElement('img');
         if(candidate.photo_url)detailImage.src=candidate.photo_url;

@@ -121,6 +121,7 @@
     technicalIdeasOpen:'Accepter les propositions',
     technicalCandidaciesOpen:'Accepter les candidatures',
     technicalColors:'Couleurs principales',
+    technicalResetColors:'Rétablir les couleurs par défaut',
     technicalLogo:'URL HTTPS du logo',
     technicalHero:'URL HTTPS de l’image d’accueil',
     technicalSlogan:'Slogan du site',
@@ -131,6 +132,9 @@
     technicalTime:'Heure (fuseau America/Toronto)',
     technicalRetention:'Nombre maximal de sauvegardes (10 à 100)',
     technicalSave:'Enregistrer les réglages',
+    technicalResetAll:'Tout rétablir par défaut',
+    technicalConfirmResetAll:'Rétablir l’apparence par défaut, rouvrir les propositions et candidatures, et désactiver les sauvegardes planifiées ? Les données, comptes et sauvegardes existantes ne seront pas supprimés.',
+    technicalResetSaved:'Les réglages par défaut ont été rétablis. Les données, comptes et sauvegardes existantes sont conservés.',
     technicalSaved:'Réglages techniques enregistrés.',
     technicalAccessTitle:'Accès Google autorisés',
     technicalAccessIntro:'Les rôles techniques et administratifs sont distincts. Ce portail technique ne donne pas accès au portail administratif.',
@@ -143,6 +147,7 @@
     technicalNoAccess:'Aucun compte autorisé.',
     technicalLogsTitle:'Journaux techniques — 90 jours',
     technicalLogIp:'Adresse IP',
+    technicalLogIpHold:'Maintenir le clic gauche pour afficher',
     technicalNoLogs:'Aucun événement technique enregistré.',
     technicalBackupsList:'Historique des sauvegardes',
     technicalRunBackup:'Créer une sauvegarde maintenant',
@@ -292,6 +297,7 @@
     technicalIdeasOpen:'Accept suggestions',
     technicalCandidaciesOpen:'Accept candidacies',
     technicalColors:'Core colors',
+    technicalResetColors:'Reset colors to default',
     technicalLogo:'HTTPS logo URL',
     technicalHero:'HTTPS home-page image URL',
     technicalSlogan:'Site slogan',
@@ -302,6 +308,9 @@
     technicalTime:'Time (America/Toronto)',
     technicalRetention:'Maximum number of backups (10 to 100)',
     technicalSave:'Save technical settings',
+    technicalResetAll:'Full reset to default',
+    technicalConfirmResetAll:'Restore the default appearance, reopen suggestions and candidacies, and disable scheduled backups? Existing data, accounts, and backups will not be deleted.',
+    technicalResetSaved:'Default settings restored. Existing data, accounts, and backups were kept.',
     technicalSaved:'Technical settings saved.',
     technicalAccessTitle:'Authorized Google accounts',
     technicalAccessIntro:'Technical and administrator roles are separate. This technical portal does not grant access to the regular administration portal.',
@@ -314,6 +323,7 @@
     technicalNoAccess:'No authorized accounts.',
     technicalLogsTitle:'Technical logs — 90 days',
     technicalLogIp:'IP address',
+    technicalLogIpHold:'Hold left click to reveal',
     technicalNoLogs:'No technical events recorded.',
     technicalBackupsList:'Backup history',
     technicalRunBackup:'Run backup now',
@@ -384,6 +394,49 @@
     node.hidden=false;
     node.dataset.kind='success';
   };
+  const makeTechnicalIpReveal=value=>{
+    if(!value)return make('span','','—');
+    const masked='••••••••••••';
+    const reveal=button(masked,'reveal-technical-ip','secondary');
+    reveal.classList.add('technical-ip-reveal');
+    reveal.setAttribute('aria-label',`${messages.technicalLogIp}: ${messages.technicalLogIpHold}`);
+    reveal.title=messages.technicalLogIpHold;
+    const hide=()=>{
+      reveal.textContent=masked;
+      reveal.dataset.revealed='false';
+    };
+    const show=()=>{reveal.textContent=String(value);reveal.dataset.revealed='true'};
+    reveal.addEventListener('pointerdown',event=>{
+      if(event.button!==0)return;
+      event.preventDefault();
+      show();
+      reveal.setPointerCapture(event.pointerId);
+    });
+    ['pointerup','pointercancel','lostpointercapture','blur'].forEach(type=>
+      reveal.addEventListener(type,hide)
+    );
+    reveal.addEventListener('keydown',event=>{
+      if(event.key===' '||event.key==='Enter'){
+        event.preventDefault();
+        show();
+      }
+    });
+    reveal.addEventListener('keyup',event=>{
+      if(event.key===' '||event.key==='Enter')hide();
+    });
+    reveal.addEventListener('contextmenu',event=>event.preventDefault());
+    return reveal;
+  };
+  const hideRevealedTechnicalIps=()=>{
+    document.querySelectorAll('.technical-ip-reveal[data-revealed="true"]').forEach(reveal=>{
+      reveal.textContent='••••••••••••';
+      reveal.dataset.revealed='false';
+    });
+  };
+  window.addEventListener('blur',hideRevealedTechnicalIps);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)hideRevealedTechnicalIps();
+  });
   const reportError=error=>console.error('Admin portal:',error);
   const config=window.CDECC_SUPABASE_CONFIG;
   const ready=Boolean(
@@ -1521,7 +1574,7 @@
     card.append(make('span',`pill admin-candidate-status ${statusClass}`,statusText));
     card.append(make('time','site-date',formatDate(item.created_at)));
     const blob=make('div','admin-candidate-blob');
-    blob.style.backgroundColor=item.background||'#396d59';
+    blob.style.backgroundColor=item.background||'#000000';
     blob.style.color=item.foreground||'#ffffff';
     const blobCopy=make('div','admin-candidate-blob-copy');
     const blobTitle=make('h2','admin-candidate-blob-title',item.team_name);
@@ -1644,7 +1697,7 @@
       members.forEach(member=>rosterList.append(make('li','',member)));
       blob.classList.toggle('has-many-members',members.length>=6);
       blob.classList.toggle('has-many-members-dense',members.length>=9);
-      blob.style.backgroundColor=String(values.get('background')||'#396d59');
+      blob.style.backgroundColor=String(values.get('background')||'#000000');
       blob.style.color=String(values.get('foreground')||'#ffffff');
     };
     if(item.status==='pending')form.addEventListener('input',()=>{
@@ -2422,6 +2475,18 @@
     const ideasOpen=addCheckbox(messages.technicalIdeasOpen,settings.ideas_open!==false);
     const candidaciesOpen=addCheckbox(messages.technicalCandidaciesOpen,settings.candidacies_open!==false);
     const visuals=settings.site_visuals||{};
+    const defaultVisuals={
+      forest:'#233d33',
+      deep:'#1a2e2a',
+      green:'#4a6d60',
+      lime:'#d9d7a5',
+      paper:'#f7f3ee',
+      ink:'#1f2a26',
+      muted:'#67756d',
+      line:'#e3ddd2',
+      soft:'#efe7dc',
+      gold:'#f0dca8'
+    };
     const colorKeys=['forest','deep','green','lime','paper','ink','muted','line','soft','gold'];
     const colorLabels={
       forest:french?'Vert forêt':'Forest',
@@ -2443,12 +2508,15 @@
       label.append(make('span','',colorLabels[key]));
       const input=document.createElement('input');
       input.type='color';
-      input.value=/^#[0-9a-f]{6}$/i.test(visuals[key]||'')?visuals[key]:'#233d33';
+      input.value=/^#[0-9a-f]{6}$/i.test(visuals[key]||'')?visuals[key]:defaultVisuals[key];
       colorInputs[key]=input;
       label.append(input);
       colorGrid.append(label);
     });
     settingsForm.append(colorGrid);
+    const resetColors=button(messages.technicalResetColors,'reset-technical-colors','secondary');
+    resetColors.classList.add('technical-reset-colors');
+    settingsForm.append(resetColors);
     const logoUrl=addField(messages.technicalLogo,'url',visuals.logo_url||'',{maxLength:1000});
     const heroUrl=addField(messages.technicalHero,'url',visuals.hero_url||'',{maxLength:1000});
     const slogan=addField(messages.technicalSlogan,'text',visuals.slogan||'Être · Faire · Agir',{maxLength:120});
@@ -2467,7 +2535,30 @@
     const settingsSave=make('button','primary','');
     settingsSave.type='submit';
     settingsSave.textContent=messages.technicalSave;
-    settingsForm.append(settingsFeedback,settingsSave);
+    const settingsActions=make('div','technical-settings-actions');
+    const resetAll=button(messages.technicalResetAll,'reset-technical-settings','secondary');
+    settingsActions.append(settingsSave,resetAll);
+    settingsForm.append(settingsFeedback,settingsActions);
+    const saveTechnicalSettings=async(next,successMessage)=>{
+      const {error}=await panelClient.rpc('update_technical_settings',{p_settings:next});
+      if(error)throw error;
+      delete settingsForm.dataset.dirty;
+      setSuccess(settingsFeedback,successMessage);
+      const backupsActive=next.backup_enabled===true;
+      backupStatus.indicator.className=backupsActive?'technical-status-ok':'technical-status-pending';
+      backupStatus.indicator.textContent=backupsActive
+        ?`${messages.technicalScheduleConfigured} · ${next.backup_frequency} · ${next.backup_time}`
+        :`${messages.technicalStatusDisabled} · ${french?'Désactivées':'Disabled'}`;
+      backupStatus.help.textContent=backupsActive?'':messages.technicalScheduleSetupHelp;
+      backupStatus.help.hidden=backupsActive;
+      if(backupsActive)backupsEnabled.disabled=false;
+      await refreshPublicSiteSettings();
+    };
+    resetColors.addEventListener('click',()=>{
+      colorKeys.forEach(key=>{colorInputs[key].value=defaultVisuals[key]});
+      settingsForm.dataset.dirty='true';
+      settingsFeedback.hidden=true;
+    });
     settingsForm.addEventListener('input',()=>{settingsForm.dataset.dirty='true'});
     settingsForm.addEventListener('change',()=>{settingsForm.dataset.dirty='true'});
     settingsForm.addEventListener('submit',async event=>{
@@ -2489,23 +2580,50 @@
         backup_retention:Number(retention.value)
       };
       try{
-        const {error}=await panelClient.rpc('update_technical_settings',{p_settings:next});
-        if(error)throw error;
-        delete settingsForm.dataset.dirty;
-        setSuccess(settingsFeedback,messages.technicalSaved);
-        const backupsActive=backupsEnabled.checked;
-        backupStatus.indicator.className=backupsActive?'technical-status-ok':'technical-status-pending';
-        backupStatus.indicator.textContent=backupsActive
-          ?`${messages.technicalScheduleConfigured} · ${frequency.value} · ${backupTime.value}`
-          :`${messages.technicalStatusDisabled} · ${french?'Désactivées':'Disabled'}`;
-        backupStatus.help.textContent=backupsActive?'':messages.technicalScheduleSetupHelp;
-        backupStatus.help.hidden=backupsActive;
-        if(backupsActive)backupsEnabled.disabled=false;
-        await refreshPublicSiteSettings();
+        await saveTechnicalSettings(next,messages.technicalSaved);
       }catch(error){
         reportError(error);
         setError(settingsFeedback,error);
       }finally{settingsSave.disabled=false}
+    });
+    resetAll.addEventListener('click',async()=>{
+      if(!window.confirm(messages.technicalConfirmResetAll))return;
+      resetAll.disabled=true;
+      settingsSave.disabled=true;
+      const defaults={
+        ideas_open:true,
+        candidacies_open:true,
+        site_visuals:{
+          ...visuals,
+          ...defaultVisuals,
+          logo_url:'',
+          hero_url:'',
+          slogan:'Être · Faire · Agir'
+        },
+        backup_enabled:false,
+        backup_frequency:'daily',
+        backup_time:'02:00',
+        backup_retention:10
+      };
+      try{
+        await saveTechnicalSettings(defaults,messages.technicalResetSaved);
+        ideasOpen.checked=true;
+        candidaciesOpen.checked=true;
+        colorKeys.forEach(key=>{colorInputs[key].value=defaultVisuals[key]});
+        logoUrl.value='';
+        heroUrl.value='';
+        slogan.value='Être · Faire · Agir';
+        backupsEnabled.checked=false;
+        frequency.value='daily';
+        backupTime.value='02:00';
+        retention.value='10';
+      }catch(error){
+        reportError(error);
+        setError(settingsFeedback,error);
+      }finally{
+        resetAll.disabled=false;
+        settingsSave.disabled=false;
+      }
     });
     settingsSection.append(settingsForm);
     technicalPanels.settings.append(settingsSection);
@@ -2619,11 +2737,16 @@
         [
           formatDate(entry.occurred_at),
           entry.actor_email,
-          entry.actor_ip||'—',
+          makeTechnicalIpReveal(entry.actor_ip),
           entry.action,
           entry.entity,
           JSON.stringify(entry.details||{})
-        ].forEach(value=>row.append(make('td','',String(value||''))));
+        ].forEach((value,index)=>{
+          const cell=make('td','');
+          if(index===2)cell.append(value);
+          else cell.textContent=String(value||'');
+          row.append(cell);
+        });
         body.append(row);
       });
       table.append(head,body);
