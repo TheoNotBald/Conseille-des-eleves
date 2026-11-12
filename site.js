@@ -568,6 +568,7 @@
     customPaletteDeep:'Couleur sombre',
     customPaletteGreen:'Couleur d’accent',
     customPaletteLime:'Couleur secondaire',
+    customPaletteCharter:'Couleur de la Charte',
     candidateSaved:'La candidature a été enregistrée uniquement sur cet appareil.',
     candidateRequired:'Remplis le nom de l’équipe, au moins un poste et les idées.',
     candidateImageInvalid:'Choisis une image JPG, PNG ou WebP de 50 Mo maximum.',
@@ -595,6 +596,7 @@
     paletteForest:'Forêt',
     paletteOcean:'Océan',
     palettePlum:'Prune',
+    paletteTeal:'Turquoise',
     appearanceTitle:'Affichage',
     themeLabel:'Mode sombre',
     sloganLabel:'Afficher la ligne « Être · Faire · Agir »',
@@ -656,6 +658,7 @@
     customPaletteDeep:'Dark color',
     customPaletteGreen:'Accent color',
     customPaletteLime:'Secondary color',
+    customPaletteCharter:'Charter color',
     candidateSaved:'The application was saved only on this device.',
     candidateRequired:'Enter the team name, at least one position, and the ideas.',
     candidateImageInvalid:'Choose a JPG, PNG, or WebP image no larger than 50 MB.',
@@ -683,6 +686,7 @@
     paletteForest:'Forest',
     paletteOcean:'Ocean',
     palettePlum:'Plum',
+    paletteTeal:'Teal',
     appearanceTitle:'Appearance',
     themeLabel:'Dark mode',
     sloganLabel:'Show the “Be · Do · Act” moving line',
@@ -874,11 +878,13 @@
   const voteSettingsKey='cdecc.vote.settings.v1';
   const preferencesKey='cdecc.ui.preferences.v1';
   const preferencesCookieName='cdecc_ui_preferences';
-  const defaultCustomPalette={forest:'#233d33',deep:'#1a2e2a',green:'#4a6d60',lime:'#d9d7a5'};
+  const defaultCustomPalette={forest:'#233d33',deep:'#1a2e2a',green:'#4a6d60',lime:'#d9d7a5',charter:'#32775c'};
   const customPaletteKeys=Object.keys(defaultCustomPalette);
-  const palettes=new Set(['forest','ocean','plum','custom']);
+  const requiredCustomPaletteKeys=customPaletteKeys.filter(key=>key!=='charter');
+  const palettes=new Set(['forest','ocean','plum','teal','custom']);
   const isValidCustomPalette=value=>value&&typeof value==='object'&&
-    customPaletteKeys.every(key=>typeof value[key]==='string'&&/^#[0-9a-f]{6}$/i.test(value[key]));
+    requiredCustomPaletteKeys.every(key=>typeof value[key]==='string'&&/^#[0-9a-f]{6}$/i.test(value[key]))&&
+    (value.charter===undefined||typeof value.charter==='string'&&/^#[0-9a-f]{6}$/i.test(value.charter));
   const parsePreferences=value=>{
     const saved=JSON.parse(value);
     if(!saved||!palettes.has(saved.palette)||typeof saved.dark!=='boolean'||typeof saved.slogan!=='boolean')return null;
@@ -889,7 +895,9 @@
       palette:saved.palette,
       dark:saved.dark,
       slogan:saved.slogan,
-      customPalette:customPalette?Object.fromEntries(customPaletteKeys.map(key=>[key,customPalette[key]])):null,
+      customPalette:customPalette?Object.fromEntries(customPaletteKeys.map(key=>[
+        key,customPalette[key]||defaultCustomPalette[key]
+      ])):null,
       updatedAt:Number.isFinite(saved.updatedAt)?saved.updatedAt:0
     };
   };
@@ -2264,7 +2272,7 @@
     const paletteCard=make('section','card settings-card');
     paletteCard.append(make('h2','',text('paletteTitle')));
     const paletteChoices=make('div','settings-choice-row');
-    ['forest','ocean','plum'].forEach(palette=>{
+    ['forest','ocean','plum','teal'].forEach(palette=>{
       const choice=button(text(`palette${palette[0].toUpperCase()}${palette.slice(1)}`),'settings-choice');
       choice.dataset.palette=palette;
       choice.setAttribute('aria-pressed',String(preferences.palette===palette));
@@ -2289,7 +2297,8 @@
       forest:'customPaletteForest',
       deep:'customPaletteDeep',
       green:'customPaletteGreen',
-      lime:'customPaletteLime'
+      lime:'customPaletteLime',
+      charter:'customPaletteCharter'
     };
     customPaletteKeys.forEach(key=>{
       const label=make('label','custom-palette-color');
