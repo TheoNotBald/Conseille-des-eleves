@@ -299,7 +299,7 @@
 .member-groups{display:grid;gap:10px}
 .member-structure-chart{display:grid;gap:22px;margin-top:24px;padding:24px;border-radius:20px;background:var(--soft)}
 .member-assembly-structure{display:grid;gap:12px;padding:12px;border-radius:18px;background:var(--green)}
-.member-assembly-panel{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,2fr);align-items:center;gap:22px;padding:24px;border-radius:14px;background:var(--deep);color:#fff}
+.member-assembly-panel{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,2fr);align-items:center;gap:22px;padding:24px;border-radius:14px;background:var(--forest);color:#fff}
 .member-assembly-title{margin:0;color:inherit;font-family:Georgia,"Times New Roman",serif;font-size:clamp(23px,3vw,34px);line-height:1.15}
 .member-assembly-slots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 18px}
 .member-structure-role-card{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;gap:10px;min-width:0;color:inherit}
@@ -307,7 +307,7 @@
 .member-structure-role{min-width:0;margin:0;color:inherit;font-size:14px;font-weight:850;line-height:1.25;overflow-wrap:anywhere}
 .member-structure-description{min-width:0;margin:0;color:inherit;font-size:12px;line-height:1.4;opacity:.88;overflow-wrap:anywhere}
 .member-assembly-representatives{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.member-assembly-representative{display:flex;min-width:0;min-height:54px;align-items:center;justify-content:center;gap:8px;padding:8px;border-radius:10px;background:var(--deep);color:#fff;font-size:13px;font-weight:850;line-height:1.2}
+.member-assembly-representative{display:flex;min-width:0;min-height:54px;align-items:center;justify-content:center;gap:8px;padding:8px;border-radius:10px;background:var(--forest);color:#fff;font-size:13px;font-weight:850;line-height:1.2}
 .member-assembly-representative>span:last-child{min-width:0;overflow-wrap:anywhere}
 .member-class-panel{display:grid;gap:12px}
 .member-class-title{margin:0;color:var(--forest);font-size:17px}
@@ -317,7 +317,7 @@
 .member-class-intro{display:grid;justify-items:start;gap:8px;width:100%;margin-top:8px;text-align:left}
 .member-structure-arrow{height:34px;color:var(--forest);font-size:30px;font-weight:800;line-height:1}
 .member-class-card{display:grid;width:100%;min-height:210px;align-content:start;gap:12px;padding:12px;border-radius:14px;background:var(--green);color:#fff}
-.member-class-card-heading{display:flex;min-height:52px;align-items:center;gap:7px;padding:7px;border-radius:9px;background:var(--deep);color:#fff;font-size:12px;font-weight:850;line-height:1.2}
+.member-class-card-heading{display:flex;min-height:52px;align-items:center;gap:7px;padding:7px;border-radius:9px;background:var(--forest);color:#fff;font-size:12px;font-weight:850;line-height:1.2}
 .member-class-card-heading>span:last-child{min-width:0;overflow-wrap:anywhere}
 .member-student-icons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-items:center;gap:9px 5px;padding:0 6px}
 .member-person-icon.is-student{width:34px;height:37px}
