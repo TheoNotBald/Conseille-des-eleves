@@ -1,0 +1,34 @@
+name: Deploy technical backup function
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - supabase/functions/technical-backup/**
+      - .github/workflows/deploy-technical-backup.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-technical-backup
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Supabase CLI
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Deploy backup function
+        run: supabase functions deploy technical-backup --project-ref ogrlkjqwkukaxkngexpr

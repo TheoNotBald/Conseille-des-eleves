@@ -245,6 +245,20 @@ Deno.serve(async request => {
 
   try {
     if (action === "health") {
+      const { data: buckets, error: bucketsError } = await serviceClient.storage.listBuckets();
+      if (bucketsError) throw new Error(`Could not verify backup storage: ${bucketsError.message}`);
+      const requiredBuckets = [...backedUpBuckets, backupBucket];
+      const availableBuckets = new Set((buckets || []).map(bucket => bucket.name));
+      const missingBuckets = requiredBuckets.filter(bucket => !availableBuckets.has(bucket));
+      if (missingBuckets.length) {
+        throw new Error(`Required storage buckets are missing: ${missingBuckets.join(", ")}`);
+      }
+      const { error: backupsTableError } = await serviceClient
+        .from("technical_backups")
+        .select("id", { head: true, count: "exact" });
+      if (backupsTableError) {
+        throw new Error(`Could not verify backup database access: ${backupsTableError.message}`);
+      }
       return jsonResponse(200, { ready: true });
     }
 

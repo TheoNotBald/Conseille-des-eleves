@@ -739,6 +739,8 @@ body[data-theme="dark"] .custom-palette-editor{border-color:var(--line);backgrou
 .technical-panel-section>h2,.technical-subheading{margin:0;color:var(--forest)}
 .technical-panel-section>p{margin:0}
 .technical-status-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:12px}
+.technical-status-copy{display:grid;gap:4px;min-width:0}
+.technical-status-help{color:var(--muted);font-size:11px;font-weight:500;line-height:1.45}
 .technical-status-ok,.technical-status-pending{font-weight:800;text-align:right}
 .technical-status-ok{color:var(--forest)}
 .technical-status-pending{color:#8a4c24}

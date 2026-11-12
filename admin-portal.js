@@ -147,7 +147,14 @@
     technicalRestoreBackup:'Restaurer',
     technicalConfirmDeleteBackup:'Supprimer définitivement cette sauvegarde et ses fichiers ?',
     technicalConfirmRestoreBackup:'Cette restauration remplace les données actuelles des propositions, candidatures, vote, membres et réglages par ceux de la sauvegarde. Continuer ?',
-    technicalBackupUnavailable:'Pour activer les sauvegardes : appliquez la migration technique, déployez la fonction sécurisée et ajoutez les secrets Supabase Vault décrits dans le guide de configuration.',
+    technicalBackupUnavailable:'Pour activer les sauvegardes : appliquez la migration technique, déployez la fonction sécurisée et ajoutez les secrets supabase_project_url et supabase_service_role_key dans Vault. Ne collez jamais la clé de service dans ce site.',
+    technicalFunctionSetupHelp:'Ajoutez le secret SUPABASE_ACCESS_TOKEN aux paramètres Actions du dépôt, puis lancez le déploiement GitHub ci-dessous.',
+    technicalDeployFunction:'Ouvrir le déploiement dans GitHub',
+    technicalSecretsSetupHelp:'Dans Supabase Vault, ajoutez supabase_project_url et supabase_service_role_key. Ne collez jamais la clé de service dans ce site.',
+    technicalScheduleSetupHelp:'Une fois les prérequis configurés, activez les sauvegardes dans Réglages du site.',
+    technicalScheduleRefreshHelp:'Réenregistrez les réglages de sauvegarde après avoir configuré la fonction et les secrets Vault.',
+    technicalReadinessMigrationHelp:'Exécutez la migration 20261113030000_technical_backup_readiness.sql dans Supabase SQL Editor.',
+    technicalScheduleConfigured:'Configurées',
     technicalBackupCreated:'Sauvegarde créée.',
     technicalBackupDeleted:'Sauvegarde supprimée.',
     technicalBackupRestored:'Sauvegarde restaurée. La page va être rechargée.',
@@ -308,7 +315,14 @@
     technicalRestoreBackup:'Restore',
     technicalConfirmDeleteBackup:'Permanently delete this backup and its files?',
     technicalConfirmRestoreBackup:'This restore replaces current suggestions, candidacies, voting, members, and site settings with the selected backup. Continue?',
-    technicalBackupUnavailable:'To enable backups, apply the technical migration, deploy the secure function, and add the Supabase Vault secrets listed in the setup guide.',
+    technicalBackupUnavailable:'To enable backups, apply the technical migration, deploy the secure function, and add the supabase_project_url and supabase_service_role_key secrets in Vault. Never paste the service key into this site.',
+    technicalFunctionSetupHelp:'Add the SUPABASE_ACCESS_TOKEN repository Actions secret, then start the GitHub deployment below.',
+    technicalDeployFunction:'Open GitHub deployment',
+    technicalSecretsSetupHelp:'Add supabase_project_url and supabase_service_role_key in Supabase Vault. Never paste the service key into this site.',
+    technicalScheduleSetupHelp:'After prerequisites are configured, enable backups in Site settings.',
+    technicalScheduleRefreshHelp:'Save the backup settings again after configuring the function and Vault secrets.',
+    technicalReadinessMigrationHelp:'Run migration 20261113030000_technical_backup_readiness.sql in the Supabase SQL Editor.',
+    technicalScheduleConfigured:'Configured',
     technicalBackupCreated:'Backup created.',
     technicalBackupDeleted:'Backup deleted.',
     technicalBackupRestored:'Backup restored. The page will reload.',
@@ -487,9 +501,6 @@
     make('h1','',french?'Panneau technique':'Technical Panel'),
     make('p','',french?'Portail technique distinct de l’administration du site.':'Technical portal, separate from site administration.')
   );
-  const technicalBack=make('button','outline',french?'Retour aux paramètres':'Back to Settings');
-  technicalBack.type='button';
-  technicalBack.dataset.page='settings';
   const technicalAuthBar=make('div','admin-portal-auth');
   technicalAuthBar.hidden=true;
   const technicalIdentity=make('span','admin-portal-identity');
@@ -519,7 +530,7 @@
   technicalLogin.append(technicalLoginIntro,technicalLoginActions);
   const technicalPanelContent=make('div','technical-portal-content');
   technicalPanelContent.hidden=true;
-  technicalShell.append(technicalHeading,technicalBack,technicalAuthBar,technicalLogin,technicalPanelContent);
+  technicalShell.append(technicalHeading,technicalAuthBar,technicalLogin,technicalPanelContent);
   technicalPage.replaceChildren(technicalShell);
   const authCallbackParams=new URLSearchParams(window.location.search);
   const authCallbackHashParams=new URLSearchParams(window.location.hash.replace(/^#/,''));
@@ -2236,6 +2247,7 @@
     }else tables.logs.replaceChildren(make('p','site-empty-state',messages.noLogs));
     panels.logs.replaceChildren(tables.logs);
   };
+  let activeTechnicalTab='overview';
   const loadTechnicalPanel=async(panelClient=technicalClient,panel=technicalPanelContent)=>{
     if(!panelClient)throw new Error(messages.accessCheckFailed);
     const [{data:settings,error:settingsError},{data:accessList,error:accessError},{data:health,error:healthError}] = await Promise.all([
@@ -2246,28 +2258,105 @@
     ]);
     if(settingsError)throw settingsError;
     if(accessError)throw accessError;
-    panel.replaceChildren(make('p','site-admin-note',messages.technicalIntro));
+    const technicalBackupsReady=!healthError&&health?.ready===true;
+    const technicalSecretsReady=settings.scheduler_secrets_configured===true;
+    const technicalScheduleCheckAvailable=typeof settings.backup_schedule_configured==='boolean';
+    const technicalScheduleReady=settings.backup_schedule_configured===true;
+    const technicalTabNames=['overview','settings','backups','access','logs'];
+    const technicalTabLabels=french
+      ?['État technique','Réglages du site','Sauvegardes','Accès','Journaux']
+      :['System status','Site settings','Backups','Access','Logs'];
+    const technicalTabs=make('div','admin-portal-tabs technical-portal-tabs');
+    technicalTabs.setAttribute('role','tablist');
+    technicalTabs.setAttribute('aria-label',french?'Sections techniques':'Technical sections');
+    const technicalPanels=Object.fromEntries(technicalTabNames.map(name=>[name,make('section','admin-portal-panel technical-portal-panel')]));
+    const technicalPanelNodes=make('div','admin-portal-panels');
+    const selectTechnicalTab=name=>{
+      if(!technicalPanels[name])return;
+      activeTechnicalTab=name;
+      technicalTabNames.forEach(tabName=>{
+        const selected=tabName===name;
+        const tab=technicalTabs.querySelector(`[data-technical-tab="${tabName}"]`);
+        tab.setAttribute('aria-selected',String(selected));
+        tab.tabIndex=selected?0:-1;
+        technicalPanels[tabName].hidden=!selected;
+      });
+    };
+    technicalTabNames.forEach((name,index)=>{
+      const tab=button(technicalTabLabels[index],'technical-tab','admin-portal-tab');
+      tab.dataset.technicalTab=name;
+      tab.id=`technical-tab-${name}`;
+      tab.setAttribute('role','tab');
+      tab.setAttribute('aria-controls',`technical-panel-${name}`);
+      tab.setAttribute('aria-selected',String(name===activeTechnicalTab));
+      tab.tabIndex=name===activeTechnicalTab?0:-1;
+      technicalTabs.append(tab);
+      const tabPanel=technicalPanels[name];
+      tabPanel.id=`technical-panel-${name}`;
+      tabPanel.setAttribute('role','tabpanel');
+      tabPanel.setAttribute('aria-labelledby',tab.id);
+      tabPanel.tabIndex=0;
+      tabPanel.hidden=name!==activeTechnicalTab;
+      technicalPanelNodes.append(tabPanel);
+    });
+    technicalTabs.addEventListener('click',event=>{
+      const tab=event.target.closest('[data-technical-tab]');
+      if(tab&&technicalTabs.contains(tab))selectTechnicalTab(tab.dataset.technicalTab);
+    });
+    technicalTabs.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      const items=Array.from(technicalTabs.querySelectorAll('[role=tab]'));
+      const index=items.indexOf(document.activeElement);
+      const next=event.key==='Home'?0:event.key==='End'?items.length-1:
+        (index+(event.key==='ArrowRight'?1:-1)+items.length)%items.length;
+      items[next].focus();
+      selectTechnicalTab(items[next].dataset.technicalTab);
+    });
+    panel.replaceChildren(make('p','site-admin-note',messages.technicalIntro),technicalTabs,technicalPanelNodes);
     const statusSection=make('section','card technical-panel-section technical-status-section');
     statusSection.append(make('h2','',messages.technicalSetupStatus));
-    const addStatus=(label,ok,detail='')=>{
+    const addStatus=(label,ok,detail='',help='')=>{
       const row=make('div','technical-status-row');
       const indicator=make('span',ok?'technical-status-ok':'technical-status-pending',
         `${ok?messages.technicalStatusEnabled:messages.technicalStatusDisabled}${detail?` · ${detail}`:''}`);
-      row.append(make('strong','',label),indicator);
+      const copy=make('div','technical-status-copy');
+      copy.append(make('strong','',label));
+      const helpText=make('span','technical-status-help',help);
+      helpText.hidden=!help;
+      if(label===messages.technicalStatusFunction&&!ok){
+        const deployLink=document.createElement('a');
+        deployLink.href='https://github.com/TheoNotBald/Conseille-des-eleves/actions/workflows/deploy-technical-backup.yml';
+        deployLink.target='_blank';
+        deployLink.rel='noopener noreferrer';
+        deployLink.textContent=messages.technicalDeployFunction;
+        helpText.append(document.createElement('br'),deployLink);
+      }
+      copy.append(helpText);
+      row.append(copy,indicator);
       statusSection.append(row);
-      return indicator;
+      return {indicator,help:helpText};
     };
     addStatus(messages.technicalStatusDatabase,true);
-    addStatus(messages.technicalStatusFunction,!healthError&&health?.ready===true);
-    addStatus(messages.technicalStatusScheduler,settings.scheduler_secrets_configured===true);
+    addStatus(messages.technicalStatusFunction,technicalBackupsReady,'',
+      technicalBackupsReady?'':messages.technicalFunctionSetupHelp);
+    addStatus(messages.technicalStatusScheduler,technicalSecretsReady,'',
+      technicalSecretsReady?'':messages.technicalSecretsSetupHelp);
     const backupStatus=addStatus(
       messages.technicalBackupsTitle,
-      settings.backup_enabled===true,
-      settings.backup_enabled===true
-        ?`${settings.backup_frequency} · ${String(settings.backup_time||'02:00').slice(0,5)}`
-        :french?'Désactivées':'Disabled'
+      settings.backup_enabled===true&&technicalScheduleReady,
+      settings.backup_enabled===true&&technicalScheduleReady
+        ?`${messages.technicalScheduleConfigured} · ${settings.backup_frequency} · ${String(settings.backup_time||'02:00').slice(0,5)}`
+        :settings.backup_enabled===true
+          ?messages.technicalStatusDisabled
+          :french?'Désactivées':'Disabled',
+      settings.backup_enabled===true&&technicalScheduleReady?''
+        :!technicalScheduleCheckAvailable
+          ?messages.technicalReadinessMigrationHelp
+          :settings.backup_enabled===true
+          ?messages.technicalScheduleRefreshHelp
+          :messages.technicalScheduleSetupHelp
     );
-    panel.append(statusSection);
+    technicalPanels.overview.append(statusSection);
 
     const settingsSection=make('section','card technical-panel-section');
     settingsSection.append(make('h2','',messages.technicalSettingsTitle));
@@ -2343,10 +2432,14 @@
     const slogan=addField(messages.technicalSlogan,'text',visuals.slogan||'Être · Faire · Agir',{maxLength:120});
     settingsForm.append(make('h3','technical-subheading',messages.technicalBackupsTitle));
     const backupsEnabled=addCheckbox(messages.technicalBackupsEnable,settings.backup_enabled===true);
+    backupsEnabled.disabled=(!technicalBackupsReady||!technicalSecretsReady||!technicalScheduleCheckAvailable)
+      &&settings.backup_enabled!==true;
     const frequency=addSelect(messages.technicalFrequency,['daily','weekly','monthly'],settings.backup_frequency||'daily');
     const backupTime=addField(messages.technicalTime,'time',settings.backup_time||'02:00');
     const retention=addField(messages.technicalRetention,'number',settings.backup_retention||10,{min:10,max:100});
-    settingsForm.append(make('p','site-admin-note',messages.technicalBackupUnavailable));
+    if(!technicalBackupsReady||!technicalSecretsReady||!technicalScheduleCheckAvailable){
+      settingsForm.append(make('p','site-admin-note',messages.technicalBackupUnavailable));
+    }
     const settingsFeedback=make('p','site-status');
     settingsFeedback.hidden=true;
     const settingsSave=make('button','primary','');
@@ -2379,10 +2472,13 @@
         delete settingsForm.dataset.dirty;
         setSuccess(settingsFeedback,messages.technicalSaved);
         const backupsActive=backupsEnabled.checked;
-        backupStatus.className=backupsActive?'technical-status-ok':'technical-status-pending';
-        backupStatus.textContent=backupsActive
-          ?`${messages.technicalStatusEnabled} · ${frequency.value} · ${backupTime.value}`
+        backupStatus.indicator.className=backupsActive?'technical-status-ok':'technical-status-pending';
+        backupStatus.indicator.textContent=backupsActive
+          ?`${messages.technicalScheduleConfigured} · ${frequency.value} · ${backupTime.value}`
           :`${messages.technicalStatusDisabled} · ${french?'Désactivées':'Disabled'}`;
+        backupStatus.help.textContent=backupsActive?'':messages.technicalScheduleSetupHelp;
+        backupStatus.help.hidden=backupsActive;
+        if(backupsActive)backupsEnabled.disabled=false;
         await refreshPublicSiteSettings();
       }catch(error){
         reportError(error);
@@ -2390,7 +2486,7 @@
       }finally{settingsSave.disabled=false}
     });
     settingsSection.append(settingsForm);
-    panel.append(settingsSection);
+    technicalPanels.settings.append(settingsSection);
 
     const accessSection=make('section','card technical-panel-section');
     accessSection.append(
@@ -2481,7 +2577,7 @@
     });
     if(!accessList?.length)accessTable.append(make('p','site-empty-state',messages.technicalNoAccess));
     accessSection.append(accessForm,accessTable);
-    panel.append(accessSection);
+    technicalPanels.access.append(accessSection);
 
     const logsSection=make('section','card technical-panel-section');
     logsSection.append(make('h2','',messages.technicalLogsTitle));
@@ -2513,13 +2609,16 @@
       wrapper.append(table);
       logsSection.append(wrapper);
     }else logsSection.append(make('p','site-empty-state',messages.technicalNoLogs));
-    panel.append(logsSection);
+    technicalPanels.logs.append(logsSection);
 
     const backupsSection=make('section','card technical-panel-section');
     backupsSection.append(make('h2','',messages.technicalBackupsList));
     const backupFeedback=make('p','site-status');
     backupFeedback.hidden=true;
     const runBackup=button(messages.technicalRunBackup,'technical-backup-create','primary');
+    runBackup.disabled=!technicalBackupsReady;
+    if(!technicalBackupsReady)backupFeedback.textContent=messages.technicalFunctionSetupHelp;
+    backupFeedback.hidden=technicalBackupsReady;
     runBackup.addEventListener('click',async()=>{
       runBackup.disabled=true;
       try{
@@ -2548,6 +2647,7 @@
       const controls=make('div','technical-backup-actions');
       if(backup.status==='complete'){
         const restore=button(messages.technicalRestoreBackup,'technical-backup-restore');
+        restore.disabled=!technicalBackupsReady;
         restore.addEventListener('click',async()=>{
           if(!window.confirm(messages.technicalConfirmRestoreBackup))return;
           restore.disabled=true;
@@ -2562,6 +2662,7 @@
         controls.append(restore);
       }
       const remove=button(messages.technicalDeleteBackup,'technical-backup-delete');
+      remove.disabled=!technicalBackupsReady;
       remove.addEventListener('click',async()=>{
         if(!window.confirm(messages.technicalConfirmDeleteBackup))return;
         remove.disabled=true;
@@ -2579,7 +2680,7 @@
     });
     if(!backups?.length)backupsList.append(make('p','site-empty-state',messages.technicalNoLogs));
     backupsSection.append(backupsList);
-    panel.append(backupsSection);
+    technicalPanels.backups.append(backupsSection);
   };
   const loadPanel=async name=>{
     try{
