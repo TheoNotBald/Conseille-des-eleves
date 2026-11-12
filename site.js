@@ -180,7 +180,7 @@
       noProjectsText:'Les projets approuvés par le Conseil des élèves apparaîtront ici.',
       noNewsTitle:'Aucune actualité pour le moment',
       noNewsText:'Les actualités, les mises à jour des projets terminés et les comptes rendus approuvés seront publiés ici lorsqu’ils seront disponibles.',
-      peopleTitle:'Représentants',
+      peopleTitle:'Ceux qui vous représentent',
       peopleText:'Les représentants assurent le lien entre les classes et le Conseil des élèves.',
       projectIntro:'Les idées approuvées par le Conseil des élèves sont réunies ici.',
       markCompleted:'Marquer comme terminé',
