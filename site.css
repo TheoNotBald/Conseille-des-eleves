@@ -615,7 +615,7 @@ body[data-theme="dark"] .custom-palette-editor{border-color:var(--line);backgrou
   .member-secondary-reps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
   .member-class-reps-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-.charter-template-frame{width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(24px,6vw,80px);background:var(--forest)}
+.charter-template-frame{width:100vw;margin:-25px 0 0 calc(50% - 50vw);padding:clamp(24px,6vw,80px);background:color-mix(in srgb,var(--green) 68%,#008b54)}
 .charter-template-note{max-width:1180px;margin:0 auto 14px;color:#fff;font-size:12px}
 .charter-template-articles{display:grid;gap:28px}
 .charter-template-panel{width:min(100%,1200px);margin:0 auto;padding:clamp(24px,4vw,48px);border:6px solid var(--line);border-radius:58px;background:var(--paper)}
