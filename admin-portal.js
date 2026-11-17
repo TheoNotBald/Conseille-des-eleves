@@ -21,25 +21,33 @@
     accessCheckFailed:'Google a confirmé votre connexion, mais Supabase n’a pas pu vérifier votre rôle. Vérifiez que la migration 20261113010000_technical_control_panel.sql a été exécutée dans le bon projet, puis réessayez.',
     tabs:['Proposition','Vote','Candidature','Membres','Journaux'],
     memberTab:'Membres',
-    memberIntro:'Ajoutez les personnes choisies, leur photo et leur groupe. Les photos et les fiches sont visibles publiquement sur la page Membres.',
+    memberIntro:'Gérez les photos, les groupes et les rôles. Chaque section de représentants accepte jusqu’à 30 membres. « Retirer » masque la personne en gardant son emplacement; « Supprimer » retire aussi l’emplacement de la page Membres.',
     memberAssemblyTitle:'Membres de l’Assemblée citoyenne',
     memberSecondaryTitle:'Représentants de niveau',
     memberClassTitle:'Représentants de classe',
     memberNameField:'Nom affiché',
     memberGroupField:'Groupe',
     memberGroupHelp:'Ce groupe s’affichera dans sa propre ligne sous le nom dans l’onglet Membres.',
+    memberAdd:'Ajouter un membre',
     memberPositionField:'Poste ou rôle',
     memberPermissionDenied:'Supabase refuse l’enregistrement des fiches Membres. Exécutez 20261113040000_member_profiles_permissions.sql dans SQL Editor et vérifiez que votre compte a le rôle admin.',
     memberPhotoField:'Photo individuelle (JPG, PNG ou WebP, 50 Mo maximum)',
+    memberPhotoRemove:'Retirer la photo',
+    memberPhotoRemoveConfirm:'Retirer cette photo de la fiche ?',
+    memberAddLimit:'Tous les emplacements de cette catégorie sont utilisés.',
     memberSave:'Enregistrer la fiche',
     memberRemove:'Retirer de la page Membres',
+    memberPublish:'Publier sur la page Membres',
     memberSaveSuccess:'La fiche a été publiée sur la page Membres.',
     memberRemoveSuccess:'La fiche a été retirée de la page Membres.',
     memberConfirmRemove:'Retirer cette personne de la page Membres ?',
+    memberDelete:'Supprimer le membre',
+    memberConfirmDelete:'Supprimer définitivement ce membre et son emplacement de la page Membres ?',
+    memberDeleteSuccess:'Le membre a été supprimé de la page Membres.',
     memberPhotoCleanupError:'La fiche est mise à jour, mais l’ancienne photo n’a pas pu être supprimée.',
     memberUploadCleanupError:'L’enregistrement a échoué et la nouvelle photo temporaire n’a pas pu être supprimée.',
     memberPhotoRemoveError:'La fiche a été retirée, mais la photo n’a pas pu être supprimée du stockage Supabase.',
-    memberMigrationMissing:'La table des membres ou ses nouveaux champs ne sont pas configurés. Exécutez 20261113000000_member_profiles.sql et 20261113050000_member_profile_groups.sql dans Supabase SQL Editor.',
+    memberMigrationMissing:'La table des membres ou ses nouveaux champs ne sont pas configurés. Exécutez les migrations membres de 20261113000000_member_profiles.sql à 20261116000000_member_rep_slots.sql dans Supabase SQL Editor.',
     memberLoadError:'Les membres n’ont pas pu être chargés. Vérifiez Supabase et exécutez 20261113050000_member_profile_groups.sql si ce n’est pas déjà fait.',
     search:'Rechercher une proposition',
     statuses:{pending:'À examiner',approved:'Approuvée',rejected:'Refusée'},
@@ -118,6 +126,22 @@
     candidatesTab:'Candidatures',
     technicalIntro:'Les réglages techniques sont vérifiés par Supabase et accessibles uniquement aux responsables techniques autorisés.',
     technicalSettingsTitle:'Réglages du site',
+    technicalContentTab:'Contenu',
+    technicalContentTitle:'Contenu du site',
+    technicalCharterTitle:'Charte',
+    technicalCharterLanguagesLabel:'Langue de modification de la charte',
+    technicalCharterNote:'Note de la charte',
+    technicalCharterArticle:'Article',
+    technicalCharterSection:'Section',
+    technicalAddArticle:'Ajouter un article',
+    technicalAddSection:'Ajouter une section',
+    technicalRemoveArticle:'Supprimer cet article',
+    technicalRemoveSection:'Supprimer cette section',
+    technicalCharterSave:'Enregistrer le contenu',
+    technicalCharterSaved:'Le contenu de la charte a été enregistré.',
+    technicalCharterRequired:'Chaque article et section doit avoir un titre français et anglais. Le texte des sections doit être fourni dans les deux langues.',
+    technicalCharterMigration:'Appliquez la migration 20261113060000_technical_content_management.sql dans Supabase SQL Editor pour activer la gestion du contenu.',
+    technicalCharterLanguage:{fr:'Français',en:'Anglais'},
     technicalIdeasOpen:'Accepter les propositions',
     technicalCandidaciesOpen:'Accepter les candidatures',
     technicalColors:'Couleurs principales',
@@ -197,25 +221,33 @@
     accessCheckFailed:'Google confirmed your sign-in, but Supabase could not check your role. Confirm that migration 20261113010000_technical_control_panel.sql ran in the correct project, then try again.',
     tabs:['Proposals','Vote','Candidacies','Members','Logs'],
     memberTab:'Members',
-    memberIntro:'Add selected people, their photos, and their group. Photos and profiles are publicly visible on the Members page.',
+    memberIntro:'Manage photos, groups, and roles. Each representative section allows up to 30 members. “Remove” hides the person but keeps the slot; “Delete” also removes the slot from the Members page.',
     memberAssemblyTitle:'Student Assembly members',
     memberSecondaryTitle:'Level representatives',
     memberClassTitle:'Class representatives',
     memberNameField:'Display name',
     memberGroupField:'Group',
     memberGroupHelp:'This group will appear on its own line below the name on the Members tab.',
+    memberAdd:'Add member',
     memberPositionField:'Position or role',
     memberPermissionDenied:'Supabase denied access to member profiles. Run 20261113040000_member_profiles_permissions.sql in SQL Editor and confirm your account has the admin role.',
     memberPhotoField:'Individual photo (JPG, PNG, or WebP, up to 50 MB)',
+    memberPhotoRemove:'Remove photo',
+    memberPhotoRemoveConfirm:'Remove this photo from the profile?',
+    memberAddLimit:'All member slots in this category are in use.',
     memberSave:'Save member profile',
     memberRemove:'Remove from Members page',
+    memberPublish:'Publish on Members page',
     memberSaveSuccess:'The profile is now published on the Members page.',
     memberRemoveSuccess:'The profile was removed from the Members page.',
     memberConfirmRemove:'Remove this person from the Members page?',
+    memberDelete:'Delete member',
+    memberConfirmDelete:'Permanently remove this member and their slot from the Members page?',
+    memberDeleteSuccess:'The member was removed from the Members page.',
     memberPhotoCleanupError:'The profile was saved, but its previous photo could not be removed.',
     memberUploadCleanupError:'The profile could not be saved, and its temporary photo could not be removed.',
     memberPhotoRemoveError:'The profile was removed, but its photo could not be deleted from Supabase Storage.',
-    memberMigrationMissing:'The members table or its new fields are not set up yet. Run 20261113000000_member_profiles.sql and 20261113050000_member_profile_groups.sql in the Supabase SQL Editor.',
+    memberMigrationMissing:'The members table or its new fields are not set up yet. Run the member migrations from 20261113000000_member_profiles.sql through 20261116000000_member_rep_slots.sql in the Supabase SQL Editor.',
     memberLoadError:'Members could not be loaded. Check Supabase and run 20261113050000_member_profile_groups.sql if you have not already.',
     search:'Search proposals',
     statuses:{pending:'Needs review',approved:'Approved',rejected:'Declined'},
@@ -294,6 +326,22 @@
     candidatesTab:'Candidacies',
     technicalIntro:'Technical controls are enforced by Supabase and available only to authorized technical administrators.',
     technicalSettingsTitle:'Site settings',
+    technicalContentTab:'Content',
+    technicalContentTitle:'Site content',
+    technicalCharterTitle:'Charter',
+    technicalCharterLanguagesLabel:'Charter editing language',
+    technicalCharterNote:'Charter note',
+    technicalCharterArticle:'Article',
+    technicalCharterSection:'Section',
+    technicalAddArticle:'Add article',
+    technicalAddSection:'Add section',
+    technicalRemoveArticle:'Remove this article',
+    technicalRemoveSection:'Remove this section',
+    technicalCharterSave:'Save content',
+    technicalCharterSaved:'Charter content saved.',
+    technicalCharterRequired:'Each article and section needs a French and English title. Section text must be provided in both languages.',
+    technicalCharterMigration:'Apply migration 20261113060000_technical_content_management.sql in Supabase SQL Editor to enable content management.',
+    technicalCharterLanguage:{fr:'French',en:'English'},
     technicalIdeasOpen:'Accept suggestions',
     technicalCandidaciesOpen:'Accept candidacies',
     technicalColors:'Core colors',
@@ -2040,7 +2088,9 @@
   const renderMemberEditorCard=(slot,record)=>{
     const card=make('article','admin-member-editor-card');
     let currentPhotoPath=record?.photo_path||null;
-    let hasProfile=Boolean(record);
+    let hasProfile=Boolean(record&&!record.is_deleted);
+    let isPublished=record?.is_published!==false;
+    let removeCurrentPhoto=false;
     let previewObjectUrl='';
     const preview=make('article',`member-profile-card member-admin-preview${slot.category==='secondary'?' member-secondary-rep-card':''}${slot.category==='class'?' member-class-rep-card':''}`);
     const placeholder=make('div','member-profile-photo-placeholder',french?'Photo à venir':'Photo coming soon');
@@ -2090,7 +2140,12 @@
     photoInput.type='file';
     photoInput.accept='image/jpeg,image/png,image/webp';
     photoLabel.append(photoInput);
-    form.append(photoLabel);
+    const photoRemoveButton=button(messages.memberPhotoRemove,'remove-member-photo','secondary');
+    photoRemoveButton.classList.add('admin-member-photo-remove');
+    photoRemoveButton.hidden=!currentPhotoPath;
+    const photoControls=make('div','admin-member-photo-controls');
+    photoControls.append(photoLabel,photoRemoveButton);
+    form.append(photoControls);
     const feedback=make('p','site-status');
     feedback.hidden=true;
     feedback.setAttribute('role','status');
@@ -2098,10 +2153,17 @@
     const actions=make('div','admin-member-editor-actions');
     const saveButton=button(messages.memberSave,'save-member','primary');
     saveButton.type='submit';
+    saveButton.hidden=slot.category==='assembly'&&!hasProfile;
     const removeButton=button(messages.memberRemove,'remove-member','secondary');
-    removeButton.hidden=!hasProfile;
-    actions.append(saveButton,removeButton);
+    removeButton.textContent=isPublished?messages.memberRemove:messages.memberPublish;
+    removeButton.classList.add('admin-member-retire');
+    removeButton.hidden=slot.category==='assembly'||!hasProfile;
+    const deleteButton=button(messages.memberDelete,'delete-member','secondary');
+    deleteButton.classList.add('admin-member-remove');
+    deleteButton.hidden=slot.category==='assembly';
+    actions.append(saveButton,removeButton,deleteButton);
     form.append(feedback,actions);
+    if(!hasProfile&&slot.category!=='assembly')form.dataset.interacting='true';
     const updatePreview=()=>{
       previewName.textContent=nameInput.value.trim()||(french?'Nom à confirmer':'Name to be confirmed');
       previewGroup.textContent=groupInput.value.trim();
@@ -2115,17 +2177,48 @@
     form.addEventListener('change',()=>{form.dataset.dirty='true'});
     photoInput.addEventListener('change',()=>{
       const file=photoInput.files?.[0];
-      if(!file)return;
+      if(!file){
+        photoRemoveButton.hidden=!currentPhotoPath;
+        return;
+      }
       if(file.size>50*1024*1024||!['image/jpeg','image/png','image/webp'].includes(file.type)){
         photoInput.value='';
         setError(feedback,new Error(messages.photoError));
         return;
       }
+      removeCurrentPhoto=false;
       if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);
       previewObjectUrl=URL.createObjectURL(file);
       image.src=previewObjectUrl;
       image.hidden=false;
       placeholder.hidden=true;
+      photoRemoveButton.hidden=false;
+      form.dataset.dirty='true';
+    });
+    photoRemoveButton.addEventListener('click',()=>{
+      if(photoInput.files?.length){
+        photoInput.value='';
+        if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
+        if(currentPhotoPath&&!removeCurrentPhoto){
+          image.src=requireClient().storage.from('member-photos').getPublicUrl(currentPhotoPath).data.publicUrl;
+          image.hidden=false;
+          placeholder.hidden=true;
+        }else{
+          image.hidden=true;
+          image.removeAttribute('src');
+          placeholder.hidden=false;
+        }
+        photoRemoveButton.hidden=!currentPhotoPath;
+        form.dataset.dirty='true';
+        return;
+      }
+      if(!currentPhotoPath||removeCurrentPhoto)return;
+      if(!window.confirm(messages.memberPhotoRemoveConfirm))return;
+      removeCurrentPhoto=true;
+      image.hidden=true;
+      image.removeAttribute('src');
+      placeholder.hidden=false;
+      photoRemoveButton.hidden=true;
       form.dataset.dirty='true';
     });
     form.addEventListener('submit',async event=>{
@@ -2143,6 +2236,8 @@
       let photoUploaded=false;
       let profileSaved=false;
       const oldPhotoPath=currentPhotoPath;
+      const photoWasRemoved=removeCurrentPhoto;
+      const nextPhotoPath=()=>removeCurrentPhoto?null:uploadedPath||currentPhotoPath;
       saveButton.disabled=true;
       try{
         if(file){
@@ -2158,13 +2253,29 @@
           group_name:groupLabel,
           role_label:positionLabel,
           group_label:positionLabel,
-          photo_path:uploadedPath||currentPhotoPath
+          photo_path:nextPhotoPath(),
+          is_published:true,
+          is_deleted:false
         },{onConflict:'slot_key'}).select('slot_key').single();
         if(result.error)throw result.error;
         profileSaved=true;
-        currentPhotoPath=uploadedPath||currentPhotoPath;
+        currentPhotoPath=nextPhotoPath();
+        removeCurrentPhoto=false;
         hasProfile=true;
+        isPublished=true;
         form.dataset.photoPath=currentPhotoPath||'';
+        if(uploadedPath||!currentPhotoPath){
+          if(currentPhotoPath){
+            image.src=requireClient().storage.from('member-photos').getPublicUrl(currentPhotoPath).data.publicUrl;
+            image.hidden=false;
+            placeholder.hidden=true;
+          }else{
+            image.hidden=true;
+            image.removeAttribute('src');
+            placeholder.hidden=false;
+          }
+        }
+        photoRemoveButton.hidden=!currentPhotoPath;
         if(uploadedPath){
           image.src=requireClient().storage.from('member-photos').getPublicUrl(uploadedPath).data.publicUrl;
           image.hidden=false;
@@ -2173,15 +2284,21 @@
         delete form.dataset.dirty;
         photoInput.value='';
         removeButton.hidden=false;
+        removeButton.textContent=messages.memberRemove;
+        removeButton.hidden=slot.category==='assembly';
         setSuccess(feedback,messages.memberSaveSuccess);
+        delete form.dataset.interacting;
         if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
         await refreshPublicMembers();
-        if(uploadedPath&&oldPhotoPath){
+        if((uploadedPath||photoWasRemoved)&&oldPhotoPath){
           await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoCleanupError);
         }
+        if(!record)await loadMembers();
       }catch(error){
         const displayedError=error?.code==='42501'
           ?new Error(messages.memberPermissionDenied)
+          :error?.code==='23514'&&error?.message==='member_profiles_category_limit_exceeded'
+            ?new Error(messages.memberAddLimit)
           :['42703','PGRST204'].includes(error?.code)
             ?new Error(messages.memberMigrationMissing)
             :error;
@@ -2196,39 +2313,86 @@
     });
     removeButton.addEventListener('click',async()=>{
       if(!hasProfile)return;
-      if(!window.confirm(messages.memberConfirmRemove))return;
+      const nextPublished=!isPublished;
+      if(isPublished&&!window.confirm(messages.memberConfirmRemove))return;
       removeButton.disabled=true;
+      form.dataset.interacting='true';
       try{
-        const result=await requireClient().from('member_profiles').delete().eq('slot_key',slot.slotKey).select('slot_key').maybeSingle();
+        const result=await requireClient().from('member_profiles')
+          .update({is_published:nextPublished})
+          .eq('slot_key',slot.slotKey)
+          .select('slot_key')
+          .maybeSingle();
         if(result.error)throw result.error;
+        if(!result.data)throw new Error(messages.saveError);
+        isPublished=nextPublished;
+        removeButton.textContent=isPublished?messages.memberRemove:messages.memberPublish;
+        setSuccess(feedback,isPublished?messages.memberSaveSuccess:messages.memberRemoveSuccess);
+        await refreshPublicMembers();
+        if(!form.dataset.dirty)delete form.dataset.interacting;
+      }catch(error){setError(feedback,error);reportError(error)}
+      finally{removeButton.disabled=false}
+    });
+    deleteButton.addEventListener('click',async()=>{
+      if(!window.confirm(messages.memberConfirmDelete))return;
+      deleteButton.disabled=true;
+      form.dataset.interacting='true';
+      if(!hasProfile){
+        if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
+        const add=renderMemberAddCard(slot,slot.category==='class'?'member-class-rep-card':'member-secondary-rep-card',(buttonElement,nextSlot)=>{
+          buttonElement.replaceWith(renderMemberEditorCard(nextSlot,null));
+        });
+        card.replaceWith(add);
+        return;
+      }
+      try{
+        const result=await requireClient().from('member_profiles')
+          .update({
+            display_name:'Deleted',
+            group_name:'',
+            group_label:slot.roleLabel,
+            role_label:slot.roleLabel,
+            is_published:false,
+            is_deleted:true,
+            photo_path:null
+          })
+          .eq('slot_key',slot.slotKey)
+          .select('slot_key')
+          .maybeSingle();
+        if(result.error)throw result.error;
+        if(!result.data)throw new Error(messages.saveError);
         const oldPhotoPath=currentPhotoPath;
         currentPhotoPath=null;
         hasProfile=false;
+        isPublished=false;
         if(previewObjectUrl){URL.revokeObjectURL(previewObjectUrl);previewObjectUrl=''}
-        form.dataset.photoPath='';
-        nameInput.value='';
-        groupInput.value=slot.groupLabel||'';
-        positionInput.value=slot.roleLabel;
-        photoInput.value='';
-        removeButton.hidden=true;
         delete form.dataset.dirty;
-        updatePreview();
-        image.hidden=true;
-        image.removeAttribute('src');
-        placeholder.hidden=false;
-        setSuccess(feedback,messages.memberRemoveSuccess);
+        delete form.dataset.interacting;
         await refreshPublicMembers();
+        await loadMembers();
+        let photoCleanupFailed=false;
         if(oldPhotoPath){
-          await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoRemoveError);
+          const cleaned=await removeMemberPhoto(oldPhotoPath,feedback,messages.memberPhotoRemoveError);
+          photoCleanupFailed=!cleaned;
         }
+        if(photoCleanupFailed)setError(state,new Error(messages.memberPhotoRemoveError));
+        else setSuccess(state,messages.memberDeleteSuccess);
       }catch(error){setError(feedback,error);reportError(error)}
-      finally{removeButton.disabled=false}
+      finally{deleteButton.disabled=false}
     });
     card.append(preview,form);
     memberEditorCleanup.set(card,()=>{
       if(previewObjectUrl)URL.revokeObjectURL(previewObjectUrl);
     });
     return card;
+  };
+  const renderMemberAddCard=(slot,extraClass,openEditor)=>{
+    const add=button('', 'admin-member-add-card');
+    add.classList.add('member-profile-card');
+    if(extraClass)add.classList.add(...extraClass.split(/\s+/).filter(Boolean));
+    add.append(make('span','admin-member-add-icon','+'),make('span','',messages.memberAdd));
+    add.addEventListener('click',()=>openEditor(add,slot));
+    return add;
   };
   const loadMembers=async()=>{
     const slots=window.cdeccMemberSlotDefinitions;
@@ -2247,20 +2411,53 @@
       const section=make('section','admin-members-section');
       section.append(make('h2','member-profile-title',memberGroupTitle(category)));
       const categorySlots=slots.filter(slot=>slot.category===category);
+      const activeProfiles=categorySlots.filter(slot=>{
+        const record=records.get(slot.slotKey);
+        return record&&!record.is_deleted;
+      });
       if(category==='class'){
+        const activePerLevel=new Map(Array.from({length:5},(_,index)=>index+1).map(level=>[
+          level,
+          activeProfiles.filter(slot=>slot.level===level).length
+        ]));
+        const nextSlot=activeProfiles.length<30
+          ?categorySlots
+            .filter(slot=>!records.has(slot.slotKey)||records.get(slot.slotKey).is_deleted)
+            .sort((a,b)=>(activePerLevel.get(a.level)-activePerLevel.get(b.level))||a.level-b.level||a.representativeIndex-b.representativeIndex)[0]
+          :null;
         for(let level=1;level<=5;level++){
           const levelSection=make('div','member-class-reps-level admin-members-level');
           levelSection.append(make('h3','member-class-reps-level-title',messages.grades[level-1]));
           const grid=make('div','member-class-reps-grid');
-          categorySlots.filter(slot=>slot.level===level).forEach(slot=>
+          const levelSlots=categorySlots.filter(slot=>slot.level===level);
+          levelSlots.filter(slot=>records.has(slot.slotKey)&&!records.get(slot.slotKey).is_deleted).forEach(slot=>
             grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey)))
           );
+          if(nextSlot?.level===level)grid.append(renderMemberAddCard(nextSlot,'member-class-rep-card',(add,slot)=>{
+            add.replaceWith(renderMemberEditorCard(slot,null));
+          }));
           levelSection.append(grid);
           section.append(levelSection);
         }
       }else{
         const grid=make('div',category==='assembly'?'member-profile-grid':'member-secondary-reps-grid');
-        categorySlots.forEach(slot=>grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey))));
+        if(category==='assembly'){
+          categorySlots.forEach(slot=>grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey))));
+        }else{
+          categorySlots.filter(slot=>records.has(slot.slotKey)&&!records.get(slot.slotKey).is_deleted).forEach(slot=>
+            grid.append(renderMemberEditorCard(slot,records.get(slot.slotKey)))
+          );
+          const activePerLevel=new Map(Array.from({length:5},(_,index)=>index+1).map(level=>[
+            level,
+            activeProfiles.filter(slot=>slot.level===level).length
+          ]));
+          const nextSlot=categorySlots
+            .filter(slot=>!records.has(slot.slotKey)||records.get(slot.slotKey).is_deleted)
+            .sort((a,b)=>(activePerLevel.get(a.level)-activePerLevel.get(b.level))||a.level-b.level||a.representativeIndex-b.representativeIndex)[0];
+          if(activeProfiles.length<30&&nextSlot)grid.append(renderMemberAddCard(nextSlot,'member-secondary-rep-card',(add,slot)=>{
+            add.replaceWith(renderMemberEditorCard(slot,null));
+          }));
+        }
         section.append(grid);
       }
       panel.append(section);
@@ -2333,14 +2530,15 @@
     ]);
     if(settingsError)throw settingsError;
     if(accessError)throw accessError;
+    const contentSettingsAvailable=Object.hasOwn(settings,'charter_content');
     const technicalBackupsReady=!healthError&&health?.ready===true;
     const technicalSecretsReady=settings.scheduler_secrets_configured===true;
     const technicalScheduleCheckAvailable=typeof settings.backup_schedule_configured==='boolean';
     const technicalScheduleReady=settings.backup_schedule_configured===true;
-    const technicalTabNames=['overview','settings','backups','access','logs'];
+    const technicalTabNames=['overview','settings','content','backups','access','logs'];
     const technicalTabLabels=french
-      ?['État technique','Réglages du site','Sauvegardes','Accès','Journaux']
-      :['System status','Site settings','Backups','Access','Logs'];
+      ?['État technique','Réglages du site',messages.technicalContentTab,'Sauvegardes','Accès','Journaux']
+      :['System status','Site settings',messages.technicalContentTab,'Backups','Access','Logs'];
     const technicalTabs=make('div','admin-portal-tabs technical-portal-tabs');
     technicalTabs.setAttribute('role','tablist');
     technicalTabs.setAttribute('aria-label',french?'Sections techniques':'Technical sections');
@@ -2520,6 +2718,7 @@
     const logoUrl=addField(messages.technicalLogo,'url',visuals.logo_url||'',{maxLength:1000});
     const heroUrl=addField(messages.technicalHero,'url',visuals.hero_url||'',{maxLength:1000});
     const slogan=addField(messages.technicalSlogan,'text',visuals.slogan||'Être · Faire · Agir',{maxLength:120});
+    if(!contentSettingsAvailable)settingsForm.append(make('p','site-admin-note',messages.technicalCharterMigration));
     settingsForm.append(make('h3','technical-subheading',messages.technicalBackupsTitle));
     const backupsEnabled=addCheckbox(messages.technicalBackupsEnable,settings.backup_enabled===true);
     backupsEnabled.disabled=(!technicalBackupsReady||!technicalSecretsReady||!technicalScheduleCheckAvailable)
@@ -2542,6 +2741,7 @@
     const saveTechnicalSettings=async(next,successMessage)=>{
       const {error}=await panelClient.rpc('update_technical_settings',{p_settings:next});
       if(error)throw error;
+      Object.assign(settings,next);
       delete settingsForm.dataset.dirty;
       setSuccess(settingsFeedback,successMessage);
       const backupsActive=next.backup_enabled===true;
@@ -2574,6 +2774,10 @@
           hero_url:heroUrl.value.trim(),
           slogan:slogan.value.trim()
         },
+        ...(contentSettingsAvailable?{
+          charter_content:settings.charter_content?.articles?.length
+            ?settings.charter_content:window.cdeccDefaultCharterContent
+        }:{}),
         backup_enabled:backupsEnabled.checked,
         backup_frequency:frequency.value,
         backup_time:backupTime.value,
@@ -2600,6 +2804,10 @@
           hero_url:'',
           slogan:'Être · Faire · Agir'
         },
+        ...(contentSettingsAvailable?{
+          charter_content:settings.charter_content?.articles?.length
+            ?settings.charter_content:window.cdeccDefaultCharterContent
+        }:{}),
         backup_enabled:false,
         backup_frequency:'daily',
         backup_time:'02:00',
@@ -2627,6 +2835,214 @@
     });
     settingsSection.append(settingsForm);
     technicalPanels.settings.append(settingsSection);
+
+    const defaultCharterContent=window.cdeccDefaultCharterContent||{note:{fr:'',en:''},articles:[]};
+    const charterContent=settings.charter_content?.articles?.length
+      ?settings.charter_content:defaultCharterContent;
+    const charterDraft=JSON.parse(JSON.stringify(charterContent));
+    const contentSection=make('section','card technical-panel-section');
+    contentSection.append(
+      make('h2','',messages.technicalContentTitle),
+      make('h3','technical-subheading',messages.technicalCharterTitle)
+    );
+    const charterMigrationHelp=make('p','site-admin-note',messages.technicalCharterMigration);
+    charterMigrationHelp.hidden=contentSettingsAvailable;
+    contentSection.append(charterMigrationHelp);
+    const charterForm=make('form','technical-charter-form');
+    let activeCharterLanguage='fr';
+    const charterLanguageTabs=make('div','technical-charter-language-tabs');
+    charterLanguageTabs.setAttribute('role','tablist');
+    charterLanguageTabs.setAttribute('aria-label',messages.technicalCharterLanguagesLabel);
+    const charterLanguageButtons={};
+    ['fr','en'].forEach(language=>{
+      const tab=button(messages.technicalCharterLanguage[language],'set-charter-language','secondary');
+      tab.dataset.language=language;
+      tab.id=`technical-charter-language-${language}`;
+      tab.setAttribute('aria-controls','technical-charter-language-panel');
+      tab.setAttribute('role','tab');
+      tab.setAttribute('aria-selected',String(language===activeCharterLanguage));
+      tab.tabIndex=language===activeCharterLanguage?0:-1;
+      charterLanguageButtons[language]=tab;
+      charterLanguageTabs.append(tab);
+    });
+    const charterNoteFields=make('div','technical-charter-localized-fields');
+    const charterLanguagePanel=make('div','technical-charter-language-panel');
+    charterLanguagePanel.id='technical-charter-language-panel';
+    const makeCharterField=(labelText,value,metadata,multiline=false)=>{
+      const label=make('label','technical-field');
+      label.append(make('span','',labelText));
+      const input=document.createElement(multiline?'textarea':'input');
+      if(!multiline)input.type='text';
+      input.value=value||'';
+      input.maxLength=metadata.property==='note'?1000:multiline?10000:160;
+      input.dataset.charterProperty=metadata.property;
+      input.dataset.charterLanguage=metadata.language;
+      if(metadata.articleIndex!==undefined)input.dataset.articleIndex=String(metadata.articleIndex);
+      if(metadata.sectionIndex!==undefined)input.dataset.sectionIndex=String(metadata.sectionIndex);
+      label.append(input);
+      return label;
+    };
+    charterForm.append(charterLanguageTabs);
+    const charterArticles=make('div','technical-charter-articles');
+    const renderCharterEditor=()=>{
+      const language=activeCharterLanguage;
+      charterNoteFields.replaceChildren(makeCharterField(
+        messages.technicalCharterNote,
+        charterDraft.note?.[language],
+        {property:'note',language}
+      ));
+      charterArticles.replaceChildren();
+      charterDraft.articles.forEach((article,articleIndex)=>{
+        const articleCard=make('section','technical-charter-article card');
+        const articleHeading=make('div','technical-charter-heading');
+        articleHeading.append(make('h3','technical-subheading',`${messages.technicalCharterArticle} ${articleIndex+1}`));
+        if(charterDraft.articles.length>1){
+          const removeArticle=button(messages.technicalRemoveArticle,'remove-charter-article','secondary');
+          removeArticle.dataset.articleIndex=String(articleIndex);
+          articleHeading.append(removeArticle);
+        }
+        articleCard.append(articleHeading);
+        articleCard.append(makeCharterField(
+          messages.technicalCharterArticle,
+          article.title?.[language],
+          {property:'article-title',language,articleIndex}
+        ));
+        const sections=make('div','technical-charter-sections');
+        article.sections.forEach((section,sectionIndex)=>{
+          const sectionCard=make('section','technical-charter-section');
+          const sectionHeading=make('div','technical-charter-heading');
+          sectionHeading.append(make('h4','',`${messages.technicalCharterSection} ${articleIndex+1}.${sectionIndex+1}`));
+          if(article.sections.length>1){
+            const removeSection=button(messages.technicalRemoveSection,'remove-charter-section','secondary');
+            removeSection.dataset.articleIndex=String(articleIndex);
+            removeSection.dataset.sectionIndex=String(sectionIndex);
+            sectionHeading.append(removeSection);
+          }
+          sectionCard.append(sectionHeading);
+          sectionCard.append(
+            makeCharterField(
+              messages.technicalCharterSection,
+              section.title?.[language],
+              {property:'section-title',language,articleIndex,sectionIndex}
+            ),
+            makeCharterField(
+              messages.details,
+              section.text?.[language],
+              {property:'section-text',language,articleIndex,sectionIndex},
+              true
+            )
+          );
+          sections.append(sectionCard);
+        });
+        const addSection=button(messages.technicalAddSection,'add-charter-section','secondary');
+        addSection.dataset.articleIndex=String(articleIndex);
+        articleCard.append(sections,addSection);
+        charterArticles.append(articleCard);
+      });
+    };
+    charterLanguagePanel.append(charterNoteFields,charterArticles);
+    renderCharterEditor();
+    const charterActions=make('div','technical-settings-actions');
+    const addArticle=button(messages.technicalAddArticle,'add-charter-article','secondary');
+    const saveCharter=make('button','primary',messages.technicalCharterSave);
+    saveCharter.type='submit';
+    const charterFeedback=make('p','site-status');
+    charterFeedback.hidden=true;
+    charterActions.append(addArticle,saveCharter);
+    charterForm.append(charterLanguagePanel,charterFeedback,charterActions);
+    if(!contentSettingsAvailable){
+      charterForm.querySelectorAll('input,textarea,button').forEach(control=>{control.disabled=true});
+    }
+    charterForm.addEventListener('input',event=>{
+      const input=event.target;
+      const {charterProperty,language,articleIndex,sectionIndex}=input.dataset;
+      if(!charterProperty||!language)return;
+      if(charterProperty==='note'){
+        charterDraft.note[language]=input.value;
+      }else if(charterProperty==='article-title'){
+        charterDraft.articles[Number(articleIndex)].title[language]=input.value;
+      }else{
+        const section=charterDraft.articles[Number(articleIndex)].sections[Number(sectionIndex)];
+        if(charterProperty==='section-title')section.title[language]=input.value;
+        if(charterProperty==='section-text')section.text[language]=input.value;
+      }
+      charterFeedback.hidden=true;
+    });
+    charterForm.addEventListener('click',event=>{
+      const action=event.target.closest('[data-portal-action]');
+      if(!action)return;
+      if(action.dataset.portalAction==='set-charter-language'){
+        activeCharterLanguage=action.dataset.language;
+        Object.entries(charterLanguageButtons).forEach(([language,tab])=>{
+          const selected=language===activeCharterLanguage;
+          tab.setAttribute('aria-selected',String(selected));
+          tab.tabIndex=selected?0:-1;
+        });
+        renderCharterEditor();
+        return;
+      }
+      const articleIndex=Number(action.dataset.articleIndex);
+      if(action.dataset.portalAction==='add-charter-article'){
+        charterDraft.articles.push({title:{fr:'',en:''},sections:[{title:{fr:'',en:''},text:{fr:'',en:''}}]});
+      }else if(action.dataset.portalAction==='remove-charter-article'){
+        charterDraft.articles.splice(articleIndex,1);
+      }else if(action.dataset.portalAction==='add-charter-section'){
+        charterDraft.articles[articleIndex].sections.push({title:{fr:'',en:''},text:{fr:'',en:''}});
+      }else if(action.dataset.portalAction==='remove-charter-section'){
+        charterDraft.articles[articleIndex].sections.splice(Number(action.dataset.sectionIndex),1);
+      }else return;
+      renderCharterEditor();
+      charterFeedback.hidden=true;
+    });
+    charterLanguageTabs.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      const languages=['fr','en'];
+      const current=languages.indexOf(activeCharterLanguage);
+      const next=event.key==='Home'?0:event.key==='End'?languages.length-1:
+        (current+(event.key==='ArrowRight'?1:-1)+languages.length)%languages.length;
+      event.preventDefault();
+      activeCharterLanguage=languages[next];
+      charterLanguageButtons[activeCharterLanguage].focus();
+      Object.entries(charterLanguageButtons).forEach(([language,tab])=>{
+        const selected=language===activeCharterLanguage;
+        tab.setAttribute('aria-selected',String(selected));
+        tab.tabIndex=selected?0:-1;
+      });
+      renderCharterEditor();
+    });
+    charterForm.addEventListener('submit',async event=>{
+      event.preventDefault();
+      if(!contentSettingsAvailable){
+        setError(charterFeedback,new Error(messages.technicalCharterMigration));
+        return;
+      }
+      const validArticle=article=>article.title?.fr?.trim()&&article.title?.en?.trim()&&
+        article.sections.length>0&&article.sections.every(section=>
+          section.title?.fr?.trim()&&section.title?.en?.trim()&&
+          typeof section.text?.fr==='string'&&typeof section.text?.en==='string'
+        );
+      if(!charterDraft.articles.length||!charterDraft.articles.every(validArticle)){
+        setError(charterFeedback,new Error(messages.technicalCharterRequired));
+        return;
+      }
+      saveCharter.disabled=true;
+      const next={
+        ...settings,
+        charter_content:charterDraft
+      };
+      try{
+        const {error}=await panelClient.rpc('update_technical_settings',{p_settings:next});
+        if(error)throw error;
+        Object.assign(settings,next);
+        setSuccess(charterFeedback,messages.technicalCharterSaved);
+        await refreshPublicSiteSettings();
+      }catch(error){
+        reportError(error);
+        setError(charterFeedback,error);
+      }finally{saveCharter.disabled=false}
+    });
+    contentSection.append(charterForm);
+    technicalPanels.content.append(contentSection);
 
     const accessSection=make('section','card technical-panel-section');
     accessSection.append(
@@ -2909,7 +3325,7 @@
     if(!client)return;
     try{
       const {data,error}=await client.from('member_profiles')
-        .select('slot_key,display_name,group_name,role_label,photo_path');
+        .select('slot_key,display_name,group_name,role_label,photo_path,is_published,is_deleted');
       if(error)throw error;
       const profiles=(data||[]).map(profile=>({
         ...profile,
@@ -2926,8 +3342,14 @@
   const refreshPublicSiteSettings=async()=>{
     if(!client)return;
     try{
-      const {data,error}=await client.from('site_public_settings')
-        .select('ideas_open,candidacies_open,site_visuals').single();
+      let {data,error}=await client.from('site_public_settings')
+        .select('ideas_open,candidacies_open,site_visuals,charter_content').single();
+      if(['42703','PGRST204'].includes(error?.code)){
+        const fallback=await client.from('site_public_settings')
+          .select('ideas_open,candidacies_open,site_visuals').single();
+        data=fallback.data;
+        error=fallback.error;
+      }
       if(error)throw error;
       window.cdeccApplyRemoteSiteSettings?.(data);
     }catch(error){reportError(error)}

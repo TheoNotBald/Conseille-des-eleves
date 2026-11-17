@@ -1220,28 +1220,46 @@
       activeCharterSearch.close();
     }
   });
+  const defaultCharterContent={
+    note:{fr:copy.fr.charterTemplateNote,en:copy.en.charterTemplateNote},
+    articles:[
+      {title:{fr:copy.fr.charterArticleOne,en:copy.en.charterArticleOne},prefix:'charterSection'},
+      {title:{fr:copy.fr.charterArticleTwo,en:copy.en.charterArticleTwo},prefix:'charterArticleTwoSection'}
+    ].map(article=>({
+      title:article.title,
+      sections:['One','Two','Three','Four','Five'].map(part=>({
+        title:{fr:copy.fr[`${article.prefix}${part}Title`],en:copy.en[`${article.prefix}${part}Title`]},
+        text:{fr:copy.fr[`${article.prefix}${part}Text`],en:copy.en[`${article.prefix}${part}Text`]}
+      }))
+    }))
+  };
+  window.cdeccDefaultCharterContent=defaultCharterContent;
+  let activeCharterContent=defaultCharterContent;
+  const localizedCharterText=value=>{
+    if(typeof value==='string')return value;
+    const language=document.documentElement.lang==='en'?'en':'fr';
+    return String(value?.[language]??value?.fr??'');
+  };
   const renderCharter=()=>{
     activeCharterSearch?.clearHighlight();
-    const articles=[
-      {title:'charterArticleOne',prefix:'charterSection'},
-      {title:'charterArticleTwo',prefix:'charterArticleTwoSection'}
-    ];
+    const content=activeCharterContent&&Array.isArray(activeCharterContent.articles)
+      ?activeCharterContent:defaultCharterContent;
+    const articles=content.articles;
     const articlePanels=make('div','charter-template-articles');
     articles.forEach((article,index)=>{
       const sections=make('div','charter-template-sections');
-      ['One','Two','Three','Four','Five'].forEach((part,sectionIndex)=>{
-        const key=`${article.prefix}${part}`;
+      (Array.isArray(article.sections)?article.sections:[]).forEach((charterSection,sectionIndex)=>{
         const section=make('section','charter-template-section');
-        const title=make('h2','',text(`${key}Title`));
+        const title=make('h2','',localizedCharterText(charterSection.title));
         title.id=`charter-article-${index+1}-section-${sectionIndex+1}-title`;
         const heading=make('div','charter-template-section-heading');
-        heading.append(make('p','charter-template-number',text(key)),title);
+        heading.append(make('p','charter-template-number',`${index+1}.${sectionIndex+1}`),title);
         section.setAttribute('aria-labelledby',title.id);
-        section.append(heading,make('p','charter-template-copy',text(`${key}Text`)));
+        section.append(heading,make('p','charter-template-copy',localizedCharterText(charterSection.text)));
         sections.append(section);
       });
       const panel=make('div','charter-template-panel');
-      panel.append(make('h1','charter-template-article',text(article.title)),sections);
+      panel.append(make('h1','charter-template-article',localizedCharterText(article.title)),sections);
       articlePanels.append(panel);
     });
     const charterSearch=make('div','site-search-anchor charter-search-anchor');
@@ -1282,7 +1300,7 @@
     charterSearchDropdown.append(charterSearchHeading,charterSearchLabel,charterSearchResults);
     charterSearch.append(charterSearchToggle,charterSearchDropdown);
     const frame=make('section','charter-template-frame');
-    frame.append(make('p','charter-template-note',text('charterTemplateNote')),charterSearch,articlePanels);
+    frame.append(make('p','charter-template-note',localizedCharterText(content.note||defaultCharterContent.note)),charterSearch,articlePanels);
     const charterSections=[...articlePanels.querySelectorAll('.charter-template-section')];
     let matchingSections=[];
     let highlightedSection=null;
@@ -1440,15 +1458,18 @@
       {slotKey:'assembly-treasurer',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleTreasurer')},
       {slotKey:'assembly-administrative-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleHighSpokesperson')},
       {slotKey:'assembly-student-spokesperson',category:'assembly',sectionLabel:text('memberProfilesTitle'),groupLabel:'',roleLabel:text('roleLowSpokesperson')},
-      ...Array.from({length:5},(_,index)=>({
-        slotKey:`secondary-${index+1}`,
+      ...Array.from({length:5},(_,levelIndex)=>Array.from({length:30},(_,representativeIndex)=>({
+        slotKey:representativeIndex===0
+          ?`secondary-${levelIndex+1}`
+          :`secondary-${levelIndex+1}-${representativeIndex+1}`,
         category:'secondary',
-        level:index+1,
+        level:levelIndex+1,
+        representativeIndex:representativeIndex+1,
         sectionLabel:text('memberSecondaryRepsTitle'),
-        groupLabel:text(`level${['One','Two','Three','Four','Five'][index]}`),
+        groupLabel:text(`level${['One','Two','Three','Four','Five'][levelIndex]}`),
         roleLabel:text('memberLevelRepresentativeRole')
-      })),
-      ...Array.from({length:5},(_,levelIndex)=>Array.from({length:5},(_,representativeIndex)=>({
+      }))).flat(),
+      ...Array.from({length:5},(_,levelIndex)=>Array.from({length:30},(_,representativeIndex)=>({
         slotKey:`class-${levelIndex+1}-${representativeIndex+1}`,
         category:'class',
         level:levelIndex+1,
@@ -1464,6 +1485,9 @@
       const card=make('article',`member-profile-card${extraClass?` ${extraClass}`:''}`);
       card.dataset.memberSlot=slot.slotKey;
       card.dataset.memberDefaultGroup=slot.groupLabel;
+      card.dataset.memberCategory=slot.category;
+      if(slot.level)card.dataset.memberLevel=String(slot.level);
+      if(slot.category==='secondary'||slot.category==='class')card.hidden=true;
       const group=make('p','member-profile-group',slot.groupLabel);
       group.hidden=!slot.groupLabel;
       const photoPlaceholder=make('div','member-profile-photo-placeholder',text('memberPhotoPlaceholder'));
@@ -1489,7 +1513,11 @@
     const applyMemberProfiles=records=>{
       const profiles=new Map((records||[]).map(record=>[record.slot_key,record]));
       document.querySelectorAll('[data-member-slot]').forEach(card=>{
-        const profile=profiles.get(card.dataset.memberSlot);
+        const storedProfile=profiles.get(card.dataset.memberSlot);
+        const category=card.dataset.memberCategory;
+        const slotExists=Boolean(storedProfile&&!storedProfile.is_deleted);
+        const profile=slotExists&&storedProfile.is_published!==false?storedProfile:null;
+        if(category==='secondary'||category==='class')card.hidden=!slotExists;
         const name=card.querySelector('.member-profile-name');
         const group=card.querySelector('.member-profile-group');
         const role=card.querySelector('.member-profile-role');
@@ -1510,6 +1538,19 @@
           placeholder.hidden=false;
         }
       });
+      const secondarySection=document.querySelector('.member-secondary-reps');
+      if(secondarySection){
+        const secondaryProfiles=[...secondarySection.querySelectorAll('[data-member-category="secondary"]')];
+        secondarySection.hidden=!secondaryProfiles.some(card=>!card.hidden);
+      }
+      const classSection=document.querySelector('.member-class-reps-section');
+      if(classSection){
+        classSection.querySelectorAll('.member-class-reps-level').forEach(level=>{
+          level.hidden=!level.querySelector('[data-member-category="class"]:not([hidden])');
+        });
+        const classProfiles=[...classSection.querySelectorAll('[data-member-category="class"]')];
+        classSection.hidden=!classProfiles.some(card=>!card.hidden);
+      }
       const loadStatus=document.querySelector('.member-load-status');
       if(loadStatus){
         loadStatus.hidden=true;
@@ -1824,18 +1865,21 @@
       .forEach(slot=>memberProfileGrid.append(makeMemberProfileCard(slot)));
     memberProfiles.append(memberProfileGrid);
     const secondaryRepsSection=make('section','member-secondary-reps');
+    secondaryRepsSection.hidden=true;
     secondaryRepsSection.append(make('h3','member-profile-title',text('memberSecondaryRepsTitle')));
     const secondaryRepsGrid=make('div','member-secondary-reps-grid');
     memberSlotDefinitions.filter(slot=>slot.category==='secondary')
       .forEach(slot=>secondaryRepsGrid.append(makeMemberProfileCard(slot,'member-secondary-rep-card')));
     secondaryRepsSection.append(secondaryRepsGrid);
     const classRepresentativeSection=make('section','member-class-reps-section');
+    classRepresentativeSection.hidden=true;
     classRepresentativeSection.append(
       make('h3','member-profile-title',text('classreps'))
     );
     for(let level=1;level<=5;level++){
       const levelKey=`level${['One','Two','Three','Four','Five'][level-1]}`;
       const levelGroup=make('div','member-class-reps-level');
+      levelGroup.hidden=true;
       levelGroup.append(make('h4','member-class-reps-level-title',text(levelKey)));
       const representatives=make('div','member-class-reps-grid');
       memberSlotDefinitions
@@ -2854,6 +2898,10 @@
   };
   window.cdeccApplyRemoteSiteSettings=settings=>{
     if(!settings||typeof settings!=='object')return;
+    if(settings.charter_content&&Array.isArray(settings.charter_content.articles)){
+      activeCharterContent=settings.charter_content;
+      renderCharter();
+    }
     const visuals=settings.site_visuals&&typeof settings.site_visuals==='object'?settings.site_visuals:{};
     const colorVariables={
       forest:'forest',deep:'deep',green:'green',lime:'lime',paper:'paper',
