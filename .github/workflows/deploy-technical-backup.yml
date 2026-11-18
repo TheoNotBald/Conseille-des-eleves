@@ -37,4 +37,4 @@ jobs:
           fi
 
       - name: Deploy backup function
-        run: supabase functions deploy technical-backup --project-ref ogrlkjqwkukaxkngexpr
+        run: supabase functions deploy technical-backup --remote=ogrlkjqwkukaxkngexpr --yes
