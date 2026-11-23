@@ -11,6 +11,7 @@
     signIn:'Continuer avec Google',
     signOut:'Se déconnecter',
     authError:'La connexion n’a pas pu être vérifiée.',
+    authCancelled:'La connexion Google a été annulée ou refusée. Réessayez avec un compte autorisé.',
     loginEyebrow:'Espace d’administration',
     loginDescription:'Connectez-vous avec un compte Google autorisé pour gérer les propositions, le vote, les candidatures et les membres.',
     loginHelp:'Le portail est réservé à l’administration. Ne partagez pas votre session.',
@@ -211,6 +212,7 @@
     signIn:'Continue with Google',
     signOut:'Sign out',
     authError:'Could not verify the sign-in.',
+    authCancelled:'Google sign-in was cancelled or denied. Try again with an authorized account.',
     loginEyebrow:'Administration portal',
     loginDescription:'Sign in with an authorized Google account to manage proposals, voting, candidacies, and members.',
     loginHelp:'This portal is for administrators. Do not share your signed-in session.',
@@ -589,7 +591,9 @@
   loginRequired.append(loginIntro,loginActions);
   shell.append(tabs,heading,securityNotice,authBar,state,loginRequired,panelNodes);
   admin.replaceChildren(shell);
-  const technicalPortalRequested=new URLSearchParams(window.location.search).get('portal')==='technical';
+  const requestedPortal=new URLSearchParams(window.location.search).get('portal');
+  const adminPortalRequested=requestedPortal==='admin';
+  const technicalPortalRequested=requestedPortal==='technical';
   const client=ready?window.supabase.createClient(config.url,config.anonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:!technicalPortalRequested}}):null;
   const technicalClient=ready?window.supabase.createClient(config.url,config.anonKey,{
     auth:{
@@ -644,11 +648,19 @@
   const authCallbackError=authCallbackParams.get('error_code')||
     authCallbackHashParams.get('error_code')||
     authCallbackParams.get('error')||
-    authCallbackHashParams.get('error');
-  const showAuthCallbackError=()=>{
-    const message=authCallbackError==='signup_disabled'?messages.signupDisabled:
-      authCallbackError==='access_denied'?messages.adminLoginDenied:messages.authError;
-    setError(authError,new Error(message));
+    authCallbackHashParams.get('error')||
+    (authCallbackParams.has('error_description')||authCallbackHashParams.has('error_description')
+      ?'provider_error':null);
+  const authCallbackErrorDescription=authCallbackParams.get('error_description')||
+    authCallbackHashParams.get('error_description');
+  const authCallbackMessage=()=>{
+    if(authCallbackError==='signup_disabled')return messages.signupDisabled;
+    if(authCallbackError==='access_denied')return messages.authCancelled;
+    if(authCallbackErrorDescription)return `${messages.authError} ${authCallbackErrorDescription}`;
+    return messages.authError;
+  };
+  const showAuthCallbackError=(target=authError)=>{
+    setError(target,new Error(authCallbackMessage()));
   };
   const cleanAuthCallbackUrl=()=>{
     const url=new URL(window.location.href);
@@ -3445,9 +3457,11 @@
     if(tab&&tabs.contains(tab)){switchTab(tab.dataset.tab);return}
     const login=event.target.closest('[data-portal-action="sign-in"]');
     if(login&&client){
-      client.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.href.split('#')[0]} }).then(({error})=>{
-        if(error){setError(authError,error);reportError(error)}
-      });
+      login.disabled=true;
+      startAdminSignIn().catch(error=>{
+        setError(authError,error);
+        reportError(error);
+      }).finally(()=>{login.disabled=false});
       return;
     }
     const technicalLoginButton=event.target.closest('[data-portal-action="technical-sign-in"]');
@@ -3545,6 +3559,7 @@
       loginTitle.textContent=french?'Connexion requise':'Sign-in required';
       loginDescription.textContent=messages.loginDescription;
     }else{
+      if(adminPortalRequested)window.showPage('admin');
       authError.hidden=true;
       try{
         if(recordSignIn){
@@ -3582,6 +3597,7 @@
         throw new Error(messages.loginDenied);
       }
       technicalUser=user;
+      if(technicalPortalRequested)window.showPage('technical');
       technicalIdentity.textContent=user.email||'';
       technicalAuthBar.hidden=false;
       technicalSignOut.hidden=false;
@@ -3612,6 +3628,16 @@
       reportError(error);
       if(session?.user)await technicalClient.auth.signOut();
     }
+  };
+  const startAdminSignIn=async()=>{
+    const redirect=new URL(window.location.href);
+    redirect.searchParams.set('portal','admin');
+    redirect.hash='';
+    const {error}=await client.auth.signInWithOAuth({
+      provider:'google',
+      options:{redirectTo:redirect.toString()}
+    });
+    if(error)throw error;
   };
   const startTechnicalSignIn=async()=>{
     const redirect=new URL(window.location.href);
@@ -3680,7 +3706,9 @@
         return;
       }
       if(authCallbackError&&!technicalPortalRequested){showAuthCallbackError();cleanAuthCallbackUrl()}
-      updateSignedIn(data.session);
+      void updateSignedIn(data.session).then(()=>{
+        if(adminPortalRequested)cleanAuthCallbackUrl();
+      });
       refreshPublicSiteSettings();
       refreshPublicIdeas();
       refreshPublicMembers();
@@ -3692,9 +3720,7 @@
         setError(technicalLoginError,error);
         reportError(error);
       }else if(authCallbackError&&technicalPortalRequested){
-        const message=authCallbackError==='signup_disabled'?messages.signupDisabled:
-          authCallbackError==='access_denied'?messages.loginDenied:messages.authError;
-        setError(technicalLoginError,new Error(message));
+        showAuthCallbackError(technicalLoginError);
         cleanAuthCallbackUrl();
         void updateTechnicalSignedIn(data.session);
       }else{

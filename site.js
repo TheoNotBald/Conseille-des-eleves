@@ -2400,10 +2400,11 @@
     if(preferencesLoadError)setStatus(settingsStatus,preferencesLoadError,'error');
   };
   renderSettings();
-  if(new URLSearchParams(window.location.search).get('portal')==='technical'){
+  const requestedPortal=new URLSearchParams(window.location.search).get('portal');
+  if(requestedPortal==='technical'||requestedPortal==='admin'){
     const hero=document.querySelector('.home-hero');
     if(hero)hero.hidden=true;
-    window.showPage('technical');
+    window.showPage(requestedPortal);
   }
   const savePreferences=()=>{
     preferences.updatedAt=Date.now();
