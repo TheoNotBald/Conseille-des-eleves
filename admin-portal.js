@@ -162,10 +162,10 @@
     technicalResetSaved:'Les réglages par défaut ont été rétablis. Les données, comptes et sauvegardes existantes sont conservés.',
     technicalSaved:'Réglages techniques enregistrés.',
     technicalAccessTitle:'Accès Google autorisés',
-    technicalAccessIntro:'Les rôles techniques et administratifs sont distincts. Ce portail technique ne donne pas accès au portail administratif.',
+    technicalAccessIntro:'Attribuez le rôle administratif, technique ou les deux à chaque compte Google.',
     technicalEmail:'Adresse du compte Google',
     technicalRole:'Rôle',
-    technicalRoles:['Administration','Administration technique'],
+    technicalRoles:['Administration','Administration technique','Administration et technique'],
     technicalAddAccess:'Ajouter ou modifier l’accès',
     technicalRemoveAccess:'Retirer l’accès',
     technicalConfirmRemoveAccess:'Retirer cet accès ? Cette action peut bloquer le compte concerné.',
@@ -363,10 +363,10 @@
     technicalResetSaved:'Default settings restored. Existing data, accounts, and backups were kept.',
     technicalSaved:'Technical settings saved.',
     technicalAccessTitle:'Authorized Google accounts',
-    technicalAccessIntro:'Technical and administrator roles are separate. This technical portal does not grant access to the regular administration portal.',
+    technicalAccessIntro:'Assign the administrator role, technical role, or both to each Google account.',
     technicalEmail:'Google account email',
     technicalRole:'Role',
-    technicalRoles:['Administrator','Technical administrator'],
+    technicalRoles:['Administrator','Technical administrator','Administrator and technical'],
     technicalAddAccess:'Add or update access',
     technicalRemoveAccess:'Remove access',
     technicalConfirmRemoveAccess:'Remove this access? This may lock out that account.',
@@ -3073,7 +3073,7 @@
     const accessRole=make('label','technical-field');
     accessRole.append(make('span','',messages.technicalRole));
     const roleSelect=document.createElement('select');
-    ['admin','technical'].forEach((value,index)=>{
+    ['admin','technical','both'].forEach((value,index)=>{
       const option=make('option','',messages.technicalRoles[index]);
       option.value=value;
       roleSelect.append(option);
@@ -3108,10 +3108,11 @@
     (accessList||[]).forEach(entry=>{
       const row=make('div','technical-access-row');
       const identity=make('div','');
-      identity.append(make('strong','',entry.email),make('span','',messages.technicalRoles[entry.role==='technical'?1:0]));
+      const roleIndex={admin:0,technical:1,both:2}[entry.role]??0;
+      identity.append(make('strong','',entry.email),make('span','',messages.technicalRoles[roleIndex]));
       const controls=make('div','technical-access-actions');
       const rowRole=document.createElement('select');
-      ['admin','technical'].forEach((value,index)=>{
+      ['admin','technical','both'].forEach((value,index)=>{
         const option=make('option','',messages.technicalRoles[index]);
         option.value=value;
         option.selected=value===entry.role;

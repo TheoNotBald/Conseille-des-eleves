@@ -9,7 +9,7 @@ The admin portal stays locked until a Supabase project is configured. The browse
 3. In **Authentication → Sign In / Providers**, enable Google sign-in.
 4. In **Authentication → Settings → User Signups**, enable **Allow new users to sign up**. Without this, Google sign-in for a Gmail account that has not used the project before returns `signup_disabled`.
 5. Create a Google OAuth client. Add the Supabase callback URL shown by the Google provider settings to the OAuth client's authorized redirect URIs.
-6. In **Authentication → URL Configuration**, set the site URL and allow the website URL for both portals. For example, if the site is `https://example.com/`, allow both `https://example.com/` and `https://example.com/?portal=technical`; add the equivalent local and Vercel URLs you use.
+6. In **Authentication → URL Configuration**, set the site URL and allow the website URL for both portals. For example, if the site is `https://example.com/`, allow `https://example.com/`, `https://example.com/?portal=admin`, and `https://example.com/?portal=technical`; add the equivalent local and Vercel URLs you use.
 7. Put the project's URL and public publishable/anon key in [`supabase-config.js`](./supabase-config.js). Keep the service-role key and database password out of the repository.
 8. Deploy the site and test a proposal and candidacy from a separate browser/device. Sign in to the Admin page with Google to review them.
 
@@ -23,7 +23,7 @@ values (lower('YOUR_GOOGLE_ACCOUNT_EMAIL'), 'technical')
 on conflict (email) do update set role = 'technical';
 ```
 
-Only allowlisted Google accounts can sign in. The **Version admin / Admin version** and **Panneau technique / Technical Panel** are separate portals with separate sign-in sessions and roles. Use the `technical` role for the Technical Panel and the `admin` role for the regular admin portal; a technical role does not grant admin-portal access. The Technical Panel's access page can manage both roles. Regular administrators cannot view technical logs, IP addresses, technical access changes, or sign-in events. Do not use a shared browser password; a password embedded in a static site would not be secret.
+Only allowlisted Google accounts can sign in. The **Version admin / Admin version** and **Panneau technique / Technical Panel** are separate portals with separate sign-in sessions. Apply `20261123000000_technical_access_both_roles.sql` in Supabase SQL Editor before assigning both roles. The Technical Panel's access page can assign `admin`, `technical`, or `both`; choose `both` when one account needs both portals. Regular administrators cannot view technical logs, IP addresses, technical access changes, or sign-in events. Do not use a shared browser password; a password embedded in a static site would not be secret.
 
 The regular **Journaux / Logs** tab reads `public.admin_audit_logs_display`, which excludes authentication and technical-control events and never returns IP addresses. The Technical Panel reads a separate restricted RPC that combines admin and technical events and includes request IPs when Supabase supplies them. The system filters logs to 90 days and prunes old rows as new events arrive and during scheduled runs. IPs and account emails are personal information; obtain school/privacy approval before production use. Forwarded IP headers are not proof of identity, and Supabase project owners can still change or remove database records.
 
